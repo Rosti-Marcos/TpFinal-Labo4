@@ -1,0 +1,13 @@
+[
+    {
+        "userId": 1,
+        "userTypeId": 2,
+        "name": "rodrigo",
+        "lastname": "eulloque",
+        "userName": "rocksti",
+        "password": "1234",
+        "eMail": "rodri@eu",
+        "phoneNumber": "21564",
+        "birthDate": "2022-10-03"
+    }
+]
