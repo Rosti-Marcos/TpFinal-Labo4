@@ -1,14 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Availability Calendar</title>
-         
-		<link href="<?php echo  CSS_PATH."style.css"?>" rel="stylesheet" type="text/css">
-		<link href="<?php echo  CSS_PATH."calendar.css"?>" rel="stylesheet" type="text/css">
-	</head>
-	<body>
+<?php 
+ include('header.php');
+?>
 	    <nav class="navtop">
 	    	<div>
 	    		<h1>Availability Calendar</h1>
@@ -36,5 +28,6 @@
 		<div class="content home">
 			<?=$calendar?>
 		</div>
-	</body>
-</html>
+		<?php 
+ include('footer.php');
+?>
