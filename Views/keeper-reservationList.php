@@ -1,18 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-  	<title>Reservation Table</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="<?php echo  CSS_PATH."styleTable.css"?>">
-
-	</head>
-	<body>
+<?php 
+ include('header.php');
+?>
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -74,4 +62,6 @@
 		
 	</section>
 
-</html>
+	<?php 
+ include('footer.php');
+?>

@@ -1,18 +1,6 @@
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400" rel="stylesheet">
-
-	<link type="text/css" rel="stylesheet" href="<?php echo  CSS_PATH."bootstrap.min.css"?>"/>
-  <link href="<?php echo  CSS_PATH."style.css"?>" rel="stylesheet" type="text/css">
-	<link type="text/css" rel="stylesheet" href="<?php echo  CSS_PATH."stylebootstrap.css"?>"/>
-
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
+<?php 
+ include('header.php');
+?>
 
   <nav class="navtop">
   	<div>
@@ -21,7 +9,7 @@
   </nav>
 
 </head>
-<body>
+
 	<div id="service" class="section img">
 		<div class="section-center">
 			<div class="container">
@@ -72,5 +60,7 @@
 			</div>
 		</div>
 	</div>
-</body>
+<?php 
+ include('footer.php');
+?>
         
