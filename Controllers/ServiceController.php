@@ -38,8 +38,8 @@
             }else{
                 $flag = 0; 
                 foreach($serviceList as $service){
-                    if($startDate < $service->getEndDate()){ /// acordarme de poner como condicion que coincida el id del keeper
-                        if($endDate > $service->getStartDate()){
+                    if($startDate <= $service->getEndDate()){ /// acordarme de poner como condicion que coincida el id del keeper
+                        if($endDate >= $service->getStartDate()){
                             $flag = 1;
                         }
                     }
