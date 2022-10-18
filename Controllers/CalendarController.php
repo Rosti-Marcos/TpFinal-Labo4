@@ -14,7 +14,7 @@ class CalendarController{
         $this->active_day = date('d');
     }
 
-    public function ShowAvailabityCalendar($month = null){
+    public function ShowAvailabilityCalendar($month = null){
         $serviceController = new ServiceController();
         $serviceList = $serviceController->getServices();
         $calendar = new CalendarController($month);
