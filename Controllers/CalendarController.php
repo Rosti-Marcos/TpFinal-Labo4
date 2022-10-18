@@ -19,7 +19,7 @@ class CalendarController{
         $this->serviceDAO = new serviceDAO();
     }
 
-    public function showAvailabityCalendar($month = null){
+    public function ShowAvailabityCalendar($month = null){
         $serviceList = $this->serviceDAO->getAll();
         $calendar = new CalendarController($month);
         foreach($serviceList as $service){

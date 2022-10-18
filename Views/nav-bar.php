@@ -38,9 +38,9 @@ include_once('header.php');
                             Keeper Menu
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAddView" ?>">Set my availability</a></li>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabilityCalendar" ?>">Availability calendar</a></li>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."User/ShowListView" ?>">Show my reservations</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Service/ShowAvailabilityView" ?>">Set my availability</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabityCalendar" ?>">Availability calendar</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookings" ?>">Show my reservations</a></li>
                         </ul>
                     </li>
                 <?php } ?>
