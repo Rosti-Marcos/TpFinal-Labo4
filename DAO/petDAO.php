@@ -103,8 +103,9 @@ class petDAO implements iPetDAO{
         });
 
         $aux = array_values($aux);
-        //var_dump($aux);die();
-        return (count($aux) > 0) ? $aux[0] : array();
+
+        return (count($aux) > 0) ? $aux : array();
+
     }
 
 
