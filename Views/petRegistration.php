@@ -17,7 +17,7 @@ include('header.php');
             <tr>
                 <th><h3>Please attach vaccine certificate</h3></th>
                 <td>
-                    <input type="file" name="vaccineCertId" id="vaccineCertId" required>
+                    <input accept="image/png,image/jpeg" type="file" name="vaccineCertId" id="vaccineCertId" required>
                 </td>
             </tr>
             <tr>
@@ -33,13 +33,13 @@ include('header.php');
             <tr>
                 <th><h3>Please attach youe pet photo</h3></th>
                 <td>
-                    <input type="file" name="petPics" id="petPics" required>
+                    <input accept="image/png,image/jpeg" type="file" name="petPics" id="petPics" required>
                 </td>
             </tr>
             <tr>
                 <th><h3>Please attach your pet video (optional)</h3></th>
                 <td>
-                    <input type="file" name="petVideo" id="petVideo">
+                    <input accept="video/mp4"type="file" name="petVideo" id="petVideo">
                 </td>
             </tr>
             <tr>
@@ -59,7 +59,10 @@ include('header.php');
     <br>
     <br>
     <input type="submit" class="enviar" value="Add pet">
+
 </form>
+        <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
+
     </section>
 
 <?php

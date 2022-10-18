@@ -13,6 +13,7 @@ include('header.php');
         </li>
         <?php } ?>
     </ul>
+    <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
 </main>
 <?php
 include('footer.php');
