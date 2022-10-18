@@ -10,8 +10,13 @@
         }
 
         public function ShowWellcomeView() {
-            require_once(VIEWS_PATH."validate-session.php");
-            require_once(VIEWS_PATH . "wellcome.php");
+            if($_SESSION["loggedUser"]->getUserTypeId() == 1){
+                require_once(VIEWS_PATH."validate-session.php");
+                require_once(VIEWS_PATH . "wellcome.php");
+            }else{
+                require_once(VIEWS_PATH."validate-session.php");
+                require_once(VIEWS_PATH . "keeper-wellcome.php");
+            }
 
         }
 
