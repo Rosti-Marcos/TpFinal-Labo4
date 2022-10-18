@@ -9,8 +9,6 @@
   	</div>
   </nav>
 
-</head>
-
 	<div id="service" class="section img">
 		<div class="section-center">
 			<div class="container">

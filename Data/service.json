@@ -14,10 +14,17 @@
         "status": "available"
     },
     {
+<<<<<<< HEAD
         "id": 1,
         "userId": 9,
         "startDate": "2022-10-18",
         "endDate": "2022-10-25",
+=======
+        "id": 2,
+        "userId": 2,
+        "startDate": "2022-10-25",
+        "endDate": "2022-10-29",
+>>>>>>> 2ef190f39e267d7c0f8454a8e9ddcde149f7ddb7
         "status": "available"
     }
 ]

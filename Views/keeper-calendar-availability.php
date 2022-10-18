@@ -7,7 +7,7 @@
 	    		<h1>Availability Calendar</h1>
 	    	</div>
 	    </nav>
-		<form action="<?php echo  FRONT_ROOT."Calendar/showAvailabityCalendar"?>" method="post">
+		<form action="<?php echo  FRONT_ROOT."Calendar/showAvailabilityCalendar"?>" method="post">
 			<span class="form-label">Month</span>
 					<select class="form-control" name="month" id="month">
 					<option value="1">January</option>
