@@ -46,6 +46,17 @@
 
             return (count($aux) > 0) ? $aux[0] : array();
         }
+        public function GetByUserType($userType) {
+            $this->RetrieveData();
+
+            $aux = array_filter($this->userList, function($user) use($userType) {
+                return $user->getUserTypeId() == $userType;
+            });
+
+            $aux = array_values($aux);
+
+            return (count($aux) > 0) ? $aux[0] : array();
+        }
 
         private function RetrieveData() {
             $this->userList = array();

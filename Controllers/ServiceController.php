@@ -2,18 +2,15 @@
     namespace Controllers;
 
     use DAO\ServiceDAO as ServiceDAO;
-    use DAO\UserDAO as UserDao; 
     use Models\Service as Service;
 
     class ServiceController
     {
         private $serviceDAO;
-        private $userDAO;
 
         public function __construct()
         {
             $this->serviceDAO = new serviceDAO();
-            $this->userDAO = new userDAO();
         }
 
         public function ShowAvailabilityView()
@@ -31,6 +28,9 @@
         }
 
         public function Add($startDate, $endDate, $status){
+            $userController = new userController();
+            $user = $userController->userDAO->GetByUserName($_SESSION['userName']);
+            $userId = $user->getUserId();
             $serviceList = $this->serviceDAO->getAll();
             if($endDate < $startDate){
                 $message = 'You cannot set the end date to before the start date';
@@ -38,21 +38,20 @@
             }else{
                 $flag = 0; 
                 foreach($serviceList as $service){
-                    if($startDate <= $service->getEndDate()){ /// acordarme de poner como condicion que coincida el id del keeper
-                        if($endDate >= $service->getStartDate()){
-                            $flag = 1;
-                        }
+                    if($service->getUserId() == $userId && $startDate <= $service->getEndDate() && $endDate >= $service->getStartDate()){
+                        $flag = 1; 
                     }
                 }
-                if(!$serviceList || $flag != 1){
+                if(!$serviceList || $flag == 0){
                     $service = new service();
-                        $service->setStartDate($startDate);
-                        $service->setEndDate($endDate);
-                        $service->setStatus($status);
-                        $this->serviceDAO->Add($service);
+                    $service->setUserId($userId);
+                    $service->setStartDate($startDate);
+                    $service->setEndDate($endDate);
+                    $service->setStatus($status);
+                    $this->serviceDAO->Add($service);
 
-                        $message = 'Your availability has been successfully set';
-                        echo "<script>alert('$message');</script>";
+                    $message = 'Your availability has been successfully set';
+                    echo "<script>alert('$message');</script>";
                 }else if($flag == 1){
                     $message = 'Some of the dates entered had already been loaded. Please enter different dates.'; 
                     echo "<script>alert('$message');</script>";
@@ -69,6 +68,11 @@
             $this->servicerDAO->Remove($id);
 
             $this->ShowAvailabilityView();
+        }
+
+        public function getServices(){
+            $serviceList = $this->serviceDAO->getAll();
+            return $serviceList;
         }
     }
 ?>

@@ -24,7 +24,6 @@
 
         public function modifyBookings($id)
         {
-            var_dump($id);
             $booking = $this->bookingDAO->GetById($id);
             require_once(VIEWS_PATH."keeper-reservation.php");
         }

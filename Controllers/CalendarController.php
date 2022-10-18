@@ -2,25 +2,21 @@
 
     namespace Controllers;
 
-    use DAO\ServiceDAO as ServiceDAO;
-    use Models\Service as Service;
-
 
 class CalendarController{
 
     private $active_year, $active_month, $active_day;
     private $events = [];
-    private $serviceDAO;
 
     public function __construct($month = null) {
         $this->active_year = date('Y');
-        $this->active_month = $month != null ? date($month) : date(11);
+        $this->active_month = $month != null ? date($month) : date('m');
         $this->active_day = date('d');
-        $this->serviceDAO = new serviceDAO();
     }
 
-    public function showAvailabityCalendar($month = null){
-        $serviceList = $this->serviceDAO->getAll();
+    public function ShowAvailabityCalendar($month = null){
+        $serviceController = new ServiceController();
+        $serviceList = $serviceController->getServices();
         $calendar = new CalendarController($month);
         foreach($serviceList as $service){
             $startDate = $service->getStartDate();

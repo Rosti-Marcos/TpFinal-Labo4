@@ -17,10 +17,8 @@ class PetController
     {
         $petList = $this->petDAO->GetByOwnerId($_SESSION['loggedUser']->getUserId());
 
-        //$pet = $this->petDAO->GetByPetId(1);
-
         require_once(VIEWS_PATH . "petList.php");
-        //var_dump($pet);die();
+
     }
 
     public function ShowAddPetView()
@@ -28,11 +26,12 @@ class PetController
         require_once(VIEWS_PATH . "petRegistration.php");
     }
 
-    public function ShowPetProfile()
+    public function ShowPetProfile($PetId)
     {
-        $pet = $this->petDAO->GetByPetId(1);
-
-        require_once(VIEWS_PATH . "petProfile.php");
+        if(!empty($PetId)){
+            $pet = $this->petDAO->GetByPetId($PetId);
+            require_once(VIEWS_PATH . "petProfile.php");
+        }
     }
 
     public function Add($petName, $petTypeId, $petBreed, $observation)
@@ -63,7 +62,7 @@ class PetController
         $aux = explode('.', $fileName);
         $name = $aux[0];
         $ext = $aux[1];
-        //if($ext == 'jpg' || $ext == 'png' || $ext == 'mp4'){
+
         $fileName = $name . '_' . time() . '.' . $ext;
         $temp = $_FILES[$nombre]['tmp_name'];
         if (move_uploaded_file($temp, IMG_PATH . $fileName)) {

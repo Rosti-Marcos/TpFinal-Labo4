@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use DAO\KeeperDAO as KeeperDAO;
+use DAO\UserDAO as UserDAO;
 use Models\Keeper as Keeper;
+use Models\User as User;
 
 
 class KeeperController{
@@ -17,8 +19,12 @@ class KeeperController{
         require_once(VIEWS_PATH . "keeper-add.php");
     }
 
-    public function ShowHomeView(){
-        require_once(VIEWS_PATH . "home.php");
+    public function ShowListView(){
+        $userController = new UserController();
+        $userList=$userController->GetUserDAO()->GetByUserType(2);
+        $keeperList =$this->keeperDAO->GetAll();
+        require_once (VIEWS_PATH . "keeper-list.php");
+        require_once(VIEWS_PATH."validate-session.php");
     }
 
     public function Add($petTypeId, $remuneration){

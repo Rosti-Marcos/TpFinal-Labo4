@@ -1,15 +1,8 @@
 <?php
     namespace Controllers;
 
-use DAO\UserDAO as UserDAO;
-
-
     class HomeController{
-        private $userDAO;
 
-        public function __construct() {
-            $this->userDAO = new UserDAO();
-        }
 
         public function Index($message = "") {
             require_once(VIEWS_PATH . "home.php");
@@ -17,12 +10,14 @@ use DAO\UserDAO as UserDAO;
         }
 
         public function ShowWellcomeView() {
+            require_once(VIEWS_PATH."validate-session.php");
             require_once(VIEWS_PATH . "wellcome.php");
 
         }
 
         public function Login($userName, $password) {
-            $user = $this->userDAO->GetByUserName($userName);
+            $userController = new UserController();
+            $user= $userController->GetUserDAO()->GetByUserName($userName);
             if(($user != null) && ($user->getPassword() === $password))
             {
                 $_SESSION["loggedUser"] = $user;
@@ -34,12 +29,6 @@ use DAO\UserDAO as UserDAO;
                 $this->Index();
             }
 
-        }
-
-
-        public function ShowUser(){
-            $user = $this->userDAO->GetByUserName($_SESSION['userName']);
-            require_once(VIEWS_PATH."user-perfil.php");
         }
 
         public function Logout() {
