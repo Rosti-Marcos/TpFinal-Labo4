@@ -18,7 +18,7 @@ include_once('header.php');
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo FRONT_ROOT. "User/ShowUser" ?>">Show Keepers</a></li>
+                    <a class="nav-link" href="<?php echo FRONT_ROOT. "Keeper/ShowListView" ?>">Show Keepers</a></li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
