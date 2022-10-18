@@ -2,8 +2,8 @@
 
 namespace DAO;
 
+use Controllers\UserController;
 use Models\Keeper as Keeper;
-use DAO\UserDao as UserDAO;
 use DAO\IKeeperDAO as IKeeperDAO;
 
 
@@ -19,7 +19,7 @@ class KeeperDAO implements IKeeperDAO {
     }
 
     public function Add(Keeper $keeper) {
-        $userDAO = new UserDAO();
+        $userController = new UserController();
         $this->RetrieveData();
         $keeper->setUserId($_SESSION["loggedUser"]->getUserId());
         $keeper->setKeeperId($this->GetNextId());
@@ -29,7 +29,7 @@ class KeeperDAO implements IKeeperDAO {
 
         $this->SaveData();
         $_SESSION["loggedUser"]->setUserTypeId(2);
-        $userDAO->Modify( $_SESSION["loggedUser"]);
+        $userController->GetUserDAO()->Modify( $_SESSION["loggedUser"]);
     }
 
 
@@ -45,7 +45,19 @@ class KeeperDAO implements IKeeperDAO {
         $this->RetrieveData();
 
         $aux = array_filter($this->keeperList, function($keeper) use($id) {
-            return $keeper->getUserName() == $id;
+            return $keeper->getKeeperId() == $id;
+        });
+
+        $aux = array_values($aux);
+
+        return (count($aux) > 0) ? $aux[0] : array();
+    }
+
+    public function GetByUserId($userId) {
+        $this->RetrieveData();
+
+        $aux = array_filter($this->keeperList, function($keeper) use($userId) {
+            return $keeper->getUserId() == $userId;
         });
 
         $aux = array_values($aux);

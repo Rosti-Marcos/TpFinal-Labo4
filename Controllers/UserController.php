@@ -9,18 +9,22 @@
     class UserController{
         private $userDAO;
 
+
         public function __construct(){
             $this->userDAO = new UserDAO();
+        }
+
+        public function GetUserDAO(){
+            return $this->userDAO;
         }
 
         public function ShowAddView(){
             require_once(VIEWS_PATH . "user-add.php");
         }
 
-        public function ShowHomeView(){
-            require_once(VIEWS_PATH . "home.php");
+        public function GetByUserType($userType){
+            return $this->userDAO->GetAll();
         }
-
         public function Add($name, $lastname, $userName, $password, $eMail, $phoneNumber, $birthDate){
 
             $user = new User;
@@ -48,6 +52,7 @@
 
         public function ShowUser(){
             require_once(VIEWS_PATH."user-profile.php");
+            require_once(VIEWS_PATH."validate-session.php");
         }
     }
 ?>
