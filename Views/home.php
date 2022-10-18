@@ -22,7 +22,7 @@ include_once('header.php');
                         </label>
                     </div>
                     <div>
-                        <button type="submit" class="btn">Login</button>
+                        <button type="submit" class="enviar">Login</button>
 
                     </div>
                 </form>

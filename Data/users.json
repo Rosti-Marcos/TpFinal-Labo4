@@ -1,0 +1,90 @@
+[
+    {
+        "userId": 1,
+        "userTypeId": 2,
+        "name": "Marcos",
+        "lastname": "Rosti",
+        "userName": "rocksti",
+        "password": "1111",
+        "eMail": "rosti_marcos@hotmail.com",
+        "phoneNumber": "02235455257",
+        "birthDate": "1986-03-08"
+    },
+    {
+        "userId": 2,
+        "userTypeId": 2,
+        "name": "Rodrigo",
+        "lastname": "Eulloque",
+        "userName": "rodrilloque",
+        "password": "1111",
+        "eMail": "rodrigo@sdasd",
+        "phoneNumber": "4564546",
+        "birthDate": "1999-02-02"
+    },
+    {
+        "userId": 3,
+        "userTypeId": 2,
+        "name": "Carlitos",
+        "lastname": "Bala",
+        "userName": "carlbal",
+        "password": "1111",
+        "eMail": "carloncho@asda",
+        "phoneNumber": "16561",
+        "birthDate": "3022-06-02"
+    },
+    {
+        "userId": 4,
+        "userTypeId": 1,
+        "name": "manu",
+        "lastname": "manuele",
+        "userName": "manu",
+        "password": "1111",
+        "eMail": "manu@masd",
+        "phoneNumber": "asasda",
+        "birthDate": "2222-02-02"
+    },
+    {
+        "userId": 6,
+        "userTypeId": 1,
+        "name": "mato",
+        "lastname": "mato",
+        "userName": "mato",
+        "password": "1111",
+        "eMail": "manu@masd",
+        "phoneNumber": "02235455257",
+        "birthDate": "2019-05-02"
+    },
+    {
+        "userId": 5,
+        "userTypeId": 2,
+        "name": "Beto",
+        "lastname": "Casella",
+        "userName": "betoca",
+        "password": "1111",
+        "eMail": "dasda@asd",
+        "phoneNumber": "02235455257",
+        "birthDate": "2222-02-02"
+    },
+    {
+        "userId": 7,
+        "userTypeId": 2,
+        "name": "asdaasdaas",
+        "lastname": "asdasd",
+        "userName": "coco",
+        "password": "1111",
+        "eMail": "asdasd@sadasd",
+        "phoneNumber": "02235455257",
+        "birthDate": "2022-05-05"
+    },
+    {
+        "userId": 8,
+        "userTypeId": 2,
+        "name": "asda",
+        "lastname": "asda",
+        "userName": "tata",
+        "password": "1111",
+        "eMail": "rosti_marcos@hotmail.com",
+        "phoneNumber": "02235455257",
+        "birthDate": "2222-02-02"
+    }
+]
