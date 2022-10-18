@@ -1,7 +1,7 @@
 <?php
 include_once('header.php');
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"role="button" data-bs-toggle="dropdown" aria-expanded="false">Pet Hero</a>
         <ul class="dropdown-menu">
@@ -18,14 +18,14 @@ include_once('header.php');
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo FRONT_ROOT. "User/ShowUser" ?>">Show Keepers</a></li>
+                    <a class="nav-link" href="<?php echo FRONT_ROOT. "Keeper/ShowListView" ?>">Show Keepers</a></li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         My pets
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."User/ShowAddView" ?>">Add pet</a></li>
+                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowAddView" ?>">Add pet</a></li>
                         <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."User/showListView" ?>">Show my pets</a></li>
                     </ul>
                 </li>
@@ -38,9 +38,9 @@ include_once('header.php');
                             Keeper Menu
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAddView" ?>">Set my availability</a></li>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabilityCalendar" ?>">Availability calendar</a></li>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."User/ShowListView" ?>">Show my reservations</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Service/ShowAvailabilityView" ?>">Set my availability</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabityCalendar" ?>">Availability calendar</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookings" ?>">Show my reservations</a></li>
                         </ul>
                     </li>
                 <?php } ?>

@@ -6,7 +6,6 @@ include_once('header.php');
 <div id="breadcrumb" class="hoc clear">
     <h5 class="heading">Register form</h5>
 </div>
-</div>
 <div class="wrapper row3" >
     <main class="container" style="width: 95%;">
         <!-- main body -->
@@ -26,7 +25,7 @@ include_once('header.php');
                             <th>Birth Date</th>
                         </tr>
                         </thead>
-                        <tbody align="center">
+                        <tbody >
                         <tr>
                             <td style="max-width: 100px;">
                                 <input type="text" name="name" min="1" max="999" size="30" required>
