@@ -1,0 +1,66 @@
+<?php 
+ include('header.php');
+?>
+
+  <nav class="navtop">
+  	<div>
+			<h1>Set my availability</h1>
+  	</div>
+  </nav>
+
+</head>
+
+	<div id="service" class="section img">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+          <form action="<?php echo  FRONT_ROOT."Service/Add "?>" method="post">
+            <?php 
+              $startDate = new DateTime();
+              $max = new DateTime();
+              $max->modify("365 days");
+             ?>
+							<div class="row no-margin">
+								<div class="col-md-3">
+									<div class="form-group">
+										<span class="form-label">From</span>
+										<input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" min=<?=$startDate->format("Y-m-d")?> max=<?=$max->format("Y-m-d")?> name="startDate" require>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="row no-margin">
+										<div class="col-md-6">
+											<div class="form-group">
+												<span class="form-label">To</span>
+                        <input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" min=<?=$startDate->format("Y-m-d")?> max=<?=$max->format("Y-m-d")?> name="endDate" require>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+                        <span class="form-label">Status</span>
+                        <select class="form-control" name="status" id="status">
+                          <option value="available">Available</option>
+                          <option value="unavailable">Unavailable</option>
+                        </select>
+                        <span class="select-arrow"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-btn">
+                    <button type="submit" class="submit-btn" value="Agregar" >Submit</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php 
+ include('footer.php');
+?>
+        

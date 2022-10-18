@@ -1,0 +1,44 @@
+[
+    {
+        "keeperId": 1,
+        "userId": 1,
+        "petTypeId": "1",
+        "remuneration": "10000",
+        "startDate": "17-10-2022"
+    },
+    {
+        "keeperId": 2,
+        "userId": 2,
+        "petTypeId": "2",
+        "remuneration": "15000",
+        "startDate": "17-10-2022"
+    },
+    {
+        "keeperId": 3,
+        "userId": 3,
+        "petTypeId": "1",
+        "remuneration": "15000",
+        "startDate": "17-10-2022"
+    },
+    {
+        "keeperId": 4,
+        "userId": 5,
+        "petTypeId": "1",
+        "remuneration": "10000",
+        "startDate": "18-10-2022"
+    },
+    {
+        "keeperId": 6,
+        "userId": 7,
+        "petTypeId": "2",
+        "remuneration": "5000",
+        "startDate": "18-10-2022"
+    },
+    {
+        "keeperId": 8,
+        "userId": 8,
+        "petTypeId": "3",
+        "remuneration": "8900",
+        "startDate": "18-10-2022"
+    }
+]

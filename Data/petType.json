@@ -1,0 +1,14 @@
+[
+  {
+    "petTypeId": "1",
+    "petType": "Pequeño"
+  },
+  {
+    "petTypeId": "2",
+    "petType": "Mediano"
+  },
+  {
+    "petTypeId": "3",
+    "petType": "Grande"
+  }
+]
