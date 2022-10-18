@@ -39,7 +39,7 @@
                 $flag = 0; 
                 foreach($serviceList as $service){
                     if($service->getUserId() == $userId && $startDate <= $service->getEndDate() && $endDate >= $service->getStartDate()){
-                                $flag = 1; 
+                        $flag = 1; 
                     }
                 }
                 if(!$serviceList || $flag == 0){
@@ -68,6 +68,11 @@
             $this->servicerDAO->Remove($id);
 
             $this->ShowAvailabilityView();
+        }
+
+        public function getServices(){
+            $serviceList = $this->serviceDAO->getAll();
+            return $serviceList;
         }
     }
 ?>
