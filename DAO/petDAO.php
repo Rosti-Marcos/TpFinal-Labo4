@@ -97,13 +97,10 @@ class petDAO implements iPetDAO{
 
     public function GetByOwnerId($ownerId) {
         $this->RetrieveData();
-
         $aux = array_filter($this->petList, function($pet) use($ownerId) {
             return $pet->getOwnerId() == $ownerId;
         });
-
         $aux = array_values($aux);
-
         return (count($aux) > 0) ? $aux : array();
 
     }

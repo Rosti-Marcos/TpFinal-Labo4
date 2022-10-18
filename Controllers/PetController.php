@@ -21,21 +21,18 @@ class PetController
 
     }
 
-    public function ShowAddPetView()
-    {
+    public function ShowAddPetView(){
         require_once(VIEWS_PATH . "petRegistration.php");
     }
 
-    public function ShowPetProfile($PetId)
-    {
+    public function ShowPetProfile($PetId){
         if(!empty($PetId)){
             $pet = $this->petDAO->GetByPetId($PetId);
             require_once(VIEWS_PATH . "petProfile.php");
         }
     }
 
-    public function Add($petName, $petTypeId, $petBreed, $observation)
-    {
+    public function Add($petName, $petTypeId, $petBreed, $observation){
         $img = 'petPics';
         $video = 'petVideo';
         $cert = 'vaccineCertId';
@@ -56,8 +53,7 @@ class PetController
         $this->ShowAddPetView();
     }
 
-    public function FileUpload($nombre)
-    {
+    public function FileUpload($nombre){
         $fileName = $_FILES[$nombre]['name'];
         $aux = explode('.', $fileName);
         $name = $aux[0];
@@ -76,10 +72,8 @@ class PetController
     public function petListByOwnerId(){
         $userId = $_SESSION['loggedUser']->getUserId();
         $petList = $this->petDAO->GetByOwnerId($userId);
-        //var_dump($petList);die();
-        //require_once $this->ShowPetListView();
         $this->ShowPetListView();
-        //require_once(VIEWS_PATH . "petList.php");
+
 
     }
 
@@ -87,21 +81,7 @@ class PetController
 }
 
 
-    /*public function FileUpload($petPics){
 
-        $fileName = $_FILES['petPics']['name'];
-        $temp = $_FILES['petPics']['tmp_name'];
-        if (!file_exists(IMG_PATH)) {
-            mkdir(IMG_PATH, 0777, true);
-            if(move_uploaded_file($temp, IMG_PATH . $fileName)){
-            //chmod(IMG_PATH . $archivo, 0777, true);
-                echo "GUARDADO";
-                } else {
-                echo "ERROR";
-            }
-        }
-
-    }*/
 
 
 ?>
