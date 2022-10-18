@@ -45,7 +45,7 @@
 
                 foreach($arrayDecode as $value) {
                     $service = new service();
-                    $service->setId($value["id"]);
+                    $service->setUserId($value["userId"]);
                     $service->setStartDate($value["startDate"]);
                     $service->setEndDate($value["endDate"]);
                     $service->setStatus($value["status"]);
@@ -62,7 +62,7 @@
 
                 $valueArray = array();
                 $valueArray["id"] = $service->getId();
-                $valueArray["keeperId"] = $service->getKeeperId();
+                $valueArray["userId"] = $service->getUserId();
                 $valueArray["startDate"]= $service->getStartDate();
                 $valueArray["endDate"] = $service->getEndDate();
                 $valueArray["status"] = $service->getStatus();
