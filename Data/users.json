@@ -86,5 +86,16 @@
         "eMail": "rosti_marcos@hotmail.com",
         "phoneNumber": "02235455257",
         "birthDate": "2222-02-02"
+    },
+    {
+        "userId": 9,
+        "userTypeId": 2,
+        "name": "victor",
+        "lastname": "silva",
+        "userName": "vicsil",
+        "password": "1234",
+        "eMail": "victor@gmail.com",
+        "phoneNumber": "111111111",
+        "birthDate": "1978-02-09"
     }
 ]

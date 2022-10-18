@@ -11,7 +11,7 @@ include_once('nav-bar.php');
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="10000">
                 <div class="container">
-                <img src="<?php echo FRONT_ROOT.IMG_PATH."perro3.jpg"?>"class="d-block w-100" alt="..." >
+                <img src="<?php echo FRONT_ROOT.IMG_PATH."perroMalo3.jpeg"?>"class="d-block w-100" alt="..." >
                 </div>
                 <div class="carousel-caption d-none d-md-block">
                     <h3>Now you are a keeper</h3>
@@ -20,20 +20,20 @@ include_once('nav-bar.php');
             </div>
             <div class="carousel-item" data-bs-interval="2000">
                 <div class="container">
-                <img src="<?php echo FRONT_ROOT.IMG_PATH."perro1.jpg"?>"class="d-block w-100" alt="..." width="240">
+                <img src="<?php echo FRONT_ROOT.IMG_PATH."perroMalo1.jpeg"?>"class="d-block w-100" alt="..." width="240">
                 </div>
                 <div class="carousel-caption d-none d-md-block">
-                    <h5You can't escape</h5>
+                    <h5>Now you are a keeper</h5>
                     <p>Don't you want to keep them?</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <div class="container">
-                <img src="<?php echo FRONT_ROOT.IMG_PATH."perro2.jpg"?>" class="d-block w-100" alt="...">
+                <img src="<?php echo FRONT_ROOT.IMG_PATH."perroMalo2.jpeg"?>" class="d-block w-100" alt="..." >
                 </div>
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Become a keeper</h5>
-                    <p>What are you waiting for?</p>
+                    <h5>Now you are a keeper</h5>
+                    <p>You can't escape</p>
                 </div>
             </div>
         </div>

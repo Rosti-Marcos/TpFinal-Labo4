@@ -61,6 +61,7 @@ include('header.php');
     <input type="submit" class="enviar" value="Add pet">
 
 </form>
+
         <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
 
     </section>

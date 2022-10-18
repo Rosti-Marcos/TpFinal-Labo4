@@ -28,9 +28,7 @@
         }
 
         public function Add($startDate, $endDate, $status){
-            $userController = new userController();
-            $user = $userController->userDAO->GetByUserName($_SESSION['userName']);
-            $userId = $user->getUserId();
+            $userId = $_SESSION["loggedUser"]->getUserId();
             $serviceList = $this->serviceDAO->getAll();
             if($endDate < $startDate){
                 $message = 'You cannot set the end date to before the start date';

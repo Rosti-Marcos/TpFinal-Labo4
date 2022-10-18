@@ -40,5 +40,12 @@
         "petTypeId": "3",
         "remuneration": "8900",
         "startDate": "18-10-2022"
+    },
+    {
+        "keeperId": 9,
+        "userId": 9,
+        "petTypeId": "3",
+        "remuneration": "5000",
+        "startDate": "18-10-2022"
     }
 ]

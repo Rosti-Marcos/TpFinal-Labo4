@@ -1,5 +1,6 @@
 <?php 
  include('header.php');
+ include('nav-bar.php');
 ?>
 	    <nav class="navtop">
 	    	<div>
