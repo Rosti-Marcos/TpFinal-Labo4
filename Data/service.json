@@ -2,29 +2,22 @@
     {
         "id": null,
         "userId": 1,
-        "startDate": "2022-10-18",
-        "endDate": "2022-10-21",
+        "startDate": "2022-12-13",
+        "endDate": "2022-12-23",
         "status": "available"
     },
     {
         "id": null,
         "userId": 1,
-        "startDate": "2022-10-25",
-        "endDate": "2022-10-29",
+        "startDate": "2022-10-18",
+        "endDate": "2022-10-26",
         "status": "available"
     },
     {
-<<<<<<< HEAD
         "id": 1,
-        "userId": 9,
-        "startDate": "2022-10-18",
-        "endDate": "2022-10-25",
-=======
-        "id": 2,
-        "userId": 2,
-        "startDate": "2022-10-25",
-        "endDate": "2022-10-29",
->>>>>>> 2ef190f39e267d7c0f8454a8e9ddcde149f7ddb7
+        "userId": 1,
+        "startDate": "2022-10-29",
+        "endDate": "2022-10-31",
         "status": "available"
     }
 ]

@@ -9,7 +9,7 @@ use Models\User as User;
 
 
 class KeeperController{
-    private $keeperDAO;
+    public $keeperDAO;
 
     public function __construct(){
         $this->keeperDAO = new KeeperDAO();
