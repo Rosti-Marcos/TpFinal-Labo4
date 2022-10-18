@@ -1,6 +1,4 @@
 <?php
-
-    if(!isset($_SESSION["loggedUser"])) {
-        header("location:..home.php");
-    }
+  if(!isset($_SESSION["loggedUser"]))
+    header("location:../index.php");  
 ?>
