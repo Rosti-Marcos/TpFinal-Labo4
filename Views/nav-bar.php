@@ -25,8 +25,8 @@ include_once('header.php');
                         My pets
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."User/ShowAddView" ?>">Add pet</a></li>
-                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."User/showListView" ?>">Show my pets</a></li>
+                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowAddPetView" ?>">Add pet</a></li>
+                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/petListByOwnerId" ?>">Show my pets</a></li>
                     </ul>
                 </li>
                 <?php if($_SESSION["loggedUser"]->getUserTypeId() == "1") {?>
