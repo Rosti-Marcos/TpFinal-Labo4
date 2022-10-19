@@ -59,8 +59,11 @@
                 foreach($arrayDecode as $value) {
                     $booking = new booking();
                     $booking->setId($value["id"]);
+                    $booking->setOwnerId($value["ownerId"]);
+                    $booking->setKeeperId($value["keeperId"]);
                     $booking->setStartDate($value["startDate"]);
                     $booking->setEndDate($value["endDate"]);
+                    $booking->setDescription($value["description"]);
                     $booking->setPrice($value["price"]);
                     $booking->setStatus($value["status"]);
 
@@ -68,6 +71,7 @@
                 }
             }
         }
+        
         private function SaveData() {
 
             $arrayEncode = array();
@@ -76,9 +80,12 @@
 
                 $valueArray = array();
                 $valueArray["id"] = $booking->getId();
+                $valueArray["ownerId"] = $booking->getOwnerId();
                 $valueArray["keeperId"] = $booking->getKeeperId();
                 $valueArray["startDate"]= $booking->getStartDate();
                 $valueArray["endDate"] = $booking->getEndDate();
+                $valueArray["description"]= $booking->getDescription();
+                $valueArray["price"] = $booking->getPrice();
                 $valueArray["status"] = $booking->getStatus();
 
 

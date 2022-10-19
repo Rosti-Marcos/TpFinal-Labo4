@@ -14,7 +14,7 @@ include_once('header.php');
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">My reservations</a>
+                    <a class="nav-link" aria-current="page" href="<?php echo FRONT_ROOT. "Booking/ShowBookings" ?>">My reservations</a>
                 </li>
 
                 <li class="nav-item">

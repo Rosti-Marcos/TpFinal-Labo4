@@ -3,8 +3,8 @@
 
     class Booking{
         private $id;
-        private $idOwner;
-        private $idKeeper;
+        private $ownerId;
+        private $keeperId;
         private $startDate;
         private $endDate;
         private $description;
@@ -19,12 +19,20 @@
             $this->id = $id;
         }
 
-        public function getIdOwner(){
-            return $this->idOwner;
+        public function setOwnerId($ownerId){
+            $this->ownerId = $ownerId;
         }
 
-        public function getIdKeeper(){
-            return $this->idKeeper;
+        public function getOwnerId(){
+            return $this->ownerId;
+        }
+
+        public function setKeeperId($keeperId){
+            $this->keeperId = $keeperId;
+        }
+
+        public function getKeeperId(){
+            return $this->keeperId;
         }
 
         public function setStartDate($startDate){
