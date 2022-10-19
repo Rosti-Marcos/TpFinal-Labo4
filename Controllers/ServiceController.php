@@ -59,18 +59,18 @@
             $this->ShowAvailabilityView();
         }
 
-        public function modifyService($service, $startDate, $endDate){
+        public function ModifyService($service, $startDate, $endDate){
             $serviceStartDate = $service->getStartDate();
             $serviceEndDate = $service->getEndDate();
             $this->Remove($service->getId());
             if($serviceStartDate == $startDate && $serviceEndDate == $endDate){
-                $this->add($startDate, $endDate, 'pending');
+                $this->Add($startDate, $endDate, 'pending');
             }
             if($serviceStartDate < $startDate){
-                $this->add($serviceStartDate, date('Y-m-d', strtotime($startDate . '-1 day')), 'available');
+                $this->Add($serviceStartDate, date('Y-m-d', strtotime($startDate . '-1 day')), 'available');
             }
             if($serviceEndDate > $endDate){
-                $this->add(strtotime($endDate . '+1 day'), $serviceEndDate, 'available');
+                $this->Add(strtotime($endDate . '+1 day'), $serviceEndDate, 'available');
             }
         }
 
