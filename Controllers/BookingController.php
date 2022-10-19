@@ -58,10 +58,6 @@
             $this->ShowAvailabilityView();
         }
 
-        public function AcceptOrRejectBooking($bookingId, $button){
-            if()
-
-        }
 
         public function Remove($id)
         {
