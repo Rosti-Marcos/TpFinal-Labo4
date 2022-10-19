@@ -22,7 +22,7 @@
             require_once(VIEWS_PATH."keeper-reservationList.php");
         }
 
-        public function modifyBookings($id)
+        public function ModifyBookings($id)
         {
             $booking = $this->bookingDAO->GetById($id);
             require_once(VIEWS_PATH."keeper-reservation.php");
@@ -31,7 +31,7 @@
         public function Add($keeperId, $startDate, $endDate, $price){
             $ownerId = $_SESSION["loggedUser"]->getUserId();
             $serviceController = new serviceController();
-            $serviceList = $serviceController->serviceDAO->GetByKeeperId($keeperId)
+            $serviceList = $serviceController->serviceDAO->GetByKeeperId($keeperId);
             if($endDate < $startDate){
                 $message = 'You cannot set the end date to before the start date';
                 echo "<script>alert('$message');</script>";
@@ -47,7 +47,7 @@
                         $booking->setPrice($price);
                         $booking->setStatus('pending');
                         $this->bookingDAO->Add($booking);
-                        $serviceController->modifyService($service, $startDate, $endDate);
+                        $serviceController->ModifyService($service, $startDate, $endDate);
                         $flag = 1;
                         break;
                     }
@@ -55,8 +55,12 @@
                 
             }
 
-
             $this->ShowAvailabilityView();
+        }
+
+        public function AcceptOrRejectBooking($bookingId, $button){
+            if()
+
         }
 
         public function Remove($id)
