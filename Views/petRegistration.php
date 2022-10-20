@@ -1,5 +1,6 @@
 <?php
 include('header.php');
+include('nav-bar.php');
 ?>
 
     <section class="ftco-section">
@@ -33,7 +34,7 @@ include('header.php');
             <tr>
                 <th><h3>Please attach youe pet photo</h3></th>
                 <td>
-                    <input accept="image/png,image/jpeg" type="file" name="petPics" id="petPics" required>
+                    <input accept="image/png,image/jpeg,image/gif" type="file" name="petPics" id="petPics" required>
                 </td>
             </tr>
             <tr>
@@ -45,7 +46,7 @@ include('header.php');
             <tr>
                 <th><h3>Yor pet breed</h3></th>
                 <td>
-                    <input type="text" name="petBreed" placeholder="Rottweiler" required>
+                    <input type="text" name="petBreed" placeholder="Breed" required>
                 </td>
             </tr>
             <tr>

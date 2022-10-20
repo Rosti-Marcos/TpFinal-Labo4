@@ -14,10 +14,24 @@
         "status": "available"
     },
     {
-        "id": 1,
+        "id": null,
         "userId": 1,
         "startDate": "2022-10-29",
         "endDate": "2022-10-31",
+        "status": "available"
+    },
+    {
+        "id": null,
+        "userId": 9,
+        "startDate": "2022-10-18",
+        "endDate": "2022-10-26",
+        "status": "available"
+    },
+    {
+        "id": 1,
+        "userId": 10,
+        "startDate": "2022-10-19",
+        "endDate": "2022-10-27",
         "status": "available"
     }
 ]

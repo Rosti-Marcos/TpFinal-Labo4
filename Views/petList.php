@@ -1,5 +1,6 @@
 <?php
 include('header.php');
+include ('nav-bar.php');
 ?>
 <main>
     <h1 align="center">My Pets</h1>
