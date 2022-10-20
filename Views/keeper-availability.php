@@ -1,5 +1,6 @@
 <?php 
  include('header.php');
+ include ('nav-bar.php');
 ?>
 
   <nav class="navtop">
@@ -7,8 +8,6 @@
 			<h1>Set my availability</h1>
   	</div>
   </nav>
-
-</head>
 
 	<div id="service" class="section img">
 		<div class="section-center">

@@ -14,7 +14,7 @@ include_once('header.php');
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">My reservations</a>
+                    <a class="nav-link" aria-current="page" href="<?php echo FRONT_ROOT. "Booking/ShowBookings" ?>">My reservations</a>
                 </li>
 
                 <li class="nav-item">
@@ -26,7 +26,7 @@ include_once('header.php');
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowAddPetView" ?>">Add pet</a></li>
-                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/petListByOwnerId" ?>">Show my pets</a></li>
+                        <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowPetListView" ?>">Show my pets</a></li>
                     </ul>
                 </li>
                 <?php if($_SESSION["loggedUser"]->getUserTypeId() == "1") {?>
@@ -39,7 +39,7 @@ include_once('header.php');
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Service/ShowAvailabilityView" ?>">Set my availability</a></li>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabityCalendar" ?>">Availability calendar</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabilityCalendar" ?>">Availability calendar</a></li>
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookings" ?>">Show my reservations</a></li>
                         </ul>
                     </li>

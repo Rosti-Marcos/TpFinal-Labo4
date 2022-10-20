@@ -23,13 +23,17 @@ include_once('header.php');
                         </thead>
                         <tbody align="center">
                         <tr>
-                            <td style="max-width: 100px;">
-                                <input type="text" name="petTypeId" min="1" max="999" size="30" required>
+                            <td>
+                                <select id="petTypeId" name="petTypeId">
+                                    <option value="3">Big</option>
+                                    <option value="2">Medium</option>
+                                    <option value="1">Small</option>
                             </td>
+                            </select>
                             <td>
                                 <input type="text" name="remuneration" size="20" required>
                             </td>
-
+                        </tr>
                         </tbody>
                     </table>
                     <div>

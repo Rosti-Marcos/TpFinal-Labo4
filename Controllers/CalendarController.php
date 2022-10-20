@@ -14,29 +14,31 @@ class CalendarController{
         $this->active_day = date('d');
     }
 
-    public function ShowAvailabityCalendar($month = null){
+    public function ShowAvailabilityCalendar($month = null){
         $serviceController = new ServiceController();
         $serviceList = $serviceController->getServices();
         $calendar = new CalendarController($month);
         foreach($serviceList as $service){
-            $startDate = $service->getStartDate();
-            $endDate = $service->getEndDate();
-            for($i = $startDate; $i <= $endDate; $i++){
-                switch ($service->getStatus()) {
-                    case 'available':
-                        $calendar->add_event('Available', $i, 1, 'green');
-                        break;
-                    case 'unavailable':
-                        $calendar->add_event('Unavailable', $i, 1, 'red');
-                        break;
-                    case 'pending':
-                        $calendar->add_event('Pending', $i, 1, 'yellow');
-                        break;
-                    case 'reserved':
-                        $calendar->add_event('Reserved', $i, 1, 'blue');
-                        break;
+            if($service->getUserId() == $_SESSION['loggedUser']->getUserId()){
+                $startDate = $service->getStartDate();
+                $endDate = $service->getEndDate();
+                for($i = $startDate; $i <= $endDate; $i++){
+                    switch ($service->getStatus()) {
+                        case 'available':
+                            $calendar->add_event('Available', $i, 1, 'green');
+                            break;
+                        case 'unavailable':
+                            $calendar->add_event('Unavailable', $i, 1, 'red');
+                            break;
+                        case 'pending':
+                            $calendar->add_event('Pending', $i, 1, 'yellow');
+                            break;
+                        case 'reserved':
+                            $calendar->add_event('Reserved', $i, 1, 'blue');
+                            break;
+                    }
+                    
                 }
-                
             }
     
         }

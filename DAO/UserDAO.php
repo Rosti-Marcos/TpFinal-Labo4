@@ -55,7 +55,7 @@
 
             $aux = array_values($aux);
 
-            return (count($aux) > 0) ? $aux[0] : array();
+            return (count($aux) > 0) ? $aux : array();
         }
 
         private function RetrieveData() {

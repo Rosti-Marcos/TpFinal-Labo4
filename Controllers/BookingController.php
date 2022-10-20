@@ -22,32 +22,42 @@
             require_once(VIEWS_PATH."keeper-reservationList.php");
         }
 
-        public function modifyBookings($id)
+        public function ModifyBookings($id)
         {
             $booking = $this->bookingDAO->GetById($id);
             require_once(VIEWS_PATH."keeper-reservation.php");
         }
 
-        public function Add($startDate, $endDate)
-        {
+        public function Add($keeperId, $startDate, $endDate, $price){
+            $ownerId = $_SESSION["loggedUser"]->getUserId();
+            $serviceController = new serviceController();
+            $serviceList = $serviceController->serviceDAO->GetByKeeperId($keeperId);
             if($endDate < $startDate){
                 $message = 'You cannot set the end date to before the start date';
                 echo "<script>alert('$message');</script>";
             }else{
+                $flag = 0;
+                foreach($serviceList as $service){
+                    if($service->getStatus() == 'available' && $startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
+                        $booking = new booking();
+                        $booking->setOwnerId($ownerId);
+                        $booking->setKeeperId($keeperId);
+                        $booking->setStartDate($startDate);
+                        $booking->setEndDate($endDate);
+                        $booking->setPrice($price);
+                        $booking->setStatus('pending');
+                        $this->bookingDAO->Add($booking);
+                        $serviceController->ModifyService($service, $startDate, $endDate);
+                        $flag = 1;
+                        break;
+                    }
+                }
+                
+            }
 
-                $booking = new booking();
- 
-                $booking->setStartDate($startDate);
-                $booking->setEndDate($endDate);
-                $booking->setStatus($status);
-                $this->bookingDAO->Add($booking);
-
-                $message = 'Your availability has been successfully set';
-                echo "<script>alert('$message');</script>";
-            }    
-            $bookingList = $this->bookingDAO->getAll();
             $this->ShowAvailabilityView();
         }
+
 
         public function Remove($id)
         {

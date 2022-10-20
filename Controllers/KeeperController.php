@@ -9,7 +9,7 @@ use Models\User as User;
 
 
 class KeeperController{
-    private $keeperDAO;
+    public $keeperDAO;
 
     public function __construct(){
         $this->keeperDAO = new KeeperDAO();
@@ -21,8 +21,9 @@ class KeeperController{
 
     public function ShowListView(){
         $userController = new UserController();
-        $userList=$userController->GetUserDAO()->GetByUserType(2);
+        $userList=$userController->userDAO->GetByUserType(2);
         $keeperList =$this->keeperDAO->GetAll();
+        $keeperLogged=$this->keeperDAO->GetByUserId($_SESSION["loggedUser"]->getUserId());
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
     }

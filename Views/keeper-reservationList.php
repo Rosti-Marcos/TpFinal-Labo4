@@ -14,11 +14,13 @@
 						<table class="table table-striped">
 						  <thead>
 						    <tr>
-						      <th>Customer</th>
-						      <th>Start date</th>
-						      <th>End date</th>
-						      <th>Price</th>
-						      <th>Status</th>
+						      <th style="text-align: center;">Customer</th>
+						      <th style="text-align: center;">Start date</th>
+						      <th style="text-align: center;">End date</th>
+						      <th style="text-align: center;">Price</th>
+						      <th style="text-align: center;">Status</th>
+							  <th style="text-align: center;">Message</th>
+							  <th style="text-align: center;">Action</th>
 						    </tr>
 						  </thead>
 						  <tbody>
@@ -27,10 +29,10 @@
 							{
 								?>
 								<tr>
-									<td>Name</td>
-									<td><?php echo $booking->getStartDate() ?></td>
-									<td><?php echo $booking->getEndDate() ?></td>
-									<td><?php echo $booking->getPrice() ?></td>
+									<td style="text-align: center;">Name</td>
+									<td style="text-align: center;"><?php echo $booking->getStartDate() ?></td>
+									<td style="text-align: center;"><?php echo $booking->getEndDate() ?></td>
+									<td style="text-align: center;"><?php echo $booking->getPrice() ?></td>
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
@@ -45,12 +47,31 @@
 												break;
 										}
 									?>
-									<td>
-									<a href="<?php echo FRONT_ROOT."Booking/modifyBookings/".$booking->getId()?>" class="<?php echo $class?>"><?php echo $booking->getStatus() ?></a>
+									<td style="text-align: center;"">
+										<a class="<?php echo $class?>"><?php echo $booking->getStatus() ?></a>
 									</td>
+									<?php
+										if($booking->getStatus() == 'pending'){
+											?>
+										<form action="<?php echo FRONT_ROOT."CellPhone/Remove" ?>" method="POST">
+											<td style="text-align: center;">
+												<input type="text" name="message" size="20" required>
+											</td>
+											<td style="text-align: center;">
+												<button type="submit" name="approve" class="btn btn-success" value=""> Approve </button>
+												<button type="submit" name="decline" class="btn btn-danger" value=""> Decline </button>
+											</td>
+										</form>
+									<?php
+										}else{
+											?>
+											<td></td>
+											<td style="text-align: center;">
+											<a class="btn btn-light"><?php echo $booking->getStatus() ?></a>
+											</td>
 								</tr>
 								<?php
-							}
+							}}
 							?> 
 						  </tbody>
 						</table>

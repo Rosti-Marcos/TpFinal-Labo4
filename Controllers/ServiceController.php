@@ -6,7 +6,7 @@
 
     class ServiceController
     {
-        private $serviceDAO;
+        public $serviceDAO;
 
         public function __construct()
         {
@@ -28,9 +28,7 @@
         }
 
         public function Add($startDate, $endDate, $status){
-            $userController = new userController();
-            $user = $userController->userDAO->GetByUserName($_SESSION['userName']);
-            $userId = $user->getUserId();
+            $userId = $_SESSION["loggedUser"]->getUserId();
             $serviceList = $this->serviceDAO->getAll();
             if($endDate < $startDate){
                 $message = 'You cannot set the end date to before the start date';
@@ -59,6 +57,21 @@
             }   
             $serviceList = $this->serviceDAO->getAll();
             $this->ShowAvailabilityView();
+        }
+
+        public function ModifyService($service, $startDate, $endDate){
+            $serviceStartDate = $service->getStartDate();
+            $serviceEndDate = $service->getEndDate();
+            $this->Remove($service->getId());
+            if($serviceStartDate == $startDate && $serviceEndDate == $endDate){
+                $this->Add($startDate, $endDate, 'pending');
+            }
+            if($serviceStartDate < $startDate){
+                $this->Add($serviceStartDate, date('Y-m-d', strtotime($startDate . '-1 day')), 'available');
+            }
+            if($serviceEndDate > $endDate){
+                $this->Add(strtotime($endDate . '+1 day'), $serviceEndDate, 'available');
+            }
         }
 
         public function Remove($id)
