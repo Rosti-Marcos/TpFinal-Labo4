@@ -46,7 +46,7 @@ include_once('header.php');
                                 <input type="text" name="phoneNumber" size="10" required>
                             </td>
                             <td>
-                                <input type="date" name="birthDate" size="10" min="1900-01-01" max="2022-12-31T00:00">required>
+                                <input type="date" name="birthDate" size="10" min="1900-01-01" max="2022-12-31T00:00" required>
                             </td>
                         </tr>
                         </tbody>
