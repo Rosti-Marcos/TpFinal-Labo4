@@ -1,0 +1,35 @@
+[
+    {
+        "petId": 1,
+        "petName": "Patan",
+        "ownerId": 1,
+        "vaccineCertId": "Views\/uploads\/certVac_1666318220.jpg",
+        "petTypeId": 3,
+        "petPics": "Views\/uploads\/rott1_1666318220.jpg",
+        "petVideo": "Views\/uploads\/rott_1666318220.mp4",
+        "petBreed": "Rottweiler",
+        "observation": "Such a nice dog!"
+    },
+    {
+        "petId": 2,
+        "petName": "nuevo",
+        "ownerId": 2,
+        "vaccineCertId": "Views\/uploads\/certVac3_1666366192.jpg",
+        "petTypeId": 0,
+        "petPics": "Views\/uploads\/perro1_1666366192.jpg",
+        "petVideo": "Views\/uploads\/perritoGris_1666366192.mp4",
+        "petBreed": "1",
+        "observation": "lalalalallalalala"
+    },
+    {
+        "petId": 3,
+        "petName": "ttttttt",
+        "ownerId": 2,
+        "vaccineCertId": "Views\/uploads\/certVac_1666366621.jpg",
+        "petTypeId": 3,
+        "petPics": "Views\/uploads\/rott1_1666366621.jpg",
+        "petVideo": "Views\/uploads\/rott_1666366621.mp4",
+        "petBreed": "rottweiler",
+        "observation": "sdghashdlabglksahb"
+    }
+]

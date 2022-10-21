@@ -26,9 +26,5 @@ class PetSpecies{
         $this->petSpecie = $petSpecie;
     }
 
-
-
-
-
 }
 ?>

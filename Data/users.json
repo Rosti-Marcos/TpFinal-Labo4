@@ -9,5 +9,16 @@
         "eMail": "victor@gmail.com",
         "phoneNumber": "11111111",
         "birthDate": "2022-02-04"
+    },
+    {
+        "userId": 2,
+        "userTypeId": 1,
+        "name": "Marcos",
+        "lastname": "Rosti",
+        "userName": "marqueto",
+        "password": "1234",
+        "eMail": "marcos@rosti",
+        "phoneNumber": "2234698745",
+        "birthDate": "2014-06-18"
     }
 ]

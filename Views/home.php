@@ -10,11 +10,10 @@ include('header.php');
                     <div class="row g-0">
                         <div class="col-lg-6">
                             <div class="card-body p-md-5 mx-md-4">
-
                                 <div class="text-center">
                                     <img class="logo"
                                          style="width: 185px;" alt="logo">
-                                    <h4 class="mt-1 mb-5 pb-1">Not just kids need heros!</h4>
+                                    <h4 class="mt-1 mb-5 pb-1">Not only kids need heros!</h4>
                                 </div>
 
                                 <form action="<?php echo FRONT_ROOT . "Home/Login"?>" method="post">
