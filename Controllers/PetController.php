@@ -33,7 +33,7 @@ class PetController
         }
     }
 
-    public function Add($petName, $petTypeId, $petBreed, $observation){
+    public function Add($petName, $petBreed, $petTypeId, $observation){
         require_once(VIEWS_PATH."validate-session.php");
         $img = 'petPics';
         $video = 'petVideo';

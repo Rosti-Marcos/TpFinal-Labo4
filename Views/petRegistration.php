@@ -1,72 +1,95 @@
 <?php
-include('header.php');
-include('nav-bar.php');
+include ('nav-bar.php');
 ?>
+<header>
+    <link href="<?php echo CSS_PATH . "addPet.css" ?>" rel="stylesheet">
+</header>
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <h3>Add your pet</h3>
+            <p class="blue-text">When you are done<br> you will see your pet on your list</p>
+            <div class="card">
+                <h5 class="text-center mb-4">Your pet data</h5>
+                <form class="form-card" action="<?php echo FRONT_ROOT . "Pet\Add" ?>" method="post" enctype="multipart/form-data">
 
-    <section class="ftco-section">
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Your pet name
+                                <span class="text-danger"> *</span>
+                            </label>
+                            <input type="text" name="petName" size="30" placeholder="name..." required>
+                        </div>
 
-<h2>Your pet data</h2>
-<form action="<?php echo FRONT_ROOT . "Pet\Add" ?>" method="post" enctype="multipart/form-data">
-    <table>
-        <td>
-            <tr>
-                <th><h3>Your pet Name</h3></th>
-                <td>
-                    <input type="text" name="petName" size="30" placeholder="name..." required>
-                </td>
-            </tr>
-            <tr>
-                <th><h3>Please attach vaccine certificate</h3></th>
-                <td>
-                    <input accept="image/png,image/jpeg" type="file" name="vaccineCertId" id="vaccineCertId" required>
-                </td>
-            </tr>
-            <tr>
-                <th><h3>Your pet Size</h3></th>
-                <td>
-                    <select id="petTypeId" name="petTypeId">
-                        <option value="3">Big</option>
-                        <option value="2">Medium</option>
-                        <option value="1">Small</option>
-                </td>
-                </select>
-            </tr>
-            <tr>
-                <th><h3>Please attach youe pet photo</h3></th>
-                <td>
-                    <input accept="image/png,image/jpeg,image/gif" type="file" name="petPics" id="petPics" required>
-                </td>
-            </tr>
-            <tr>
-                <th><h3>Please attach your pet video (optional)</h3></th>
-                <td>
-                    <input accept="video/mp4"type="file" name="petVideo" id="petVideo">
-                </td>
-            </tr>
-            <tr>
-                <th><h3>Yor pet breed</h3></th>
-                <td>
-                    <input type="text" name="petBreed" placeholder="Breed" required>
-                </td>
-            </tr>
-            <tr>
-                <th><h3>Aditional info</h3></th>
-                <td>
-                    <textarea cols="50" rows="10" type="text" name="observation" placeholder="Please insert your additional info"></textarea>
-                </td>
-            </tr>
-        </td>
-    </table>
-    <br>
-    <br>
-    <input type="submit" class="enviar" value="Add pet">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Yor pet breed
+                                <span class="text-danger"> *</span>
+                            </label>
+                            <input type="text" name="petBreed" placeholder="Breed" required>
+                        </div>
+                    </div>
 
-</form>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Your pet size
+                                <span class="text-danger"> *</span>
+                            </label>
+                            <select id="petTypeId" name="petTypeId">
+                                <option value="3">Big</option>
+                                <option value="2">Medium</option>
+                                <option value="1">Small</option>
+                            </select>
+                        </div>
 
-        <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Your pet photo
+                                <span class="text-danger"> *</span>
+                            </label>
+                            <input accept="image/png,image/jpeg,image/gif" type="file" name="petPics" id="petPics" required>
+                        </div>
+                    </div>
 
-    </section>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Your pet health certificate
+                                <span class="text-danger"> *</span>
+                            </label>
+                            <input accept="image/png,image/jpeg" type="file" name="vaccineCertId" id="vaccineCertId" required>
+                        </div>
 
-<?php
-include('footer.php');
-?>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Your pet video (optional)
+                                <span class="text-danger"></span>
+                            </label>
+                            <input accept="video/mp4" type="file" name="petVideo" id="petVideo">
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-12 flex-column d-flex">
+                            <label class="form-control-label px-3">Some observations
+                                <span class="text-danger"> </span>
+                            </label>
+                            <textarea cols="50" rows="2" type="text" name="observation" placeholder="Please insert your additional info"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-end">
+                        <div> <button type="submit" class="enviar">Add Pet</button> </div>
+                    </div>
+
+
+
+                    <div class="row justify-content-end">
+                        <div>
+                            <button type="button" class="enviar" onclick="location.href= '<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

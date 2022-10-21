@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PETS</title>
     <link href="<?php echo CSS_PATH . "loginStyle.css" ?>" rel="stylesheet">
+
     <link href="<?php echo  CSS_PATH."style.css"?>" rel="stylesheet" type="text/css">
     <link href="<?php echo  CSS_PATH."calendar.css"?>" rel="stylesheet" type="text/css">
     <link type="text/css" rel="stylesheet" href="<?php echo  CSS_PATH."stylebootstrap.css"?>"/>

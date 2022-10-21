@@ -1,67 +1,92 @@
 <?php
-include_once('header.php');
+include('header.php');
 
 ?>
+<section class="imgHuesitos">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="card-body p-md-5 mx-md-4">
+                                <div class="text-center">
+                                    <img class="logo"
+                                         style="width: 185px;" alt="logo">
+                                    <h4 class="mt-1 mb-5 pb-1">Not only kids need heros!</h4>
+                                </div>
 
-<div id="breadcrumb" class="hoc clear">
-    <h5 class="heading">Register form</h5>
-</div>
-<div class="wrapper row3" >
-    <main class="container" style="width: 95%;">
-        <!-- main body -->
-        <div class="content" >
-            <div id="comments" style="align-items:center;">
-                <h2>Please insert your data</h2>
-                <form action="<?php echo  FRONT_ROOT . "User\Add "?>" method="post"  style="background-color: #EAEDED;padding: 2rem !important;">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Last Name</th>
-                            <th>User Name</th>
-                            <th>Password</th>
-                            <th>E-Mail</th>
-                            <th>Phone Number</th>
-                            <th>Birth Date</th>
-                        </tr>
-                        </thead>
-                        <tbody >
-                        <tr>
-                            <td style="max-width: 100px;">
-                                <input type="text" name="name" min="1" max="999" size="30" required>
-                            </td>
-                            <td>
-                                <input type="text" name="lastname" size="20" required>
-                            </td>
-                            <td>
-                                <input type="text" name="userName" size="20" required>
-                            </td>
-                            <td>
-                                <input type="password" name="password" size="10" required>
-                            </td>
-                            <td>
-                                <input type="email" name="eMail" size="10" required>
-                            </td>
-                            <td>
-                                <input type="text" name="phoneNumber" size="10" required>
-                            </td>
-                            <td>
-                                <input type="date" name="birthDate" size="10" min="1900-01-01" max="2022-12-31T00:00" required>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <input type="submit" class="btn" value="Send" style="background-color:#DC8E47;color:white;"/>
+                                <form action="<?php echo  FRONT_ROOT . "User\Add "?>" method="post">
+                                    <p>Please register and start looking for your pet keeper</p>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="name" class="form-control"
+                                               placeholder="Your name" required/>
+                                        <label class="form-label" >Username</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="lastname" class="form-control"
+                                               placeholder="Your last name" required/>
+                                        <label class="form-label" >Password</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="userName" class="form-control"
+                                               placeholder="User name" required/>
+                                        <label class="form-label" >Username</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="password" name="password" class="form-control" required/>
+                                        <label class="form-label" for="form2Example22">Password</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="email" name="eMail" class="form-control"
+                                               placeholder="john@doe" required/>
+                                        <label class="form-label" >E-mail</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="phoneNumer" class="form-control"
+                                               placeholder="223-4111111" required/>
+                                        <label class="form-label" for="form2Example22">Phone number</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="date" name="birthDate" class="form-control"
+                                               size="10" min="1900-01-01" max="2022-12-31T00:00" required/>
+                                        <label class="form-label" for="form2Example22">Birth date</label>
+                                    </div>
+
+                                    <div class="text-center pt-1 mb-5 pb-1">
+                                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Register!</button>
+
+                                    </div>
+
+                                    <div class="d-flex align-items-center justify-content-center pb-4">
+                                        <p class="mb-0 me-2"></p>
+                                        <button type="button" class="btn btn-outline-danger"
+                                                onclick="location.href='<?php echo FRONT_ROOT . "Home/Index" ?>'">Back to Login</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                            <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                <h4 class="mb-4">We are more than just website</h4>
+                                <p class="small mb-0">connecting people to brighten the days of our little friends is our mission!
+                                    Our pets deserve quality time and there are always people willing to dedicate them.<br>
+                                    You can trust us to meet some!
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </form>
-                <a href="<?php echo FRONT_ROOT. "Home\Index"?>">Back</a>
+                </div>
             </div>
         </div>
-    </main>
-</div>
-<!-- ################################################################################################ -->
-
-<?php
-include('footer.php');
-?>
+    </div>
+</section>
