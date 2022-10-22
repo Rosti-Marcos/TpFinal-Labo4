@@ -149,3 +149,25 @@
 	height: 550px;
 	border: #050505 2px solid;
 }
+
+.column {
+	float: left;
+}
+
+.left {
+    width: 40%;
+}
+
+.middle {
+    width: 30%;
+}
+    
+.right {
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
