@@ -1,5 +1,6 @@
 <?php 
  include('header.php');
+ include('nav-bar.php');
 ?>
 	<section class="ftco-section">
 		<div class="container">
@@ -80,7 +81,7 @@
 			  </form>
 			</div>
 		</div>
-		
+		<a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
 	</section>
 
 	<?php 
