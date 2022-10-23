@@ -1,11 +1,11 @@
 <?php
 include_once('header.php');
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"role="button" data-bs-toggle="dropdown" aria-expanded="false">Pet Hero</a>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT. "User/ShowUser" ?>">My profile</a></li>
+            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT. "User/ShowUserProfile" ?>">My profile</a></li>
             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Home/Logout" ?>">Logout</a></li>
         </ul>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

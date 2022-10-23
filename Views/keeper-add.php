@@ -31,7 +31,7 @@ include_once('header.php');
                             </td>
                             </select>
                             <td>
-                                <input type="text" name="remuneration" size="20" required>
+                                <input type="number" name="remuneration" size="20" min="0" required>
                             </td>
                         </tr>
                         </tbody>

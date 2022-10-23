@@ -58,6 +58,7 @@
 				</div>
 			</div>
 		</div>
+		<a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
 	</div>
 <?php 
  include('footer.php');
