@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class PetSpecies{
+class PetSpecie{
     private $petSpecieId;
     private $petSpecie;
 

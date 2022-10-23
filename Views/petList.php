@@ -14,7 +14,11 @@ include ('nav-bar.php');
         </li>
         <?php } ?>
     </ul>
-    <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
+    <div class="row justify-content-end">
+        <div>
+            <button type="button" class="enviar" onclick="location.href= '<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+        </div>
+    </div>
 </main>
 <?php
 include('footer.php');

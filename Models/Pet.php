@@ -7,10 +7,11 @@ class Pet{
     private $petName;
     private $ownerId;
     private $vaccineCertId;
-    private $petTypeId;
+    private $petSize;
     private $petPics;
     private $petVideo;
     private $petBreed;
+    private $petSpecieId;
     private $observation;
 
 
@@ -54,13 +55,13 @@ class Pet{
     }
 
 
-    public function getPetTypeId(){
-        return $this->petTypeId;
+    public function getPetSize(){
+        return $this->petSize;
     }
 
 
-    public function setPetTypeId($PetTypeId){
-        $this->petTypeId = $PetTypeId;
+    public function setPetSize($petSize){
+        $this->petSize = $petSize;
     }
 
 
@@ -93,6 +94,15 @@ class Pet{
         $this->petBreed = $petBreed;
     }
 
+    public function getPetSpecieId(){
+        return $this->petSpecieId;
+    }
+
+
+    public function setPetSpecieId($petSpecieId){
+        $this->petSpecieId = $petSpecieId;
+    }
+
 
     public function getObservation(){
         return $this->observation;
@@ -102,6 +112,8 @@ class Pet{
     public function setObservation($observation){
         $this->observation = $observation;
     }
+
+
 
 
 }

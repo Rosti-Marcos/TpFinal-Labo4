@@ -1,0 +1,10 @@
+[
+    {
+      "petSpecieId": 1,
+      "petSpecie": "Dog"
+    },
+    {
+      "petSpecieId": 2,
+      "petSpecie": "Cat"
+    }
+]
