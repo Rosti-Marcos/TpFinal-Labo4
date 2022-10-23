@@ -29,9 +29,9 @@
 
                 $this->ShowWellcomeView();
             } else {
-                $message = 'User name or password incorrect';
-                echo "<script>alert('$message');</script>";
-                $this->Index();
+                $message = "User name or password incorrect";
+                //echo ;
+                $this->Index("<script>alert('$message');</script>");
             }
 
         }
