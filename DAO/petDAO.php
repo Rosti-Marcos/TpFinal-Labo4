@@ -4,7 +4,7 @@ namespace DAO;
 
 use Models\Pet as Pet;
 use DAO\IPetDAO as IPetDAO;
-use Models\User as User;
+
 
 class petDAO implements iPetDAO{
 
@@ -63,10 +63,11 @@ class petDAO implements iPetDAO{
                 $pet->setPetName($value["petName"]);
                 $pet->setOwnerId($value["ownerId"]);
                 $pet->setVaccineCertId($value["vaccineCertId"]);
-                $pet->setPetTypeId($value["petTypeId"]);
+                $pet->setPetSize($value["petSize"]);
                 $pet->setPetPics($value["petPics"]);
                 $pet->setPetVideo($value["petVideo"]);
                 $pet->setPetBreed($value["petBreed"]);
+                $pet->setPetSpecieId($value["petSpecieId"]);
                 $pet->setObservation($value["observation"]);
                 array_push($this->petList, $pet);
             }
@@ -84,10 +85,11 @@ class petDAO implements iPetDAO{
             $valueArray["petName"]= $pet->getPetName();
             $valueArray["ownerId"] = $pet->getOwnerId();
             $valueArray["vaccineCertId"] = $pet->getVaccineCertId();
-            $valueArray["petTypeId"] = $pet->getPetTypeId();
+            $valueArray["petSize"] = $pet->getPetSize();
             $valueArray["petPics"] = $pet->getPetPics();
             $valueArray["petVideo"] = $pet->getPetVideo();
             $valueArray["petBreed"] = $pet->getPetBreed();
+            $valueArray["petSpecieId"] = $pet->getPetSpecieId();
             $valueArray["observation"] = $pet->getObservation();
             array_push($arrayEncode, $valueArray);
         }

@@ -21,8 +21,12 @@ class PetController
     }
 
     public function ShowAddPetView(){
+        $petSpecieController = new PetSpecieController();
+        $petSpecieList = $petSpecieController->petSpecieDAO->GetAll();
+
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH . "petRegistration.php");
+
     }
 
     public function ShowPetProfile($PetId){
@@ -33,7 +37,7 @@ class PetController
         }
     }
 
-    public function Add($petName, $petBreed, $petTypeId, $observation){
+    public function Add($petName, $petBreed, $petSize, $petSpecie, $observation){
         require_once(VIEWS_PATH."validate-session.php");
         $img = 'petPics';
         $video = 'petVideo';
@@ -45,10 +49,11 @@ class PetController
         $pet = new Pet();
         $pet->setPetName($petName);
         $pet->setVaccineCertId($fileName3);
-        $pet->setPetTypeId(intval($petTypeId));
+        $pet->setPetSize(intval($petSize));
         $pet->setPetPics($fileName);
         $pet->setPetVideo($fileName2);
         $pet->setPetBreed($petBreed);
+        $pet->setPetSpecieId($petSpecie);
         $pet->setObservation($observation);
 
         $this->petDAO->Add($pet);
@@ -70,14 +75,5 @@ class PetController
 
         }
     }
-
-
-
-
 }
-
-
-
-
-
 ?>

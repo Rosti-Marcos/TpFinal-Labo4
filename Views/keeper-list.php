@@ -1,4 +1,4 @@
-<?php
+ <?php
   include_once('header.php');
   include_once('nav-bar.php');
 ?>
@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                         <?php foreach($userList as $user){
-                        if ($user->getUserId() != $keeperLogged->getUserId()){ ?>
+                        if (($keeperLogged==null) || ($keeperLogged->getUserId()!= $user->getUserId())){ ?>
                         <tr>
                             <td><?php echo $user->getName() ?></td>
                             <td><?php echo $user->getLastname() ?></td>

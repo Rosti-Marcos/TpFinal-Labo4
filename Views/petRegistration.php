@@ -34,7 +34,7 @@ include ('nav-bar.php');
                             <label class="form-control-label px-3">Your pet size
                                 <span class="text-danger"> *</span>
                             </label>
-                            <select id="petTypeId" name="petTypeId">
+                            <select id="petSize" name="petSize">
                                 <option value="3">Big</option>
                                 <option value="2">Medium</option>
                                 <option value="1">Small</option>
@@ -64,7 +64,18 @@ include ('nav-bar.php');
                             <input accept="video/mp4" type="file" name="petVideo" id="petVideo">
                         </div>
                     </div>
-
+                    <br>
+                    
+                    
+                    <div class="btn-group">
+                        <?php foreach($petSpecieList as $petSpecie){?>
+                        <input type="radio" class="btn-check" name="petSpecie" id="option.<?php echo $petSpecie->getPetSpecieId() ?>" autocomplete="off" value="<?php echo $petSpecie->getPetSpecieId() ?>" checked />
+                        <label class="btn btn-secondary" for="option.<?php echo $petSpecie->getPetSpecieId() ?>"><?php echo $petSpecie->getPetSpecie() ?></label>
+                        <?php } ?>
+                    </div>
+                    
+                    
+                    
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-12 flex-column d-flex">
                             <label class="form-control-label px-3">Some observations

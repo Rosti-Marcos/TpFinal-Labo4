@@ -22,13 +22,13 @@ include('header.php');
                                     <div class="form-outline mb-4">
                                         <input type="text" name="name" class="form-control"
                                                placeholder="Your name" required/>
-                                        <label class="form-label" >Username</label>
+                                        <label class="form-label" >Name</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
                                         <input type="text" name="lastname" class="form-control"
                                                placeholder="Your last name" required/>
-                                        <label class="form-label" >Password</label>
+                                        <label class="form-label" >Last name</label>
                                     </div>
 
                                     <div class="form-outline mb-4">
