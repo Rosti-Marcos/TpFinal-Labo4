@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PETS</title>
+    <title>Pet Hero</title>
+    <link rel="shortcut icon" href="<?php echo FRONT_ROOT.IMG_PATH."huellaLogo.png"?>">
     <link href="<?php echo CSS_PATH . "loginStyle.css" ?>" rel="stylesheet">
 
     <link href="<?php echo  CSS_PATH."style.css"?>" rel="stylesheet" type="text/css">

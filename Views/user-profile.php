@@ -25,12 +25,12 @@
                     </thead>
                     <tbody>
                   <tr>
-                    <td><?php echo $_SESSION["loggedUser"]->getName() ?></td>
-                    <td><?php echo $_SESSION["loggedUser"]->getLastname() ?></td>
-                    <td><?php echo $_SESSION["loggedUser"]->getUserName() ?></td>
-                    <td><?php echo $_SESSION["loggedUser"]->getEMail() ?></td>
-                    <td><?php echo $_SESSION["loggedUser"]->getPhoneNumber() ?></td>
-                    <td><?php echo $_SESSION["loggedUser"]->getBirthDate() ?></td>
+                    <td><?php echo $user->getName() ?></td>
+                    <td><?php echo $user->getLastname() ?></td>
+                    <td><?php echo $user->getUserName() ?></td>
+                    <td><?php echo $user->getEMail() ?></td>
+                    <td><?php echo $user->getPhoneNumber() ?></td>
+                    <td><?php echo $user->getBirthDate() ?></td>
                   </tr>
                     </tbody>
                 </table>

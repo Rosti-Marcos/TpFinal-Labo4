@@ -39,8 +39,7 @@
             $user->setBirthDate($birthDate);
             if ($this->userDAO->GetByUserName($userName)) {
 
-                $message = 'User name already exists, please enter a new user name';
-                echo "<script>alert('$message');</script>";
+                return $message = 'User name already exists, please enter a new user name';
 
                 require_once(VIEWS_PATH."user-add.php");
             } else {
@@ -50,9 +49,9 @@
             }
         }
 
-        public function ShowUser(){
+        public function ShowUserProfile(){
+            $user = $_SESSION["loggedUser"];
             require_once(VIEWS_PATH."user-profile.php");
             require_once(VIEWS_PATH."validate-session.php");
         }
     }
-?>
