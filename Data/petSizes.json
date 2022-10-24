@@ -1,0 +1,14 @@
+[
+  {
+    "petSizeId": 1,
+    "petSize": "Small"
+  },
+  {
+    "petSizeId": 2,
+    "petSize": "Medium"
+  },
+  {
+    "petSizeId": 3,
+    "petSize": "Big"
+  }
+]

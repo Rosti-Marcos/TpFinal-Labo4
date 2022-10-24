@@ -23,7 +23,8 @@ class PetController
     public function ShowAddPetView(){
         $petSpecieController = new PetSpecieController();
         $petSpecieList = $petSpecieController->petSpecieDAO->GetAll();
-
+        $petSizeController = new PetSizeController();
+        $petSizeList = $petSizeController->petSizeDAO->GetAll();
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH . "petRegistration.php");
 
@@ -49,7 +50,7 @@ class PetController
         $pet = new Pet();
         $pet->setPetName($petName);
         $pet->setVaccineCertId($fileName3);
-        $pet->setPetSize(intval($petSize));
+        $pet->setPetSizeId(\intval ($petSize));
         $pet->setPetPics($fileName);
         $pet->setPetVideo($fileName2);
         $pet->setPetBreed($petBreed);

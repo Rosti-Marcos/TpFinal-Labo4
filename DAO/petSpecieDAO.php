@@ -57,7 +57,7 @@ class petSpecieDAO implements iPetSpecieDAO{
 
         $arrayEncode = array();
 
-        foreach ($this->petSpecieListList as $petSpecie){
+        foreach ($this->petSpecieList as $petSpecie){
 
             $valueArray = array();
             $valueArray["petSpecieId"]= $petSpecie->getPetSpecieId();

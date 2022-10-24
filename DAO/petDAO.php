@@ -6,7 +6,7 @@ use Models\Pet as Pet;
 use DAO\IPetDAO as IPetDAO;
 
 
-class petDAO implements iPetDAO{
+class petDAO implements IPetDAO{
 
     private $petList = array();
     private $fileName = ROOT . "Data/pets.json";
@@ -63,7 +63,7 @@ class petDAO implements iPetDAO{
                 $pet->setPetName($value["petName"]);
                 $pet->setOwnerId($value["ownerId"]);
                 $pet->setVaccineCertId($value["vaccineCertId"]);
-                $pet->setPetSize($value["petSize"]);
+                $pet->setPetSizeId($value["petSizeId"]);
                 $pet->setPetPics($value["petPics"]);
                 $pet->setPetVideo($value["petVideo"]);
                 $pet->setPetBreed($value["petBreed"]);
@@ -85,7 +85,7 @@ class petDAO implements iPetDAO{
             $valueArray["petName"]= $pet->getPetName();
             $valueArray["ownerId"] = $pet->getOwnerId();
             $valueArray["vaccineCertId"] = $pet->getVaccineCertId();
-            $valueArray["petSize"] = $pet->getPetSize();
+            $valueArray["petSizeId"] = $pet->getPetSizeId();
             $valueArray["petPics"] = $pet->getPetPics();
             $valueArray["petVideo"] = $pet->getPetVideo();
             $valueArray["petBreed"] = $pet->getPetBreed();
