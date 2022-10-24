@@ -15,12 +15,13 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Customer</th>
-                        <th>Start date</th>
-                        <th>End date</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Last name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Birth Date</th>
+                        
                     </tr>
                     </thead>
                     <tbody>
@@ -35,7 +36,13 @@
                     </tbody>
                 </table>
             </div>
-            <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
+            <div class="row justify-content-end">
+                 <div class="d-flex align-items-center justify-content-center pb-4">
+                  <p class="mb-0 me-2"></p>
+                    <button type="button" class="btn btn-outline-danger"
+                      onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+                    </div>
+            </div>
         </div>
     </div>
     </div>

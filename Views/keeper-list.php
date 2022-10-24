@@ -19,21 +19,25 @@
                             <th>Lastname</th>
                             <th>Email</th>
                             <th>Phone Number</th>
-                            <th>Birth Date</th>
+                            <th>Age</th>
                             <th>Type pets </th>
                             <th>Intended remuneration</th>
                             <th>Start Date</th>
                         </tr>
                         </thead>
                         <tbody>
+
+                        <?php  $year = date('Y');?>
                         <?php foreach($userList as $user){
                         if (($keeperLogged==null) || ($keeperLogged->getUserId()!= $user->getUserId())){ ?>
                         <tr>
+                            <?php $birthExplode = explode("-",$user->getBirthDate());?>
+                             
                             <td><?php echo $user->getName() ?></td>
                             <td><?php echo $user->getLastname() ?></td>
                             <td><?php echo $user->getEMail() ?></td>
                             <td><?php echo $user->getPhoneNumber() ?></td>
-                            <td><?php echo $user->getBirthDate() ?></td>
+                            <td><?php echo $age= $year - $birthExplode[0]; ?></td>
                             <?php
                             foreach($keeperList as $keeper){
                                 if($keeper->getUserId() == $user->getUserId()){
@@ -49,6 +53,13 @@
                 </div>
             </div>
         </div>
+        <div class="row justify-content-end">
+        <div class="d-flex align-items-center justify-content-center pb-4">
+                  <p class="mb-0 me-2"></p>
+                    <button type="button" class="btn btn-outline-danger"
+                      onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+                    </div>
+         </div>
     </div>
 
 </section>
