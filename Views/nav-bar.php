@@ -1,7 +1,7 @@
 <?php
 include_once('header.php');
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"role="button" data-bs-toggle="dropdown" aria-expanded="false">Pet Hero</a>
         <ul class="dropdown-menu">

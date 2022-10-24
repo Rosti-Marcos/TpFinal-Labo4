@@ -29,7 +29,7 @@ class KeeperController{
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
     }
-
+    
     public function Add($petTypeId, $remuneration){
         $keeper = new Keeper;
         $keeper->setPetTypeId($petTypeId);
