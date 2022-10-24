@@ -7,7 +7,7 @@ class Pet{
     private $petName;
     private $ownerId;
     private $vaccineCertId;
-    private $petSize;
+    private $petSizeId;
     private $petPics;
     private $petVideo;
     private $petBreed;
@@ -55,13 +55,13 @@ class Pet{
     }
 
 
-    public function getPetSize(){
-        return $this->petSize;
+    public function getPetSizeId(){
+        return $this->petSizeId;
     }
 
 
-    public function setPetSize($petSize){
-        $this->petSize = $petSize;
+    public function setPetSizeId($petSizeId){
+        $this->petSizeId = $petSizeId;
     }
 
 

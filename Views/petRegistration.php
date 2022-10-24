@@ -34,11 +34,18 @@ include ('nav-bar.php');
                             <label class="form-control-label px-3">Your pet size
                                 <span class="text-danger"> *</span>
                             </label>
-                            <select id="petSize" name="petSize">
-                                <option value="3">Big</option>
-                                <option value="2">Medium</option>
-                                <option value="1">Small</option>
+
+
+
+                            <select id="petSizeId" name="petSizeId">
+                                <?php foreach($petSizeList as $petSize){?>
+                                <option value="<?php echo $petSize->getPetSizeId()?>"><?php echo $petSize->getPetSize()?></option>
+                                <?php } ?>
                             </select>
+
+
+
+
                         </div>
 
                         <div class="form-group col-sm-6 flex-column d-flex">

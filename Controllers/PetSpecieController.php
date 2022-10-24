@@ -18,7 +18,6 @@ class PetSpecieController
 
         $petSpecie = new PetSpecie();
         $petSpecie->setPetSpecie($petSpecie);
-
         $this->petSpecieDAO->Add($petSpecie);
     }
 
