@@ -6,7 +6,7 @@ use Models\PetSize as PetSize;
 use DAO\IPetSizeDAO as IPetSizeDAO;
 
 
-class petSizeDAO implements iPetSizeDAO{
+class PetSizeDAO implements iPetSizeDAO{
 
     private $petSizeList = array();
     private $fileName = ROOT . "Data/petSizes.json";
@@ -67,6 +67,18 @@ class petSizeDAO implements iPetSizeDAO{
         }
         $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
         file_put_contents($this->fileName, $jsonContent);
+    }
+    
+    public function GetById($petSizeId) {
+        $this->RetrieveData();
+
+        $aux = array_filter($this->petSizeList, function($petSize) use($petSizeId) {
+            return $petSize->getPetSizeId() == $petSizeId;
+        });
+
+        $aux = array_values($aux);
+
+        return (count($aux) > 0) ? $aux[0] : array();
     }
 }
 ?>

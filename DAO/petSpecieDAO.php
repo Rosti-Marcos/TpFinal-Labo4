@@ -6,7 +6,7 @@ use Models\PetSpecie as PetSpecie;
 use DAO\IPetSpecieDAO as IPetSpecieDAO;
 
 
-class petSpecieDAO implements iPetSpecieDAO{
+class PetSpecieDAO implements iPetSpecieDAO{
 
     private $petSpecieList = array();
     private $fileName = ROOT . "Data/petSpecies.json";
@@ -68,5 +68,19 @@ class petSpecieDAO implements iPetSpecieDAO{
         $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
         file_put_contents($this->fileName, $jsonContent);
     }
+
+    public function GetById($petSpecie) {
+        $this->RetrieveData();
+
+        $aux = array_filter($this->userSpecieList, function($userType) use($userTypeId) {
+            return $userType->getUserTypeId() == $userTypeId;
+        });
+
+        $aux = array_values($aux);
+
+        return (count($aux) > 0) ? $aux[0] : array();
+    }
+
+
 }
 ?>

@@ -2,7 +2,6 @@
 
 namespace DAO;
 
-use Controllers\UserController;
 use Models\Keeper as Keeper;
 use DAO\IKeeperDAO as IKeeperDAO;
 
@@ -19,17 +18,16 @@ class KeeperDAO implements IKeeperDAO {
     }
 
     public function Add(Keeper $keeper) {
-        $userController = new UserController();
+        
         $this->RetrieveData();
-        $keeper->setUserId($_SESSION["loggedUser"]->getUserId());
+    
+        $keeper->setUser($_SESSION["loggedUser"]);
         $keeper->setKeeperId($this->GetNextId());
         $keeper->setStartDate(date('d-m-Y'));
 
         array_push($this->keeperList, $keeper);
 
         $this->SaveData();
-        $_SESSION["loggedUser"]->setUserTypeId(2);
-        $userController->GetUserDAO()->Modify( $_SESSION["loggedUser"]);
     }
 
 
@@ -53,11 +51,11 @@ class KeeperDAO implements IKeeperDAO {
         return (count($aux) > 0) ? $aux[0] : array();
     }
 
-    public function GetByUserId($userId) {
+    public function GetByUser($user) {
         $this->RetrieveData();
 
-        $aux = array_filter($this->keeperList, function($keeper) use($userId) {
-            return $keeper->getUserId() == $userId;
+        $aux = array_filter($this->keeperList, function($keeper) use($user) {
+            return $keeper->getUser() == $user;
         });
 
         $aux = array_values($aux);
@@ -75,10 +73,17 @@ class KeeperDAO implements IKeeperDAO {
             foreach($arrayDecode as $value) {
                 $keeper = new Keeper();
                 $keeper->setKeeperId($value["keeperId"]);
-                $keeper->setUserId($value["userId"]);
-                $keeper->setPetTypeId($value["petTypeId"]);
+               
+                $keeper->setPetSize($value["petSize"]);
                 $keeper->setRemuneration($value["remuneration"]);
                 $keeper->setStartDate($value["startDate"]);
+
+                $userDAO = new UserDAO;
+                $user = $userDAO->GetById($value["user"]);
+                $petSizeDAO = new PetSizeDAO;
+                $petSize = $petSizeDAO->GetById($value["petSize"]);
+                $keeper->setUser($user);
+                $keeper->setPetSize($petSize);
 
                 array_push($this->keeperList, $keeper);
             }
@@ -92,8 +97,8 @@ class KeeperDAO implements IKeeperDAO {
 
             $valueArray = array();
             $valueArray["keeperId"]=$keeper->getKeeperId();
-            $valueArray["userId"]=$keeper->getUserId();
-            $valueArray["petTypeId"]= $keeper->getPetTypeId();
+            $valueArray["user"]=$keeper->getUser()->getUserId();
+            $valueArray["petSize"]= $keeper->getPetSize()->getPetSizeId();
             $valueArray["remuneration"] = $keeper->getRemuneration();
             $valueArray["startDate"] = $keeper->getStartDate();
 
