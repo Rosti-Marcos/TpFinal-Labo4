@@ -1,0 +1,38 @@
+[
+    {
+        "petId": 1,
+        "petName": "nuevo",
+        "ownerId": 1,
+        "vaccineCertId": "Views\/uploads\/certVac2_1666642109.jpg",
+        "petSizeId": 2,
+        "petPics": "Views\/uploads\/perro3_1666642109.jpg",
+        "petVideo": "Views\/uploads\/perritoGris_1666642109.mp4",
+        "petBreed": "caniche",
+        "petSpecieId": "1",
+        "observation": "asdsadsada"
+    },
+    {
+        "petId": 2,
+        "petName": "asdasdsadsadsad",
+        "ownerId": 1,
+        "vaccineCertId": "Views\/uploads\/certVac2_1666642488.jpg",
+        "petSizeId": 2,
+        "petPics": "Views\/uploads\/perro3_1666642488.jpg",
+        "petVideo": "Views\/uploads\/rott_1666642488.mp4",
+        "petBreed": "Rottweiler",
+        "petSpecieId": "2",
+        "observation": "asdfsadsadsad"
+    },
+    {
+        "petId": 3,
+        "petName": "asdasdsadsadsad",
+        "ownerId": 1,
+        "vaccineCertId": "Views\/uploads\/gato4_1666642570.jpg",
+        "petSizeId": 2,
+        "petPics": "Views\/uploads\/perro3_1666642570.jpg",
+        "petVideo": "Views\/uploads\/perroSonrriente_1666642570.mp4",
+        "petBreed": "caniche",
+        "petSpecieId": "1",
+        "observation": "asdfsafsfs"
+    }
+]
