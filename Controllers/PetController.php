@@ -15,7 +15,7 @@ class PetController
 
     public function ShowPetListView(){
         require_once(VIEWS_PATH."validate-session.php");
-        $petList = $this->petDAO->GetByOwnerId($_SESSION['loggedUser']->getUserId());
+        $petList = $this->petDAO->GetByUser($_SESSION['loggedUser']);
         require_once(VIEWS_PATH . "petList.php");
 
     }
@@ -38,23 +38,26 @@ class PetController
         }
     }
 
-    public function Add($petName, $petBreed, $petSize, $petSpecie, $observation){
+    public function Add($petName, $petBreed, $petSizeId, $petSpecieId, $observation){
         require_once(VIEWS_PATH."validate-session.php");
         $img = 'petPics';
         $video = 'petVideo';
-        $cert = 'vaccineCertId';
+        $cert = 'vaccineCert';
         $fileName = UPLOADS_PATH . $this->FileUpload($img);
         $fileName2 = UPLOADS_PATH . $this->FileUpload($video);
         $fileName3 = UPLOADS_PATH . $this->FileUpload($cert);
-
+        $petSizeController = new PetSizeController;
+        $petSize = $petSizeController->petSizeDAO->GetById($petSizeId);
+        $petSpecieController = new PetSpecieController;
+        $petSpecie = $petSpecieController->petSpecieDAO->GetById($petSpecieId);
         $pet = new Pet();
         $pet->setPetName($petName);
-        $pet->setVaccineCertId($fileName3);
-        $pet->setPetSizeId(\intval ($petSize));
+        $pet->setVaccineCert($fileName3);
+        $pet->setPetSize($petSize);
         $pet->setPetPics($fileName);
         $pet->setPetVideo($fileName2);
         $pet->setPetBreed($petBreed);
-        $pet->setPetSpecieId($petSpecie);
+        $pet->setPetSpecie($petSpecie);
         $pet->setObservation($observation);
 
         $this->petDAO->Add($pet);

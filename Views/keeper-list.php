@@ -20,7 +20,7 @@
                             <th>Email</th>
                             <th>Phone Number</th>
                             <th>Age</th>
-                            <th>Type pets </th>
+                            <th>Pet Size</th>
                             <th>Intended remuneration</th>
                             <th>Start Date</th>
                         </tr>
@@ -28,26 +28,22 @@
                         <tbody>
 
                         <?php  $year = date('Y');?>
-                        <?php foreach($userList as $user){
-                        if (($keeperLogged==null) || ($keeperLogged->getUserId()!= $user->getUserId())){ ?>
+                        <?php foreach($keeperList as $keeper){
+                        if (($keeper->getUser()->getUserType()->getUserTypeId() == 1) || ($keeper->getUser() != $_SESSION["loggedUser"])){ ?>
                         <tr>
-                            <?php $birthExplode = explode("-",$user->getBirthDate());?>
+                            <?php $birthExplode = explode("-",$keeper->getUser()->getBirthDate());?>
                              
-                            <td><?php echo $user->getName() ?></td>
-                            <td><?php echo $user->getLastname() ?></td>
-                            <td><?php echo $user->getEMail() ?></td>
-                            <td><?php echo $user->getPhoneNumber() ?></td>
+                            <td><?php echo $keeper->getUser()->getName() ?></td>
+                            <td><?php echo $keeper->getUser()->getLastname() ?></td>
+                            <td><?php echo $keeper->getUser()->getEMail() ?></td>
+                            <td><?php echo $keeper->getUser()->getPhoneNumber() ?></td>
                             <td><?php echo $age= $year - $birthExplode[0]; ?></td>
-                            <?php
-                            foreach($keeperList as $keeper){
-                                if($keeper->getUserId() == $user->getUserId()){
-                            ?>
-                            <td><?php echo $keeper->getPetTypeId() ?></td>
+                            <td><?php echo $keeper->getPetSize()->getPetSize() ?></td>
                             <td><?php echo $keeper->getRemuneration() ?></td>
                             <td><?php echo $keeper->getStartDate() ?></td>
                         </tr>
                                 <?php }?>
-                        <?php }}}?>
+                        <?php }?>
                         </tbody>
                     </table>
                 </div>
