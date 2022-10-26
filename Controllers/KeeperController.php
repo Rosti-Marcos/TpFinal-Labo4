@@ -22,11 +22,6 @@ class KeeperController{
 
     public function ShowListView(){
         $keeperList =$this->keeperDAO->GetAll();
-        if ($_SESSION["loggedUser"]->getUserTypeId() == 2){
-        $keeperLogged=$this->keeperDAO->GetByUser($_SESSION["loggedUser"]);
-        }else{
-            $keeperLogged=null;
-        }
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
     }

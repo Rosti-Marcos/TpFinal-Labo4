@@ -18,10 +18,11 @@ class KeeperDAO implements IKeeperDAO {
     }
 
     public function Add(Keeper $keeper) {
-        
+        $userDAO = new UserDAO;
         $this->RetrieveData();
-    
+        
         $keeper->setUser($_SESSION["loggedUser"]);
+        $user = $userDAO->TurnToKeeper($keeper->getUser());
         $keeper->setKeeperId($this->GetNextId());
         $keeper->setStartDate(date('d-m-Y'));
 
@@ -34,7 +35,7 @@ class KeeperDAO implements IKeeperDAO {
     public function GetNextId() {
         $id = 0;
         foreach($this->keeperList as $keeper) {
-            $id = ($keeper->getUserId() > $id) ? $keeper->getUserId() : $id;
+            $id = ($keeper->getKeeperId() > $id) ? $keeper->getKeeperId() : $id;
         }
         return $id + 1;
     }
@@ -74,7 +75,6 @@ class KeeperDAO implements IKeeperDAO {
                 $keeper = new Keeper();
                 $keeper->setKeeperId($value["keeperId"]);
                
-                $keeper->setPetSize($value["petSize"]);
                 $keeper->setRemuneration($value["remuneration"]);
                 $keeper->setStartDate($value["startDate"]);
 

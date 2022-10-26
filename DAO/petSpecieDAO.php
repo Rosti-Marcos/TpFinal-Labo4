@@ -69,11 +69,11 @@ class PetSpecieDAO implements iPetSpecieDAO{
         file_put_contents($this->fileName, $jsonContent);
     }
 
-    public function GetById($petSpecie) {
+    public function GetById($petSpecieId) {
         $this->RetrieveData();
 
-        $aux = array_filter($this->userSpecieList, function($userType) use($userTypeId) {
-            return $userType->getUserTypeId() == $userTypeId;
+        $aux = array_filter($this->petSpecieList, function($petSpecie) use($petSpecieId) {
+            return $petSpecie->getPetSpecieId() == $petSpecieId;
         });
 
         $aux = array_values($aux);

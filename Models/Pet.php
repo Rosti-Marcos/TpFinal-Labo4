@@ -5,13 +5,13 @@ namespace Models;
 class Pet{
     private $petId;
     private $petName;
-    private $user;
+    private User $user;
     private $vaccineCert;
-    private $petSize;
+    private PetSize $petSize;
     private $petPics;
     private $petVideo;
     private $petBreed;
-    private $petSpecie;
+    private PetSpecie $petSpecie;
     private $observation;
 
 
@@ -94,8 +94,8 @@ class Pet{
         $this->petBreed = $petBreed;
     }
 
-    public function getPetSpecieId(){
-        return $this->petSpecieId;
+    public function getPetSpecie(){
+        return $this->petSpecie;
     }
 
 

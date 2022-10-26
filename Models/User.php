@@ -5,7 +5,7 @@ namespace Models;
 class User{
 
     private $userId;
-    private $userType;
+    private UserType $userType;
     private $name;
     private $lastname;
     private $userName;

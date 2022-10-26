@@ -4,8 +4,8 @@ namespace Models;
 
 class Keeper{
     private $keeperId;
-    private $user;
-    private $petSize;
+    private User $user;
+    private PetSize $petSize;
     private $remuneration;
     private $startDate;
 

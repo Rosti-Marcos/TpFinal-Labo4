@@ -42,7 +42,7 @@
             $this->RetrieveData();
     
             $aux = array_filter($this->userList, function($user) use($userId) {
-                return $userId->getUserId() == $userId;
+                return $user->getUserId() == $userId;
             });
     
             $aux = array_values($aux);
@@ -114,6 +114,20 @@
         public function Modify(User $newUser) {
             $this->RetrieveData();
 
+            $this->userList = array_filter($this->userList, function($user) use($newUser) {
+                return $user->getUserId() != $newUser->getUserId();
+            });
+
+            array_push($this->userList, $newUser);
+
+            $this->SaveData();
+        }
+
+        public function TurnToKeeper (User $newUser) {
+            $this->RetrieveData();
+            $userTypeDAO = new UserTypeDAO;
+            $userType = $userTypeDAO->GetById(2);
+            $newUser->setUserType($userType);
             $this->userList = array_filter($this->userList, function($user) use($newUser) {
                 return $user->getUserId() != $newUser->getUserId();
             });

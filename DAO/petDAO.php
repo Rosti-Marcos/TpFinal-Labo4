@@ -58,20 +58,25 @@ class PetDAO implements IPetDAO{
             $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
             foreach($arrayDecode as $value) {
+                $petSizeDAO = new PetSizeDAO;
+                $petSize = $petSizeDAO->GetById($value["petSize"]);
+                $userDAO = new UserDAO;
+                $user = $userDAO->GetById($value["user"]);
+                $petSpecieDAO = new PetSpecieDAO;
+                $petSpecie = $petSpecieDAO->GetById($value["petSpecie"]);
+
                 $pet = new Pet();
                 $pet->setPetId($value["petId"]);
                 $pet->setPetName($value["petName"]);
-                $pet->setUser($value["user"]);
+                $pet->setUser($user);
                 $pet->setVaccineCert($value["vaccineCert"]);
-                $pet->setPetSize($value["petSize"]);
+                $pet->setPetSize($petSize);
                 $pet->setPetPics($value["petPics"]);
                 $pet->setPetVideo($value["petVideo"]);
                 $pet->setPetBreed($value["petBreed"]);
-                $pet->setPetSpecie($value["petSpecie"]);
+                $pet->setPetSpecie($petSpecie);
                 $pet->setObservation($value["observation"]);
-
-                $petSpecieDAO = new PetSpecieDAO;
-                $petSpecie = $petSpecieDAO->GetB
+                
                 array_push($this->petList, $pet);
             }
         }
@@ -100,10 +105,10 @@ class PetDAO implements IPetDAO{
         file_put_contents($this->fileName, $jsonContent);
     }
 
-    public function GetByOwnerId($ownerId) {
+    public function GetByUser($user) {
         $this->RetrieveData();
-        $aux = array_filter($this->petList, function($pet) use($ownerId) {
-            return $pet->getOwnerId() == $ownerId;
+        $aux = array_filter($this->petList, function($pet) use($user) {
+            return $pet->getuser() == $user;
         });
         $aux = array_values($aux);
         return (count($aux) > 0) ? $aux : array();

@@ -51,7 +51,7 @@ include ('nav-bar.php');
                             <label class="form-control-label px-3">Your pet health certificate
                                 <span class="text-danger"> *</span>
                             </label>
-                            <input accept="image/png,image/jpeg" type="file" name="vaccineCertId" id="vaccineCertId" required>
+                            <input accept="image/png,image/jpeg" type="file" name="vaccineCert" id="vaccineCert" required>
                         </div>
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label class="form-control-label px-3">Your pet video (optional)
@@ -63,7 +63,7 @@ include ('nav-bar.php');
                     <br>               
                     <div class="btn-group">
                         <?php foreach($petSpecieList as $petSpecie){?>
-                        <input type="radio" class="btn-check" name="petSpecie" id="option.<?php echo $petSpecie->getPetSpecieId() ?>" autocomplete="off" value="<?php echo $petSpecie->getPetSpecieId() ?>" checked />
+                        <input type="radio" class="btn-check" name="petSpecieId" id="option.<?php echo $petSpecie->getPetSpecieId() ?>" autocomplete="off" value="<?php echo $petSpecie->getPetSpecieId() ?>" checked />
                         <label class="btn btn-secondary" for="option.<?php echo $petSpecie->getPetSpecieId() ?>"><?php echo $petSpecie->getPetSpecie() ?></label>
                         <?php } ?>
                     </div>                   
