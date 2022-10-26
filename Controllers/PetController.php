@@ -38,7 +38,7 @@ class PetController
         }
     }
 
-    public function Add($petName, $petBreed, $petSize, $petSpecie, $observation){
+    public function Add($petName, $petBreed, $petSizeId, $petSpecie, $observation){
         require_once(VIEWS_PATH."validate-session.php");
         $img = 'petPics';
         $video = 'petVideo';
@@ -50,7 +50,7 @@ class PetController
         $pet = new Pet();
         $pet->setPetName($petName);
         $pet->setVaccineCertId($fileName3);
-        $pet->setPetSizeId(\intval ($petSize));
+        $pet->setPetSizeId(intval ($petSizeId));
         $pet->setPetPics($fileName);
         $pet->setPetVideo($fileName2);
         $pet->setPetBreed($petBreed);
