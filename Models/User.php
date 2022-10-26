@@ -5,7 +5,7 @@ namespace Models;
 class User{
 
     private $userId;
-    private $userTypeId;
+    private $userType;
     private $name;
     private $lastname;
     private $userName;
@@ -23,12 +23,12 @@ class User{
         $this->userId = $userId;
     }
 
-    public function getUserTypeId(){
-        return $this->userTypeId;
+    public function getUserType(){
+        return $this->userType;
     }
 
-    public function setUserTypeId($userTypeId){
-        $this->userTypeId = $userTypeId;
+    public function setUserType(UserType $userType){
+        $this->userType = $userType;
     }
 
     public function getName(){

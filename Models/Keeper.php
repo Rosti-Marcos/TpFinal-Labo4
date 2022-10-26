@@ -4,8 +4,8 @@ namespace Models;
 
 class Keeper{
     private $keeperId;
-    private $userId;
-    private $petTypeId;
+    private $user;
+    private $petSize;
     private $remuneration;
     private $startDate;
 
@@ -18,20 +18,20 @@ class Keeper{
         $this->keeperId = $keeperId;
     }
 
-    public function getUserId(){
-        return $this->userId;
+    public function getUser(){
+        return $this->user;
     }
 
-    public function setUserId($userId){
-        $this->userId = $userId;
+    public function setUser(User $user){
+        $this->user = $user;
     }
 
-    public function getPetTypeId(){
-        return $this->petTypeId;
+    public function getPetSize(){
+        return $this->petSize;
     }
 
-    public function setPetTypeId($petTypeId){
-        $this->petTypeId = $petTypeId;
+    public function setPetSize(PetSize $petSize){
+        $this->petSize = $petSize;
     }
 
     public function getRemuneration(){

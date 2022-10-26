@@ -6,6 +6,7 @@
     use Models\User as User;
 
 
+
     class UserController{
         public $userDAO;
 
@@ -14,23 +15,15 @@
             $this->userDAO = new UserDAO();
         }
 
-        public function GetUserDAO(){
-            return $this->userDAO;
-        }
 
         public function ShowAddView(){
             require_once(VIEWS_PATH . "user-add.php");
         }
 
-        public function GetByUserType($userType){
-            return $this->userDAO->GetAll();
-        }
         public function Add($name, $lastname, $userName, $password, $eMail, $phoneNumber, $birthDate){
-
+        
             $user = new User;
-            $user->setUserId($this->userDAO->GetNextId());
             $user->setName($name);
-            $user->setUserTypeId(1);
             $user->setLastname($lastname);
             $user->setUserName($userName);
             $user->setPassword($password);
@@ -54,4 +47,6 @@
             require_once(VIEWS_PATH."user-profile.php");
             require_once(VIEWS_PATH."validate-session.php");
         }
+
+
     }

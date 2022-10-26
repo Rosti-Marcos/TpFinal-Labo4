@@ -5,6 +5,7 @@
     use Models\User as User;
     use DAO\IUserDAO as IUserDAO;
 
+
     class UserDAO implements IUserDAO {
 
         private $userList = array();
@@ -17,10 +18,12 @@
         }
 
         public function Add(User $user) {
+            $userTypeDAO = new UserTypeDAO;
+            $userType = $userTypeDAO->GetById(1);
+           
             $this->RetrieveData();
-
             $user->setUserId($this->GetNextId());
-
+            $user->setUserType($userType);
             array_push($this->userList, $user);
 
             $this->SaveData();
@@ -35,6 +38,18 @@
             return $id + 1;
         }
 
+        public function GetById($userId) {
+            $this->RetrieveData();
+    
+            $aux = array_filter($this->userList, function($user) use($userId) {
+                return $userId->getUserId() == $userId;
+            });
+    
+            $aux = array_values($aux);
+    
+            return (count($aux) > 0) ? $aux[0] : array();
+        }
+
         public function GetByUserName($userName) {
             $this->RetrieveData();
 
@@ -45,17 +60,6 @@
             $aux = array_values($aux);
 
             return (count($aux) > 0) ? $aux[0] : array();
-        }
-        public function GetByUserType($userType) {
-            $this->RetrieveData();
-
-            $aux = array_filter($this->userList, function($user) use($userType) {
-                return $user->getUserTypeId() == $userType;
-            });
-
-            $aux = array_values($aux);
-
-            return (count($aux) > 0) ? $aux : array();
         }
 
         private function RetrieveData() {
@@ -68,7 +72,6 @@
                 foreach($arrayDecode as $value) {
                     $user = new User();
                     $user->setUserId($value["userId"]);
-                    $user->setUserTypeId($value["userTypeId"]);
                     $user->setName($value["name"]);
                     $user->setLastname($value["lastname"]);
                     $user->setUserName($value["userName"]);
@@ -76,6 +79,11 @@
                     $user->setEMail($value["eMail"]);
                     $user->setPhoneNumber($value["phoneNumber"]);
                     $user->setBirthDate($value["birthDate"]);
+
+                    $userTypeDAO = new UserTypeDAO;
+                    $userType = $userTypeDAO->GetById($value["userType"]);
+                    $user->setUserType($userType);
+
                     array_push($this->userList, $user);
                 }
             }
@@ -88,7 +96,7 @@
 
                 $valueArray = array();
                 $valueArray["userId"]=$user->getUserId();
-                $valueArray["userTypeId"]=$user->getUserTypeId();
+                $valueArray["userType"]=$user->getUserType()->getUserTypeId();
                 $valueArray["name"]= $user->getName();
                 $valueArray["lastname"] = $user->getLastname();
                 $valueArray["userName"] = $user->getUserName();
@@ -96,7 +104,6 @@
                 $valueArray["eMail"] = $user->getEMail();
                 $valueArray["phoneNumber"] = $user->getPhoneNumber();
                 $valueArray["birthDate"] = $user->getBirthDate();
-
 
                 array_push($arrayEncode, $valueArray);
             }
@@ -115,5 +122,6 @@
 
             $this->SaveData();
         }
+
     }
 ?>

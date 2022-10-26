@@ -14,25 +14,28 @@ class KeeperController{
     }
 
     public function ShowAddView(){
+        $petSizeController = new PetSizeController();
+        $petSizeList = $petSizeController->petSizeDAO->GetAll();
         require_once(VIEWS_PATH . "keeper-add.php");
+        require_once(VIEWS_PATH."validate-session.php");
     }
 
     public function ShowListView(){
-        $userController = new UserController();
-        $userList=$userController->userDAO->GetByUserType(2);
         $keeperList =$this->keeperDAO->GetAll();
         if ($_SESSION["loggedUser"]->getUserTypeId() == 2){
-        $keeperLogged=$this->keeperDAO->GetByUserId($_SESSION["loggedUser"]->getUserId());
+        $keeperLogged=$this->keeperDAO->GetByUser($_SESSION["loggedUser"]);
         }else{
             $keeperLogged=null;
         }
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
     }
-    
-    public function Add($petTypeId, $remuneration){
+
+    public function Add($petSizeId, $remuneration){
+        $petSizeController = new PetSizeController;
+        $petSize=$petSizeController->petSizeDAO->GetById($petSizeId);
         $keeper = new Keeper;
-        $keeper->setPetTypeId($petTypeId);
+        $keeper->setPetSize($petSize);
         $keeper->setRemuneration($remuneration);
         $this->keeperDAO->Add($keeper);
         require_once(VIEWS_PATH."keeper-wellcome.php");
