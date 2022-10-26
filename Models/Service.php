@@ -3,7 +3,7 @@
 
     class Service{
         private $id;
-        private $userId;
+        private User $user;
         private $startDate;
         private $endDate;
         private $status;
@@ -16,12 +16,12 @@
             return $this->id;
         }
 
-        public function setUserId($id){
-            $this->userId = $id;
+        public function setUser($user){
+            $this->user = $user;
         }
 
-        public function getUserId(){
-            return $this->userId;
+        public function getUser(){
+            return $this->user;
         }
 
         public function setStartDate($startDate){

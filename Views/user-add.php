@@ -36,7 +36,7 @@ include('header.php');
                                                placeholder="User name" required/>
                                         <label class="form-label" >Username</label>
                                     </div>
-
+                                
                                     <div class="form-outline mb-4">
                                         <input type="password" name="password" class="form-control" required/>
                                         <label class="form-label" for="form2Example22">Password</label>

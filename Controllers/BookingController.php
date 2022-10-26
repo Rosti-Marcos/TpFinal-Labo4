@@ -29,7 +29,7 @@
         }
 
         public function Add($keeperId, $startDate, $endDate, $price){
-            $ownerId = $_SESSION["loggedUser"]->getUserId();
+            $user = $_SESSION["loggedUser"];
             $serviceController = new serviceController();
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($keeperId);
             if($endDate < $startDate){
@@ -39,9 +39,11 @@
                 $flag = 0;
                 foreach($serviceList as $service){
                     if($service->getStatus() == 'available' && $startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
+                        $keeperController = new KeeperController;
+                        $keeper = $keeperController->keeperDAO->GetById($keeperId);
                         $booking = new booking();
-                        $booking->setOwnerId($ownerId);
-                        $booking->setKeeperId($keeperId);
+                        $booking->setUser($user);
+                        $booking->setKeeper($keeper);
                         $booking->setStartDate($startDate);
                         $booking->setEndDate($endDate);
                         $booking->setPrice($price);
@@ -55,7 +57,6 @@
                 
             }
 
-            $this->ShowAvailabilityView();
         }
 
 
@@ -65,7 +66,6 @@
             
             $this->bookingDAO->Remove($id);
 
-            $this->ShowAvailabilityView();
         }
     }
 ?>

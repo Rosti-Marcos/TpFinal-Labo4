@@ -8,7 +8,7 @@
     class BookingDAO implements IBookingDAO{
 
         public $bookingList = array();
-        private $fileName = ROOT . "Data/booking.json";
+        private $fileName = ROOT . "Data/bookings.json";
 
 
         public function GetAll() {
@@ -59,13 +59,20 @@
                 foreach($arrayDecode as $value) {
                     $booking = new booking();
                     $booking->setId($value["id"]);
-                    $booking->setOwnerId($value["ownerId"]);
-                    $booking->setKeeperId($value["keeperId"]);
+                    $booking->setKeeper($value["keeper"]);
                     $booking->setStartDate($value["startDate"]);
                     $booking->setEndDate($value["endDate"]);
                     $booking->setDescription($value["description"]);
                     $booking->setPrice($value["price"]);
                     $booking->setStatus($value["status"]);
+                    
+                    $userDAO = new UserDAO;
+                    $user = $userDAO->GetById($value["user"]);
+                    $booking->setUser($user);
+                    
+                    $keeperDAO = new KeeperDAO;
+                    $keeper = $keeperDAO->GetById($value["keeper"]);
+                    $booking->setKeeper($keeper);
 
                     array_push($this->bookingList, $booking);
                 }
@@ -80,8 +87,8 @@
 
                 $valueArray = array();
                 $valueArray["id"] = $booking->getId();
-                $valueArray["ownerId"] = $booking->getOwnerId();
-                $valueArray["keeperId"] = $booking->getKeeperId();
+                $valueArray["user"] = $booking->getUser()->getUserId();
+                $valueArray["keeper"] = $booking->getKeeper()->getKeeperId();
                 $valueArray["startDate"]= $booking->getStartDate();
                 $valueArray["endDate"] = $booking->getEndDate();
                 $valueArray["description"]= $booking->getDescription();

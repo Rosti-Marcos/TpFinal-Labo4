@@ -1,0 +1,24 @@
+[
+    {
+        "userId": 1,
+        "userType": 2,
+        "name": "Rodrigo",
+        "lastname": "Eulloque",
+        "userName": "rodrilloque",
+        "password": "1111",
+        "eMail": "rosti_marcos@hotmail.com",
+        "phoneNumber": "02235455257",
+        "birthDate": "1988-03-08"
+    },
+    {
+        "userId": 2,
+        "userType": 1,
+        "name": "Marcos",
+        "lastname": "Rosti",
+        "userName": "rocksti",
+        "password": "1111",
+        "eMail": "rosti_marcos@hotmail.com",
+        "phoneNumber": "02235455257",
+        "birthDate": "1986-03-28"
+    }
+]

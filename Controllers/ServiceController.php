@@ -28,7 +28,7 @@
         }
 
         public function Add($startDate, $endDate, $status){
-            $userId = $_SESSION["loggedUser"]->getUserId();
+            $user = $_SESSION["loggedUser"];
             $serviceList = $this->serviceDAO->getAll();
             if($endDate < $startDate){
                 $message = 'You cannot set the end date to before the start date';
@@ -36,13 +36,13 @@
             }else{
                 $flag = 0; 
                 foreach($serviceList as $service){
-                    if($service->getUserId() == $userId && $startDate <= $service->getEndDate() && $endDate >= $service->getStartDate()){
+                    if($service->getUser() == $user && $startDate <= $service->getEndDate() && $endDate >= $service->getStartDate()){
                         $flag = 1; 
                     }
                 }
                 if(!$serviceList || $flag == 0){
                     $service = new service();
-                    $service->setUserId($userId);
+                    $service->setUser($user);
                     $service->setStartDate($startDate);
                     $service->setEndDate($endDate);
                     $service->setStatus($status);

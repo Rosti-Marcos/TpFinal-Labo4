@@ -19,7 +19,7 @@ class CalendarController{
         $serviceList = $serviceController->getServices();
         $calendar = new CalendarController($month);
         foreach($serviceList as $service){
-            if($service->getUserId() == $_SESSION['loggedUser']->getUserId()){
+            if($service->getUser() == $_SESSION['loggedUser']){
                 $startDate = $service->getStartDate();
                 $endDate = $service->getEndDate();
                 for($i = $startDate; $i <= $endDate; $i++){
