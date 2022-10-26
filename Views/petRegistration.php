@@ -28,26 +28,17 @@ include ('nav-bar.php');
                             <input type="text" name="petBreed" placeholder="Breed" required>
                         </div>
                     </div>
-
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label class="form-control-label px-3">Your pet size
                                 <span class="text-danger"> *</span>
                             </label>
-
-
-
                             <select id="petSizeId" name="petSizeId">
                                 <?php foreach($petSizeList as $petSize){?>
                                 <option value="<?php echo $petSize->getPetSizeId()?>"><?php echo $petSize->getPetSize()?></option>
                                 <?php } ?>
                             </select>
-
-
-
-
                         </div>
-
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label class="form-control-label px-3">Your pet photo
                                 <span class="text-danger"> *</span>
@@ -55,7 +46,6 @@ include ('nav-bar.php');
                             <input accept="image/png,image/jpeg,image/gif" type="file" name="petPics" id="petPics" required>
                         </div>
                     </div>
-
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label class="form-control-label px-3">Your pet health certificate
@@ -63,7 +53,6 @@ include ('nav-bar.php');
                             </label>
                             <input accept="image/png,image/jpeg" type="file" name="vaccineCertId" id="vaccineCertId" required>
                         </div>
-
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label class="form-control-label px-3">Your pet video (optional)
                                 <span class="text-danger"></span>
@@ -71,18 +60,13 @@ include ('nav-bar.php');
                             <input accept="video/mp4" type="file" name="petVideo" id="petVideo">
                         </div>
                     </div>
-                    <br>
-                    
-                    
+                    <br>               
                     <div class="btn-group">
                         <?php foreach($petSpecieList as $petSpecie){?>
                         <input type="radio" class="btn-check" name="petSpecie" id="option.<?php echo $petSpecie->getPetSpecieId() ?>" autocomplete="off" value="<?php echo $petSpecie->getPetSpecieId() ?>" checked />
                         <label class="btn btn-secondary" for="option.<?php echo $petSpecie->getPetSpecieId() ?>"><?php echo $petSpecie->getPetSpecie() ?></label>
                         <?php } ?>
-                    </div>
-                    
-                    
-                    
+                    </div>                   
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-12 flex-column d-flex">
                             <label class="form-control-label px-3">Some observations
@@ -91,21 +75,14 @@ include ('nav-bar.php');
                             <textarea cols="50" rows="2" type="text" name="observation" placeholder="Please insert your additional info"></textarea>
                         </div>
                     </div>
-
-                    <div class="row justify-content-end">
-                        <div> <button type="submit" class="enviar">Add Pet</button> </div>
-                    </div>
-
-
-
+                        <div class="row justify-content-end">
+                            <div> <button type="submit" class="enviar">Add Pet</button> </div>
+                        </div>
                     <div class="row justify-content-end">
                         <div>
                             <button type="button" class="enviar" onclick="location.href= '<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
                         </div>
                     </div>
-
-
-
                 </form>
             </div>
         </div>

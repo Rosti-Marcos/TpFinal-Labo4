@@ -1,0 +1,24 @@
+[
+    {
+        "userId": 1,
+        "userTypeId": 2,
+        "name": "victor",
+        "lastname": "silva",
+        "userName": "vicsil",
+        "password": "1234",
+        "eMail": "vicsil@asda",
+        "phoneNumber": "11111111",
+        "birthDate": "2022-09-27"
+    },
+    {
+        "userId": 2,
+        "userTypeId": 1,
+        "name": "adssad",
+        "lastname": "asdsad",
+        "userName": "lala",
+        "password": "1234",
+        "eMail": "asdsad@s",
+        "phoneNumber": "111111111",
+        "birthDate": "2022-10-20"
+    }
+]
