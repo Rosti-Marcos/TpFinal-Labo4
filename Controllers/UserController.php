@@ -16,7 +16,7 @@
         }
 
 
-        public function ShowAddView(){
+        public function ShowAddView($message = ""){
             require_once(VIEWS_PATH . "user-add.php");
         }
 

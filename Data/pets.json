@@ -1,0 +1,14 @@
+[
+    {
+        "petId": 1,
+        "petName": "Carlos",
+        "user": 1,
+        "vaccineCert": "Views\/uploads\/perro3_1666802746.jpg",
+        "petSize": 3,
+        "petPics": "Views\/uploads\/gato3_1666802746.jpg",
+        "petVideo": "Views\/uploads\/rott_1666802746.mp4",
+        "petBreed": "asd",
+        "petSpecie": 2,
+        "observation": "gato"
+    }
+]

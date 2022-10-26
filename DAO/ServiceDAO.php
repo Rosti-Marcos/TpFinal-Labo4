@@ -8,7 +8,7 @@
     class ServiceDAO implements IServiceDAO{
 
         public $serviceList = array();
-        private $fileName = ROOT . "Data/service.json";
+        private $fileName = ROOT . "Data/services.json";
 
 
         public function GetAll() {
@@ -40,16 +40,20 @@
             $this->serviceList = array();
 
             if(file_exists($this->fileName)) {
+    
                 $jsonContent = file_get_contents($this->fileName);
                 $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
                 foreach($arrayDecode as $value) {
                     $service = new service();
-                    $service->setUserId($value["userId"]);
+                    $service->setId($value["id"]);
                     $service->setStartDate($value["startDate"]);
                     $service->setEndDate($value["endDate"]);
                     $service->setStatus($value["status"]);
-
+                    
+                    $userDAO = new UserDAO;
+                    $user = $userDAO->GetById($value["user"]);
+                    $service->setUser($user);
                     array_push($this->serviceList, $service);
                 }
             }
@@ -62,7 +66,7 @@
 
                 $valueArray = array();
                 $valueArray["id"] = $service->getId();
-                $valueArray["userId"] = $service->getUserId();
+                $valueArray["user"] = $service->getUser()->getUserId();
                 $valueArray["startDate"]= $service->getStartDate();
                 $valueArray["endDate"] = $service->getEndDate();
                 $valueArray["status"] = $service->getStatus();
