@@ -1,14 +1,14 @@
 [
   {
     "userTypeId": 1,
-    "type": "Owner"
+    "userType": "Owner"
   },
   {
     "userTypeId": 2,
-    "type": "Keeper"
+    "userType": "Keeper"
   },
   {
     "userTypeId": 3,
-    "type": "Admin"
+    "userType": "Admin"
   }
 ]

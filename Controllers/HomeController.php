@@ -1,6 +1,8 @@
 <?php
     namespace Controllers;
 
+use DAO\UserDAO;
+
     class HomeController{
 
 
@@ -10,7 +12,7 @@
         }
 
         public function ShowWellcomeView() {
-            if($_SESSION["loggedUser"]->getUserTypeId() == 1){
+            if($_SESSION["loggedUser"]->getUserType()->getUserTypeId() == 1){
                 require_once(VIEWS_PATH."validate-session.php");
                 require_once(VIEWS_PATH . "wellcome.php");
             }else{
@@ -21,8 +23,8 @@
         }
 
         public function Login($userName, $password) {
-            $userController = new UserController();
-            $user= $userController->GetUserDAO()->GetByUserName($userName);
+            $userDAO = new UserDAO;
+            $user= $userDAO->GetByUserName($userName);
             if(($user != null) && ($user->getPassword() === $password))
             {
                 $_SESSION["loggedUser"] = $user;

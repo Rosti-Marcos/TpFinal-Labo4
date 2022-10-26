@@ -8,7 +8,7 @@ use DAO\IUserTypeDAO as IUserTypeDAO;
 class UserTypeDAO implements IUserTypeDAO {
 
     private $userTypeList = array();
-    private $fileName = ROOT . "Data/userType.json";
+    private $fileName = ROOT . "Data/userTypes.json";
 
 
     public function GetAll() {
@@ -30,7 +30,7 @@ class UserTypeDAO implements IUserTypeDAO {
     private function GetNextId() {
         $id = 0;
         foreach($this->userTypeList as $userType) {
-            $id = ($userType->getUserTypeId() > $id) ? $userType->getUserID() : $id;
+            $id = ($userType->getUserTypeId() > $id) ? $userType->getUserTypeID() : $id;
         }
         return $id + 1;
     }
@@ -39,7 +39,7 @@ class UserTypeDAO implements IUserTypeDAO {
         $this->RetrieveData();
 
         $aux = array_filter($this->userTypeList, function($userType) use($userTypeId) {
-            return $userTypeId->getUserName() == $userTypeId;
+            return $userType->getUserTypeId() == $userTypeId;
         });
 
         $aux = array_values($aux);
@@ -57,11 +57,12 @@ class UserTypeDAO implements IUserTypeDAO {
             foreach($arrayDecode as $value) {
                 $userType = new UserType();
                 $userType->setUserTypeId($value["userTypeId"]);
-                $userType->setType($value["type"]);
+                $userType->setUserType($value["userType"]);
                 array_push($this->userTypeList, $userType);
             }
         }
     }
+
     private function SaveData() {
 
         $arrayEncode = array();
@@ -70,12 +71,13 @@ class UserTypeDAO implements IUserTypeDAO {
 
             $valueArray = array();
             $valueArray["userTypeId"]=$user->getUserTypeId();
-            $valueArray["type"]= $user->getType();
+            $valueArray["userType"]= $user->getUserType();
 
             array_push($arrayEncode, $valueArray);
         }
         $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
         file_put_contents($this->fileName, $jsonContent);
     }
+
 }
 ?>

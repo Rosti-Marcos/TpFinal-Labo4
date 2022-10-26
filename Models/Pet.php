@@ -5,13 +5,13 @@ namespace Models;
 class Pet{
     private $petId;
     private $petName;
-    private $ownerId;
-    private $vaccineCertId;
-    private $petSizeId;
+    private $user;
+    private $vaccineCert;
+    private $petSize;
     private $petPics;
     private $petVideo;
     private $petBreed;
-    private $petSpecieId;
+    private $petSpecie;
     private $observation;
 
 
@@ -35,33 +35,33 @@ class Pet{
     }
 
 
-    public function getOwnerId(){
-        return $this->ownerId;
+    public function getUser(){
+        return $this->user;
     }
 
 
-    public function setOwnerId($ownerId){
-        $this->ownerId = $ownerId;
+    public function setUser(User $user){
+        $this->user = $user;
     }
 
 
-    public function getVaccineCertId(){
-        return $this->vaccineCertId;
+    public function getVaccineCert(){
+        return $this->vaccineCert;
     }
 
 
-    public function setVaccineCertId($vaccineCertId){
-        $this->vaccineCertId = $vaccineCertId;
+    public function setVaccineCert($vaccineCert){
+        $this->vaccineCert = $vaccineCert;
     }
 
 
-    public function getPetSizeId(){
-        return $this->petSizeId;
+    public function getPetSize(){
+        return $this->petSize;
     }
 
 
-    public function setPetSizeId($petSizeId){
-        $this->petSizeId = $petSizeId;
+    public function setPetSize(PetSize $petSize){
+        $this->petSize = $petSize;
     }
 
 
@@ -99,8 +99,8 @@ class Pet{
     }
 
 
-    public function setPetSpecieId($petSpecieId){
-        $this->petSpecieId = $petSpecieId;
+    public function setPetSpecie(PetSpecie $petSpecie){
+        $this->petSpecie = $petSpecie;
     }
 
 

@@ -6,7 +6,7 @@ use Models\Pet as Pet;
 use DAO\IPetDAO as IPetDAO;
 
 
-class petDAO implements IPetDAO{
+class PetDAO implements IPetDAO{
 
     private $petList = array();
     private $fileName = ROOT . "Data/pets.json";
@@ -34,7 +34,7 @@ class petDAO implements IPetDAO{
 
         $pet->setPetId($this->GetNextId());
 
-        $pet->setOwnerId($_SESSION["loggedUser"]->getUserId());
+        $pet->setUser($_SESSION["loggedUser"]);
 
         array_push($this->petList, $pet);
 
@@ -61,14 +61,17 @@ class petDAO implements IPetDAO{
                 $pet = new Pet();
                 $pet->setPetId($value["petId"]);
                 $pet->setPetName($value["petName"]);
-                $pet->setOwnerId($value["ownerId"]);
-                $pet->setVaccineCertId($value["vaccineCertId"]);
-                $pet->setPetSizeId($value["petSizeId"]);
+                $pet->setUser($value["user"]);
+                $pet->setVaccineCert($value["vaccineCert"]);
+                $pet->setPetSize($value["petSize"]);
                 $pet->setPetPics($value["petPics"]);
                 $pet->setPetVideo($value["petVideo"]);
                 $pet->setPetBreed($value["petBreed"]);
-                $pet->setPetSpecieId($value["petSpecieId"]);
+                $pet->setPetSpecie($value["petSpecie"]);
                 $pet->setObservation($value["observation"]);
+
+                $petSpecieDAO = new PetSpecieDAO;
+                $petSpecie = $petSpecieDAO->GetB
                 array_push($this->petList, $pet);
             }
         }
@@ -83,13 +86,13 @@ class petDAO implements IPetDAO{
             $valueArray = array();
             $valueArray["petId"]= $pet->getPetId();
             $valueArray["petName"]= $pet->getPetName();
-            $valueArray["ownerId"] = $pet->getOwnerId();
-            $valueArray["vaccineCertId"] = $pet->getVaccineCertId();
-            $valueArray["petSizeId"] = $pet->getPetSizeId();
+            $valueArray["user"] = $pet->getUser()->getUserId();
+            $valueArray["vaccineCert"] = $pet->getVaccineCert();
+            $valueArray["petSize"] = $pet->getPetSize()->getPetSizeId();
             $valueArray["petPics"] = $pet->getPetPics();
             $valueArray["petVideo"] = $pet->getPetVideo();
             $valueArray["petBreed"] = $pet->getPetBreed();
-            $valueArray["petSpecieId"] = $pet->getPetSpecieId();
+            $valueArray["petSpecie"] = $pet->getPetSpecie()->getPetSpecieId();
             $valueArray["observation"] = $pet->getObservation();
             array_push($arrayEncode, $valueArray);
         }

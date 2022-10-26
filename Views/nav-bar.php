@@ -29,7 +29,7 @@ include_once('header.php');
                         <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Pet/ShowPetListView" ?>">Show my pets</a></li>
                     </ul>
                 </li>
-                <?php if($_SESSION["loggedUser"]->getUserTypeId() == "1") {?>
+                <?php if($_SESSION["loggedUser"]->getUserType()->getUserTypeId() == "1") {?>
                     <li class="nav-item">
                         <a class="nav-link active" href="<?php echo FRONT_ROOT. "Keeper/ShowAddView" ?>">Become a Keeper</a></li>
                 <?php }else{ ?>
