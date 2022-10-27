@@ -152,7 +152,8 @@
             </div>
             <div class="col-6 col-sm-7"
                 <div class="content home">
-                            <form action="<?php echo  FRONT_ROOT."Calendar/showAvailabilityCalendar"?>" method="post">
+                            <form action="<?php echo  FRONT_ROOT."Booking/PreReservation"?>" method="post">
+                            <input type="hidden" name="userId" id="userId" value="<?php echo $user->getUserId() ?>">
                                 <span class="form-label">Month</span>
                                         <select name="month" id="month">
                                         <option value="1">January</option>
