@@ -81,11 +81,22 @@
         public function GetByKeeperId($keeperId) {
             $this->RetrieveData();
             $aux = array_filter($this->serviceList, function($service) use($keeperId) {
-                return $service->getKeeperId() == $keeperId;
+                return $service->getUser()->getUserId() == $keeperId;
             });
             $aux = array_values($aux);
             return (count($aux) > 0) ? $aux : array();
     
+        }
+
+        public function Remove($id)
+        {            
+            $this->RetrieveData();
+            
+            $this->serviceList = array_filter($this->serviceList, function($service) use($id){                
+                return $service->getId() != $id;
+            });
+            
+            $this->SaveData();
         }
     }
 ?>

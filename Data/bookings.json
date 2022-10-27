@@ -1,0 +1,13 @@
+[
+    {
+        "id": 13,
+        "user": 2,
+        "keeper": 1,
+        "startDate": "2022-10-27",
+        "endDate": "2022-10-29",
+        "message": "Aprobada perro",
+        "petSpecie": 2,
+        "price": 10000,
+        "status": "approved"
+    }
+]

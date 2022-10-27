@@ -7,7 +7,8 @@
         private Keeper $keeper;
         private $startDate;
         private $endDate;
-        private $description;
+        private $message;
+        private PetSpecie $petSpecie;
         private $price;
         private $status;
 
@@ -51,12 +52,20 @@
             return $this->endDate;
         }
 
-        public function setDescription($description){
-            $this->description = $description;
+        public function setMessage($message){
+            $this->message = $message;
         }
 
-        public function getDescription(){
-            return $this->description;
+        public function getMessage(){
+            return $this->message;
+        }
+
+        public function setPetSpecie(PetSpecie $petSpecie){
+            $this->petSpecie = $petSpecie;
+        }
+
+        public function getPetSpecie(){
+            return $this->petSpecie;
         }
 
         public function setPrice($price){

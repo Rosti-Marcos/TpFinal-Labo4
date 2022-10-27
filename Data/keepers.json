@@ -2,8 +2,8 @@
     {
         "keeperId": 1,
         "user": 1,
-        "petSize": 3,
-        "remuneration": "15000",
+        "petSize": 1,
+        "remuneration": "5000",
         "startDate": "26-10-2022"
     }
 ]
