@@ -9,5 +9,16 @@
         "petSpecie": 2,
         "price": 10000,
         "status": "approved"
+    },
+    {
+        "id": 14,
+        "user": 2,
+        "keeper": 1,
+        "startDate": "2022-10-27",
+        "endDate": "2022-10-29",
+        "message": "no puedo esos dias",
+        "petSpecie": 1,
+        "price": 10000,
+        "status": "rejected"
     }
 ]
