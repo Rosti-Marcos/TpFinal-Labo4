@@ -32,24 +32,24 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<span class="form-label">To</span>
-                        <input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" min=<?=$startDate->format("Y-m-d")?> max=<?=$max->format("Y-m-d")?> name="endDate" require>
+                        						<input class="form-control" type="date" value="<?php echo date("Y-m-d");?>" min=<?=$startDate->format("Y-m-d")?> max=<?=$max->format("Y-m-d")?> name="endDate" require>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-                        <span class="form-label">Status</span>
-                        <select class="form-control" name="status" id="status">
-                          <option value="available">Available</option>
-                          <option value="unavailable">Unavailable</option>
-                        </select>
-                        <span class="select-arrow"></span>
+												<span class="form-label">Status</span>
+													<select class="form-control" name="status" id="status">
+														<option value="available">Available</option>
+														<option value="unavailable">Unavailable</option>
+													</select>
+												<span class="select-arrow"></span>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-btn">
-                    <button type="submit" class="submit-btn" value="Agregar" >Submit</button>
+                    					<button type="submit" class="submit-btn" value="Agregar" >Submit</button>
 									</div>
 								</div>
 							</div>

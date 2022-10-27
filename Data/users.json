@@ -2,23 +2,23 @@
     {
         "userId": 1,
         "userType": 2,
-        "name": "Rodrigo",
+        "name": "rodrigo",
         "lastname": "Eulloque",
-        "userName": "rodrilloque",
+        "userName": "rocksti",
         "password": "1111",
-        "eMail": "rosti_marcos@hotmail.com",
-        "phoneNumber": "02235455257",
-        "birthDate": "1988-03-08"
+        "eMail": "rodri@eu",
+        "phoneNumber": "2944163556",
+        "birthDate": "1992-07-16"
     },
     {
         "userId": 2,
         "userType": 1,
-        "name": "Marcos",
-        "lastname": "Rosti",
-        "userName": "rocksti",
-        "password": "1111",
-        "eMail": "rosti_marcos@hotmail.com",
-        "phoneNumber": "02235455257",
-        "birthDate": "1986-03-28"
+        "name": "Victor",
+        "lastname": "Silva",
+        "userName": "vicsil",
+        "password": "1234",
+        "eMail": "vic@sil",
+        "phoneNumber": "2235164525",
+        "birthDate": "1985-12-12"
     }
 ]

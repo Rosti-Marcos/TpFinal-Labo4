@@ -42,7 +42,39 @@ class CalendarController{
             }
     
         }
-        require_once(VIEWS_PATH . "keeper-calendar-availability.php");
+        require_once(VIEWS_PATH."keeper-calendar-availability.php");
+        
+    }
+
+    public function GetKeeperAvailabilityCalendar($month = null, $userId){
+        $serviceController = new ServiceController();
+        $serviceList = $serviceController->getServices();
+        $calendar = new CalendarController($month);
+        foreach($serviceList as $service){
+            if($service->getUser()->getUserId() == $userId){
+                $startDate = $service->getStartDate();
+                $endDate = $service->getEndDate();
+                for($i = $startDate; $i <= $endDate; $i++){
+                    switch ($service->getStatus()) {
+                        case 'available':
+                            $calendar->add_event('Available', $i, 1, 'green');
+                            break;
+                        case 'unavailable':
+                            $calendar->add_event('Unavailable', $i, 1, 'red');
+                            break;
+                        case 'pending':
+                            $calendar->add_event('Pending', $i, 1, 'yellow');
+                            break;
+                        case 'reserved':
+                            $calendar->add_event('Reserved', $i, 1, 'blue');
+                            break;
+                    }
+                    
+                }
+            }
+    
+        }
+        return $calendar;
         
     }
 

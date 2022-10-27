@@ -14,7 +14,7 @@ include_once('header.php');
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<?php echo FRONT_ROOT. "Booking/ShowBookings" ?>">My reservations</a>
+                    <a class="nav-link" aria-current="page" href="<?php echo FRONT_ROOT. "Booking/ShowBookingsUser" ?>">My reservations</a>
                 </li>
 
                 <li class="nav-item">
@@ -40,7 +40,7 @@ include_once('header.php');
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Service/ShowAvailabilityView" ?>">Set my availability</a></li>
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabilityCalendar" ?>">Availability calendar</a></li>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookings" ?>">Show my reservations</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeper" ?>">Show my reservations</a></li>
                         </ul>
                     </li>
                 <?php } ?>

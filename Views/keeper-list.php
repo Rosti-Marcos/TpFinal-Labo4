@@ -41,6 +41,7 @@
                             <td><?php echo $keeper->getPetSize()->getPetSize() ?></td>
                             <td><?php echo $keeper->getRemuneration() ?></td>
                             <td><?php echo $keeper->getStartDate() ?></td>
+                            <td><a class="btn btn-primary" href="<?php echo FRONT_ROOT."Booking/PreReservation/".$keeper->getUser()->getUserId()?>" class="btn">Show Profile</a></td>
                         </tr>
                                 <?php }?>
                         <?php }?>

@@ -15,13 +15,12 @@
 						<table class="table table-striped">
 						  <thead>
 						    <tr>
-						      <th style="text-align: center;">Customer</th>
+						      <th style="text-align: center;">Keeper</th>
 						      <th style="text-align: center;">Start date</th>
 						      <th style="text-align: center;">End date</th>
 						      <th style="text-align: center;">Price</th>
 						      <th style="text-align: center;">Status</th>
 							  <th style="text-align: center;">Message</th>
-							  <th style="text-align: center;">Action</th>
 						    </tr>
 						  </thead>
 						  <tbody>
@@ -31,7 +30,7 @@
                                 $name;
                                 $lastName;
                                 foreach($userList as $user){
-                                    if($booking->getUser()->getUserId() == $user->getUserId()){
+                                    if($booking->getKeeper()->getKeeperId() == $user->getUserId()){
                                         $name = $user->getName();
                                         $lastName = $user->getLastname();
                                     }
@@ -57,32 +56,14 @@
 
 										}
 									?>
-									<td style="text-align: center;"">
+									<td style="text-align: center;">
 										<a class="<?php echo $class?>"><?php echo $booking->getStatus() ?></a>
 									</td>
-									<?php
-										if($booking->getStatus() == 'pending'){
-											?>
-										<form action="<?php echo FRONT_ROOT."Booking/ReplyBooking" ?>" method="POST">
-											<td style="text-align: center;"> 
-												<input type="hidden" name="bookingId" id="bookingId" value="<?php echo $booking->getId() ?>">
-												<input type="text" name="message" size="20" required>
-											</td>
-											<td style="text-align: center;">
-												<button type="submit" name="approve" class="btn btn-success" value="Approve"> Approve </button>
-												<button type="submit" name="decline" class="btn btn-danger" value="Decline"> Decline </button>
-											</td>
-										</form>
-									<?php
-										}else{
-											?>
-											<td  style="text-align: center;"><?php echo $booking->getMessage() ?></td>
-											<td style="text-align: center;">
-											<a class="btn btn-secondary"><?php echo $booking->getStatus() ?></a>
-											</td>
+									<td style="text-align: center;"><?php echo $booking->getMessage() ?></td>
+	
 								</tr>
 								<?php
-							}}
+							}
 							?> 
 						  </tbody>
 						</table>
