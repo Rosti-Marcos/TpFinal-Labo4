@@ -9,6 +9,11 @@ define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("IMG_PATH", VIEWS_PATH . "img/");
 define("UPLOADS_PATH", VIEWS_PATH . "uploads/");
 define("HOME_URL", "http://localhost");
+
+define("DB_HOST", "localhost");
+define("DB_NAME", "pet_hero");
+define("DB_USER", "root");
+define("DB_PASS", "");
 ?>
 
 

@@ -99,7 +99,7 @@ body {
     transform: scale(1.2);
 }
 
-.petList{
+.petList{    
     width: 940px;
     margin: 0 auto;
     padding: 50px;
@@ -107,6 +107,7 @@ body {
 
 
 .petList li{
+  background: linear-gradient(to bottom, #3f3f41, #e1e3e6);
     display: inline-block;
     text-align: center;
     width: 29%;
