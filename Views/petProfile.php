@@ -1,25 +1,80 @@
 <?php
-include('header.php');
+
 include ('nav-bar.php');
 ?>
-<div>
-    <p>
+<header>
+    <link href="<?php echo CSS_PATH . "profileStyle.css" ?>" rel="stylesheet">
+</header>
+<div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card p-0">
+                    <div class="card-image">
+                    <img src="<?php echo HOME_URL.FRONT_ROOT.$pet->GetPetPics()?>?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                            alt="">
+                    </div>
+                    <div class="card-content d-flex flex-column align-items-center">
+                        <h4 class="pt-2">My name is <?php echo $pet->GetPetName()?></h4>
+                        <h5>I'm a <?php echo $pet->GetPetBreed()?></h5>
 
-    <h1>Name: <?php echo $pet->GetPetName()?></h1>
-    <h3>I'm a: <?php echo $pet->GetPetBreed()?></h3>
-    <h3>My owner comments: <?php echo $pet->GetObservation()?></h3>
-    <h3>My healt certificate: <img src="<?php echo HOME_URL.FRONT_ROOT.$pet->getVaccineCert()?>" height="240"></h3>
-    <h3>Here I am!! <img src="<?php echo HOME_URL.FRONT_ROOT.$pet->GetPetPics()?>" height="240"></h3>
-    <h3>My video! <video controls alt= "no hay video" width="320" height="240"><source src="<?php echo HOME_URL.FRONT_ROOT.$pet->GetPetVideo()?>"></h3>
+                        <ul class="social-icons d-flex justify-content-center">
+                            <li style="--i:1">
+                                <a href="#">
+                                    <span class="fab fa-facebook"></span>
+                                </a>
+                            </li>
+                            <li style="--i:2">
+                                <a href="#">
+                                    <span class="fab fa-twitter"></span>
+                                </a>
+                            </li>
+                            <li style="--i:3">
+                                <a href="#">
+                                    <span class="fab fa-instagram"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card p-0">
+                    <div class="card-image">
+                    <video controls alt= "no hay video"  height="350"><source src="<?php echo HOME_URL.FRONT_ROOT.$pet->GetPetVideo()?>">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card p-0">
+                    <div class="card-image">
+                        <img src="<?php echo HOME_URL.FRONT_ROOT.$pet->getVaccineCert()?>?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                            alt="">
+                    </div>
+                    <div class="card-content d-flex flex-column align-items-center">
+                        <h4 class="pt-2">My Health</h4>
+                        <h5>Certificate</h5>
 
+                        <ul class="social-icons d-flex justify-content-center">
+                            <li style="--i:1">
+                                <a href="#">
+                                    <span class="fab fa-facebook"></span>
+                                </a>
+                            </li>
+                            <li style="--i:2">
+                                <a href="#">
+                                    <span class="fab fa-twitter"></span>
+                                </a>
+                            </li>
+                            <li style="--i:3">
+                                <a href="#">
+                                    <span class="fab fa-instagram"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-    </p>
-</div>
-<a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
-<?php
-include('footer.php');
-?>
-
-
-
-
+        </div>
+    </div>

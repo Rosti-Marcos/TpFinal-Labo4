@@ -4,6 +4,7 @@ include ('nav-bar.php');
 <header>
     <link href="<?php echo CSS_PATH . "addPet.css" ?>" rel="stylesheet">
 </header>
+
 <div class="container-fluid px-1 py-5 mx-auto">
     <div class="row d-flex justify-content-center">
         <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
@@ -75,12 +76,15 @@ include ('nav-bar.php');
                             <textarea cols="50" rows="2" type="text" name="observation" placeholder="Please insert your additional info"></textarea>
                         </div>
                     </div>
-                        <div class="row justify-content-end">
-                            <div> <button type="submit" class="enviar">Add Pet</button> </div>
-                        </div>
+                    <div class="text-center pt-1 mb-5 pb-1">
+                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Add Pet</button>
+                    </div>
+                                          
                     <div class="row justify-content-end">
-                        <div>
-                            <button type="button" class="enviar" onclick="location.href= '<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+                        <div class="d-flex align-items-center justify-content-center pb-4">
+                            <p class="mb-0 me-2"></p>
+                            <button type="button" class="btn btn-outline-danger"
+                                    onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
                         </div>
                     </div>
                 </form>

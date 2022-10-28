@@ -2,6 +2,7 @@
 include('header.php');
 include ('nav-bar.php');
 ?>
+<body background="<?php echo FRONT_ROOT . IMG_PATH . "bgFootprints.jpeg"?>">
 <main>
     <h1 align="center">My Pets</h1>
     <ul class="petList">
@@ -14,9 +15,12 @@ include ('nav-bar.php');
         </li>
         <?php } ?>
     </ul>
+    
     <div class="row justify-content-end">
-        <div>
-            <button type="button" class="enviar" onclick="location.href= '<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+            <p class="mb-0 me-2"></p>
+            <button type="button" class="btn btn-outline-danger"
+                    onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
         </div>
     </div>
 </main>
