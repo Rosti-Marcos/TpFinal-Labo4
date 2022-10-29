@@ -21,9 +21,23 @@ class KeeperController{
     }
 
     public function ShowListView(){
-        $keeperList =$this->keeperDAO->GetAll();
+        $keeperList = null;
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
+    }
+
+    public function ShowListViewFiltered($startDate, $endDate){
+        $keepers = $this->keeperDAO->GetAll();
+        $serviceController = new ServiceController();
+        $serviceList = $serviceController->serviceDAO->GetAvailables();
+        $keeperList = array();
+        foreach($serviceList as $service){
+            if($startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
+                $keeper = $this->keeperDAO->GetByUser($service->getUser());
+                array_push($keeperList, $keeper);
+            }
+        }
+        require_once (VIEWS_PATH . "keeper-list.php");
     }
 
     public function Add($petSizeId, $remuneration){
