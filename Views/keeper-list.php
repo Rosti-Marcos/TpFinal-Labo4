@@ -2,6 +2,7 @@
   include_once('header.php');
   include_once('nav-bar.php');
 ?>
+<body background="<?php echo FRONT_ROOT . IMG_PATH . "bgPerroBlanco.jpg"?>">
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -9,7 +10,7 @@
                 <h2 class="heading-section">Keepers List</h2>
             </div>
         </div>
-        <div class="container">
+        <div class="container">        
         <div class="row justify-content-md-center">
             <div class="col-6 col-md-6">
               <div class="card mb-12">
