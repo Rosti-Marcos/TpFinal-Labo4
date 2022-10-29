@@ -16,6 +16,16 @@
             return $this->serviceList;
         }
 
+        public function GetAvailables() {
+            $available = 'available';
+            $this->RetrieveData();
+            $aux = array_filter($this->serviceList, function($service) use($available) {
+                return $service->getStatus() == $available ;
+            });
+            $aux = array_values($aux);
+            return (count($aux) > 0) ? $aux : array();
+        }
+
         public function Add(Service $service) {
             $this->RetrieveData();
 

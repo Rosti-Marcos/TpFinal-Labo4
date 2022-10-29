@@ -23,7 +23,7 @@
                         $max = new DateTime();
                         $max->modify("365 days");
                             ?>
-                    <form>
+                    <form action="<?php echo  FRONT_ROOT."Keeper/ShowListViewFiltered"?>" method="post">
                         </div>
                         <hr>
                         <div class="col-sm-2">
@@ -55,6 +55,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-wrap">
+                    <?php if($keeperList){ ?>
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -87,7 +88,7 @@
                             <td><a class="btn btn-primary" href="<?php echo FRONT_ROOT."Booking/PreReservation/".$keeper->getUser()->getUserId()?>" class="btn">Show Profile</a></td>
                         </tr>
                                 <?php }?>
-                        <?php }?>
+                        <?php }}?>
                         </tbody>
                     </table>
                 </div>
