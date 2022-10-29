@@ -35,7 +35,10 @@ class CalendarController{
                             break;
                         case 'reserved':
                             $calendar->add_event('Reserved', $i, 1, 'blue');
-                            break;
+                            break; 
+                        case 'approved':
+                            $calendar->add_event('Approved', $i, 1, 'blue');
+                            break;  
                     }
                     
                 }
@@ -67,6 +70,9 @@ class CalendarController{
                             break;
                         case 'reserved':
                             $calendar->add_event('Reserved', $i, 1, 'blue');
+                            break;
+                        case 'rejected':
+                            $calendar->add_event('Rejected', $i, 1, 'grey');
                             break;
                     }
                     

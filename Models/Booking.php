@@ -8,7 +8,7 @@
         private $startDate;
         private $endDate;
         private $message;
-        private PetSpecie $petSpecie;
+        private Pet $pet;
         private $price;
         private $status;
 
@@ -60,12 +60,12 @@
             return $this->message;
         }
 
-        public function setPetSpecie(PetSpecie $petSpecie){
-            $this->petSpecie = $petSpecie;
+        public function setPet($pet){
+            $this->pet = $pet;
         }
 
-        public function getPetSpecie(){
-            return $this->petSpecie;
+        public function getPet(){
+            return $this->pet;
         }
 
         public function setPrice($price){
