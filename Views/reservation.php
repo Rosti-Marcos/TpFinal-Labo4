@@ -118,13 +118,20 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Specie</h6>
+                      <h6 class="mb-0">Pet</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <?php foreach($petSpecieList as $petSpecie){?>
-                            <input type="radio" class="btn-check" name="petSpecieId" id="option.<?php echo $petSpecie->getPetSpecieId() ?>" autocomplete="off" value="<?php echo $petSpecie->getPetSpecieId() ?>" checked />
-                            <label class="btn btn-secondary" for="option.<?php echo $petSpecie->getPetSpecieId() ?>"><?php echo $petSpecie->getPetSpecie() ?></label>
-                        <?php } ?>
+                        <?php 
+                        $cont = 0;
+                        foreach($petList as $pet){
+                            if($pet->getPetSize() == $petSize){
+                                $cont++;
+                            ?>
+                            <input type="radio" class="btn-check" name="petId" id="option.<?php echo $pet->getPetId() ?>" autocomplete="off" value="<?php echo $pet->getPetId() ?>" checked />
+                            <label class="btn btn-secondary" for="option.<?php echo $pet->getPetName() ?>"><?php echo $pet->getPetName() ?></label>
+                        <?php }} if($cont == 0){ ?>
+                            "You do not have any pet size that the keeper takes care of."
+                            <?php } ?>
                     </div>
                   </div>
                   <hr>
@@ -133,17 +140,19 @@
                       <h6 class="mb-0">Size</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                    <select id="petSizeId" name="petSizeId">
-                        <?php foreach($petSizeList as $petSize){?>
-                            <option value="<?php echo $petSize->getPetSizeId()?>"><?php echo $petSize->getPetSize()?></option>
-                            <?php } ?>
-                            <input type="hidden" name="userId" value="<?php echo $user->getUserId() ?>">
-                        </select>
+                        <?php echo $petSize->getPetSize() ?>
+                        <input type="hidden" name="petSizeId" value="<?php echo $petSize->getPetSizeId() ?>">
+                        <input type="hidden" name="userId" value="<?php echo $user->getUserId() ?>">
                     </div>
                   </div>
                   <hr>
                   <div class="row">
+                    <?php if($cont > 0){
+                        ?>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Book</button>
+                    <?php }else{ ?>
+                        <a class="btn btn-secondary">Book</a>
+                        <?php } ?>
                   </div>
                 </div>
               </div>

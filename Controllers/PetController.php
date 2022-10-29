@@ -6,7 +6,7 @@
 
 class PetController
 {
-    private $petDAO;
+    public $petDAO;
 
     public function __construct()
     {

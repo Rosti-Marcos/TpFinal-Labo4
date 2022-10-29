@@ -45,6 +45,20 @@
             return (count($booking) > 0) ? $booking : array();
         }
 
+        public function GetByKeeperId($keeperId)
+        {
+            $this->RetrieveData();
+
+            $booking = array_filter($this->bookingList, function($booking) use($keeperId){                
+                return $booking->getKeeper()->getKeeperId() == $keeperId;
+            });
+
+            $booking = array_values($booking);
+            
+
+            return (count($booking) > 0) ? $booking : array();
+        }
+
         public function GetById($id) {
             $this->RetrieveData();
     
@@ -98,8 +112,8 @@
                 $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
                 foreach($arrayDecode as $value) {
-                    $petSpecieDAO = new PetSpecieDAO;
-                    $petSpecie = $petSpecieDAO->GetById($value["petSpecie"]);
+                    $petDAO = new PetDAO;
+                    $pet = $petDAO->GetByPetId($value["pet"]);
                     $userDAO = new UserDAO;
                     $user = $userDAO->GetById($value["user"]);
                     $keeperDAO = new KeeperDAO;
@@ -112,21 +126,9 @@
                     $booking->setStartDate($value["startDate"]);
                     $booking->setEndDate($value["endDate"]);
                     $booking->setMessage($value["message"]);
-                    $booking->setPetSpecie($petSpecie);
+                    $booking->setPet($pet);
                     $booking->setPrice($value["price"]);
                     $booking->setStatus($value["status"]);
-                    
-                    $userDAO = new UserDAO;
-                    $user = $userDAO->GetById($value["user"]);
-                    $booking->setUser($user);
-                    
-                    $keeperDAO = new KeeperDAO;
-                    $keeper = $keeperDAO->GetById($value["keeper"]);
-                    $booking->setKeeper($keeper);
-
-                    $petSpecieDAO = new PetSpecieDAO;
-                    $petSpecie = $petSpecieDAO->GetById($value["petSpecie"]);
-                    $booking->setPetSpecie($petSpecie);
 
                     array_push($this->bookingList, $booking);
                 }
@@ -146,7 +148,7 @@
                 $valueArray["startDate"]= $booking->getStartDate();
                 $valueArray["endDate"] = $booking->getEndDate();
                 $valueArray["message"]= $booking->getMessage();
-                $valueArray["petSpecie"] = $booking->getPetSpecie()->getPetSpecieId();
+                $valueArray["pet"] = $booking->getPet()->getPetId();
                 $valueArray["price"] = $booking->getPrice();
                 $valueArray["status"] = $booking->getStatus();
 

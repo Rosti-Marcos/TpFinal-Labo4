@@ -9,6 +9,48 @@
                 <h2 class="heading-section">Keepers List</h2>
             </div>
         </div>
+        <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-6 col-md-6">
+              <div class="card mb-12">
+                <div class="card-body">
+                  <div class="row">
+                    <div style="text-align: center;">
+                      <h6>Search Keepers</h6>
+                      <?php 
+                        $startDate = new DateTime();
+                        $max = new DateTime();
+                        $max->modify("365 days");
+                            ?>
+                    <form>
+                        </div>
+                        <hr>
+                        <div class="col-sm-2">
+                        <h5 class="mb-2" style="text-align: center;">From</h5>
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            <input  type="date" value="<?php echo date("Y-m-d");?>" min=<?=$startDate->format("Y-m-d")?> max=<?=$max->format("Y-m-d")?> name="startDate" require>
+                        </div>
+                        <div class="col-sm-2">
+                        <h5 class="mb-4" style="text-align: center;">To</h5>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="date" value="<?php echo date("Y-m-d");?>" min=<?=$startDate->format("Y-m-d")?> max=<?=$max->format("Y-m-d")?> name="endDate" require>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                        <div>
+                    </form>
+                    </div>
+                  </div>
+                </div>               
+              </div>
+            </form>
+            </div>
+            </div>
+        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-wrap">

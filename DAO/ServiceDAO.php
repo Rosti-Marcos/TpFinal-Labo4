@@ -35,7 +35,6 @@
             return $id + 1;
         }
 
-
         private function RetrieveData() {
             $this->serviceList = array();
 
@@ -78,6 +77,7 @@
             file_put_contents($this->fileName, $jsonContent);
         }
 
+
         public function GetByKeeperId($keeperId) {
             $this->RetrieveData();
             $aux = array_filter($this->serviceList, function($service) use($keeperId) {
@@ -86,6 +86,31 @@
             $aux = array_values($aux);
             return (count($aux) > 0) ? $aux : array();
     
+        }
+
+        public function GetById($id) {
+            $this->RetrieveData();
+    
+            $aux = array_filter($this->serviceList, function($service) use($id) {
+                return $service->getId() == $id;
+            });
+    
+            $aux = array_values($aux);
+    
+            return (count($aux) > 0) ? $aux[0] : array();
+        }
+
+        public function modifyService($serviceId, $status){
+            $this->RetrieveData();
+            $newService = $this->GetById($serviceId);
+            $newService->setStatus($status);
+            $this->serviceList = array_filter($this->serviceList, function($service) use($newService) {
+                return $service->getId() != $newService->getId();
+            });
+
+            array_push($this->serviceList, $newService);
+
+            $this->SaveData();
         }
 
         public function Remove($id)
