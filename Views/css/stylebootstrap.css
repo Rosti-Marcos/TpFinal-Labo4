@@ -150,6 +150,14 @@
 	border: #050505 2px solid;
 }
 
+.img2{
+	background-image: url('../img/dogwp.jpg');
+	display: block;
+	width: auto;
+	height: 550px;
+	border: #050505 2px solid;
+}
+
 
 
   

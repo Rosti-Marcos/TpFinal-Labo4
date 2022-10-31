@@ -1,6 +1,7 @@
 <?php 
  include('header.php');
 ?>
+<div id="service" class="section img">
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -47,7 +48,7 @@
 		</div>
 		
 	</section>
-
+</div>
 <?php 
  include('footer.php');
 ?>

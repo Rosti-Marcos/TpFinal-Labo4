@@ -25,10 +25,21 @@
 
         public function ShowBookingsKeeper()
         {
+            $this->CheckFinishedBookings();
             $userController = new UserController();
             $keeperController = new KeeperController();
             $keeper = $keeperController->keeperDAO->GetByUser($_SESSION['loggedUser']);
             $bookingList = $this->bookingDAO->getByKeeper($keeper);
+            $userList = $userController->userDAO->getAll();
+            require_once(VIEWS_PATH."keeper-reservationList.php");
+        }
+
+        public function ShowBookingsKeeperByStatus($status)
+        {
+            $userController = new UserController();
+            $keeperController = new KeeperController();
+            $keeper = $keeperController->keeperDAO->GetByUser($_SESSION['loggedUser']);
+            $bookingList = $this->bookingDAO->getByStatus($status);
             $userList = $userController->userDAO->getAll();
             require_once(VIEWS_PATH."keeper-reservationList.php");
         }
@@ -38,7 +49,8 @@
             $keeperController = new KeeperController;
             $serviceController = new serviceController();
             $petController = new PetController();
-            $serviceList = $serviceController->serviceDAO->GetByKeeperId($userId);
+            $pet = $petController->petDAO->getByPetId($petId);
+            $serviceList = $serviceController->serviceDAO->GetAvailablesByKeeper($userId);
             $bookingList = $this->bookingDAO->GetByKeeperId($userId);
             $petUserList = $petController->petDAO->GetByUser($user);
             if($petUserList){
@@ -61,51 +73,75 @@
                         $flag = 0;
                         foreach($serviceList as $service){
                             if($service->getStatus() == 'available' && $startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
+                                $cont++;
                                 foreach($bookingList as $book){
-                                    if(($startDate <= $book->getStartDate() && $endDate >= $book->getStartDate() || 
-                                        $startDate <= $book->getEndDate() && $endDate >= $book->getEndDate()) && 
-                                        $petSpecieId != $book->getPet()->getPetSpecie()->getPetSpecieId()){
+                                    if($startDate <= $book->getStartDate() && $endDate >= $book->getStartDate() || 
+                                        $startDate <= $book->getEndDate() && $endDate >= $book->getEndDate()){
+                                        if($pet->getPetSpecie()->getPetSpecieId() != $book->getPet()->getPetSpecie()->getPetSpecieId()){
                                             $flag = 1;
                                         }
-                                    if(!$bookingList || $flag == 0){
-                                        $keeper = $keeperController->keeperDAO->GetById($userId);
-                                        $pet = $petController->petDAO->getByPetId($petId);
-                                        $remuneration = $keeper->getRemuneration();
-                                        $date1=date_create($startDate);
-                                        $date2=date_create($endDate);
-                                        $diff=$date2->diff($date1)->format("%a");
-                                        $price = $remuneration * $diff;
-                                        $booking = new booking();
-                                        $booking->setUser($user);
-                                        $booking->setKeeper($keeper);
-                                        $booking->setStartDate($startDate);
-                                        $booking->setEndDate($endDate);
-                                        $booking->setPrice($price);
-                                        $booking->setStatus('pending');
-                                        $booking->setPet($pet);
-                                        $this->bookingDAO->Add($booking);
-                                        $serviceController->Add($startDate, $endDate, 'pending', $keeper);
-                                        $message = 'Your booking has been successfully set';
-                                        echo "<script>alert('$message');</script>";
-                                        break;
-                                    }else if($flag == 1){
-                                        $message = 'Some of the dates entered had already been booked with different species. Please enter different dates.'; 
-                                        echo "<script>alert('$message');</script>";
-                                        $this->PreReservation($userId);
-                                        break;
+                                        if($book->getUser() == $_SESSION["loggedUser"] && $book->getPet() == $pet){
+                                            switch ($book->getStatus()) {
+                                                case 'pending':
+                                                    $message = 'You already have a pending reservation.';
+                                                    echo "<script>alert('$message');</script>";
+                                                    break;
+                                                case 'approved':
+                                                    $message = 'Your reservation is already approved.';
+                                                    echo "<script>alert('$message');</script>";
+                                                    break;
+                                                case 'rejected':
+                                                    $message = 'Your reservation was already rejected.';
+                                                    echo "<script>alert('$message');</script>";
+                                                    break;
+                                            }
+                                            $flag = 2;     
+                                            break;
+                                        }   
+                                            
                                     }
-                                    
                                 }
-                            }else{
-                                $cont++;
+
+                                if(!$bookingList || $flag == 0){
+                                        
+                                    $keeper = $keeperController->keeperDAO->GetById($userId);
+                                    $remuneration = $keeper->getRemuneration();
+                                    $date1=date_create($startDate);
+                                    $date2=date_create($endDate);
+                                    $diff=$date2->diff($date1)->format("%a");
+                                    $price = $remuneration * ($diff + 1);
+                                    $booking = new booking();
+                                    $booking->setUser($user);
+                                    $booking->setKeeper($keeper);
+                                    $booking->setStartDate($startDate);
+                                    $booking->setEndDate($endDate);
+                                    $booking->setPrice($price);
+                                    $booking->setStatus('pending');
+                                    $booking->setPet($pet);
+                                    $this->bookingDAO->Add($booking);
+                                    $serviceController->Add($startDate, $endDate, 'pending', $keeper);
+                                    $cont++;
+                                    $message = 'Your booking has been successfully set';
+                                    echo "<script>alert('$message');</script>";
+                                    break;
+                                }else if($flag == 1){
+                                    $message = 'Some of the dates entered had already been booked with different species. Please enter different dates.'; 
+                                    echo "<script>alert('$message');</script>";
+                                    $this->PreReservation($userId);
+                                    break;
+                                }else{
+                                    $this->PreReservation($userId);
+                                    break;
+                                }
                             }
                         }
                         
                     }
-                    if($cont < sizeOf(serviceList)){
+                    if($cont < sizeOf($serviceList)){
                         $message = 'Some of the dates introduced are not available, please check the availability calendar and enter a new one.'; 
                         echo "<script>alert('$message');</script>";
                         $this->PreReservation($userId);
+                        
                     }
                 }
             }else{
@@ -154,6 +190,22 @@
                 }
             }
             $this->ShowBookingsKeeper();
+        }
+
+        public function CheckFinishedBookings(){
+            $bookingList = $this->bookingDAO->GetByKeeperId($_SESSION["loggedUser"]->getUserId());
+            foreach($bookingList as $booking){
+                if($booking->getEndDate() < date('y-m-d')){
+                    switch($booking->getStatus()){
+                        case 'approved':
+                            $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "finished");
+                            break;
+                        case 'pending':
+                            $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "unanswered");
+                    }
+                    
+                }
+            }
         }
         
         public function Remove($id)

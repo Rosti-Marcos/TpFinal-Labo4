@@ -2,6 +2,8 @@
  include('header.php');
  include('nav-bar.php');
 ?>
+<div id="service" class="section">
+<body background="<?php echo FRONT_ROOT . IMG_PATH . "bgPerroBlanco.jpg"?>">
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -9,6 +11,33 @@
 					<h2 class="heading-section">Reservation List</h2>
 				</div>
 			</div>
+		<div class="container">       
+        <div class="row justify-content-md-center">
+            <div class="col-6 col-md-7">
+              <div class="card mb-12">
+                <div class="card-body">
+                  <div class="row">
+				  	 <div class="col-sm-4" style="text-align: center;">
+				  		<h5 class="mb-2" style="border-right: 1px solid grey">Bookings Filter</h5>
+                     </div>
+                    	<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."finished"?>" class="btn btn-primary" for="option.finished" value="finished">Finished</a>
+						</div>
+						<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."pending"?>" class="btn btn-warning" for="option.pending" value="pending">Pending</a>
+						</div>
+						<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."approved"?>" class="btn btn-success" for="option.approved">Approved</a>
+						</div>
+						<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."rejected"?>" class="btn btn-danger" for="option.rejected">Rejected</a>
+                        </div>
+                     </div>           
+              		</div>
+            	</div>
+            </div>
+        </div>
+		<br/>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-wrap">
@@ -54,7 +83,12 @@
 											case 'rejected':
 												$class =  "btn btn-danger"; 
 												break;
-
+											case 'finished':
+												$class =  "btn btn-primary"; 
+												break;
+											case 'unanswered':
+												$class = "btn btn-secondary"; 
+												break;
 										}
 									?>
 									<td style="text-align: center;"">
@@ -91,9 +125,15 @@
 			  </form>
 			</div>
 		</div>
-		<a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
+		<div class="row justify-content-end">
+        <div class="d-flex align-items-center justify-content-center pb-4">
+                  <p class="mb-0 me-2"></p>
+                    <button type="button" class="btn btn-outline-danger"
+                      onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+                    </div>
+         </div>
 	</section>
-
+</div>
 	<?php 
  include('footer.php');
 ?>

@@ -2,6 +2,7 @@
  include('header.php');
  include('nav-bar.php');
 ?>
+<div id="service" class="section">
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -72,7 +73,12 @@
 			  </form>
 			</div>
 		</div>
-		<a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+                  <p class="mb-0 me-2"></p>
+                    <button type="button" class="btn btn-outline-danger"
+                      onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
+                    </div>
+         </div>
 	</section>
 
 	<?php 
