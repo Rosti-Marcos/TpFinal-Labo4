@@ -1,83 +1,87 @@
 <?php
+    namespace DAO;
 
-namespace DAO;
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
+    use Models\UserType as UserType;
+    use DAO\IUserTypeDAO as IUserTypeDAO;
 
-use Models\UserType as UserType;
-use DAO\IUserTypeDAO as IUserTypeDAO;
+    class UserTypeDAO implements IUserTypeDAO{
+        private $connection;
+        private $tableName = "user_type";
 
-class UserTypeDAO implements IUserTypeDAO {
+        public function Add(UserType $userType)
+        {
+            try
+            {
+                $query = "INSERT INTO " . $this->tableName . " (id, type) VALUES (:id, :type);";
+                
+                $parameters["id"] = $userType->getUserTypeId();
+                $parameters["type"] = $userType->getUserType();                
 
-    private $userTypeList = array();
-    private $fileName = ROOT . "Data/userTypes.json";
+                //$this->connection = Connection::GetInstance();
 
-
-    public function GetAll() {
-        $this->RetrieveData();
-        return $this->userTypeList;
-    }
-
-    public function Add(UserType $userType) {
-        $this->RetrieveData();
-
-        $userType->setUserTypeID($this->GetNextId());
-
-        array_push($this->userTypeList, $userType);
-
-        $this->SaveData();
-    }
-
-
-    private function GetNextId() {
-        $id = 0;
-        foreach($this->userTypeList as $userType) {
-            $id = ($userType->getUserTypeId() > $id) ? $userType->getUserTypeID() : $id;
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
         }
-        return $id + 1;
-    }
 
-    public function GetById($userTypeId) {
-        $this->RetrieveData();
+        public function GetAll()
+        {
+            try
+            {
+                $userTypeList = array();
 
-        $aux = array_filter($this->userTypeList, function($userType) use($userTypeId) {
-            return $userType->getUserTypeId() == $userTypeId;
-        });
+                $query = "SELECT * FROM ".$this->tableName;
 
-        $aux = array_values($aux);
+                //$this->connection = Connection::GetInstance();
 
-        return (count($aux) > 0) ? $aux[0] : array();
-    }
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $userType = new UserType();
+                    $userType->setUserTypeId($row["id"]);
+                    $userType->setUserType($row["type"]);
+                    
 
-    private function RetrieveData() {
-        $this->userTypeList = array();
+                    array_push($userTypeList, $userType);
+                }
 
-        if(file_exists($this->fileName)) {
-            $jsonContent = file_get_contents($this->fileName);
-            $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+                return $userTypeList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
 
-            foreach($arrayDecode as $value) {
+        public function GetById($id)
+        {
+            try
+            {
+                
+
+                $query = "SELECT * FROM ".$this->tableName."WHERE id = " . $id;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);                
+                if(!empty($resultSet)){
                 $userType = new UserType();
-                $userType->setUserTypeId($value["userTypeId"]);
-                $userType->setUserType($value["userType"]);
-                array_push($this->userTypeList, $userType);
+                $userType->setUserTypeId($resultSet[0]["id"]);
+                $userType->setUserType($resultSet[0]["type"]);       
+
+                return $userType;
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
             }
         }
     }
-
-    private function SaveData() {
-
-        $arrayEncode = array();
-
-        foreach ($this->userTypeList as $user){
-
-            $valueArray = array();
-            $valueArray["userTypeId"]=$user->getUserTypeId();
-            $valueArray["userType"]= $user->getUserType();
-
-            array_push($arrayEncode, $valueArray);
-        }
-        $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-        file_put_contents($this->fileName, $jsonContent);
-    }
-
-}
 ?>

@@ -1,86 +1,83 @@
 <?php
+    namespace DAO;
 
-namespace DAO;
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
+    use Models\PetSpecie as PetSpecie;
+    use DAO\IPetSpecieDAO as IPetSpecieDAO;
 
-use Models\PetSpecie as PetSpecie;
-use DAO\IPetSpecieDAO as IPetSpecieDAO;
+    class PetSpecieDAO implements IPetSpecieDAO{
+        private $connection;
+        private $tableName = "pet_specie";
 
+        public function Add(PetSpecie $petSpecie)
+        {
+            try
+            {
+                $query = "INSERT INTO " . $this->tableName . " (id, pet_specie) VALUES (:id, :pet_specie);";
+                
+                $parameters["id"] = $petSpecie->getPetSpecieId();
+                $parameters["pet_specie"] = $petSpecie->getPetSpecie();                
 
-class PetSpecieDAO implements iPetSpecieDAO{
+                $this->connection = Connection::GetInstance();
 
-    private $petSpecieList = array();
-    private $fileName = ROOT . "Data/petSpecies.json";
-
-    function GetAll(){
-        $this->RetrieveData();
-        return $this->petSpecieList;
-    }
-
-    function Add(PetSpecie $petSpecie){
-
-        $this->RetrieveData();
-
-        $petSpecie->setPetSpecieId($this->GetNextId());
-
-        array_push($this->petSpecieList, $petSpecie);
-
-        $this->SaveData();
-
-    }
-
-    private function GetNextId() {
-        $id = 0;
-        foreach($this->petSpecieList as $petSpecie) {
-            $id = ($petSpecie->getPetSpecieId() > $id) ? $petSpecie->getPetSpecieId() : $id;
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
         }
-        return $id + 1;
-    }
 
-    public function RetrieveData() {
-        $this->petSpecieList = array();
+        public function GetAll()
+        {
+            try
+            {
+                $petSpecieList = array();
 
-        if(file_exists($this->fileName)) {
-            $jsonContent = file_get_contents($this->fileName);
-            $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+                $query = "SELECT * FROM ".$this->tableName;
 
-            foreach($arrayDecode as $value) {
-                $petSpecie = new PetSpecie();
-                $petSpecie->setPetSpecieId($value["petSpecieId"]);
-                $petSpecie->setPetSpecie($value["petSpecie"]);
+                $this->connection = Connection::GetInstance();
 
-                array_push($this->petSpecieList, $petSpecie);
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){                
+                    $petSpecie= new PetSpecie();
+                    $petSpecie->setPetSpecieId($row["id"]);
+                    $petSpecie->setPetSpecie($row["pet_specie"]);                    
+
+                    array_push($petSpecieList, $petSpecie);
+                }
+
+                return $petSpecieList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetById($id){
+            try{
+                $petSpecieList = array();
+
+                $query = "SELECT * FROM ".$this->tableName."WHERE id = " . $id;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);                
+                if(!empty($resultSet)){
+                $petSpecie= new PetSpecie();
+                $petSpecie->setPetSpecieId($resultSet["id"]);
+                $petSpecie->setPetSpecie($resultSet["pet_specie"]);       
+
+                return $petSpecieList;
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
             }
         }
     }
-
-    private function SaveData() {
-
-        $arrayEncode = array();
-
-        foreach ($this->petSpecieList as $petSpecie){
-
-            $valueArray = array();
-            $valueArray["petSpecieId"]= $petSpecie->getPetSpecieId();
-            $valueArray["petSpecie"]= $petSpecie->getPetSpecie();
-
-            array_push($arrayEncode, $valueArray);
-        }
-        $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-        file_put_contents($this->fileName, $jsonContent);
-    }
-
-    public function GetById($petSpecieId) {
-        $this->RetrieveData();
-
-        $aux = array_filter($this->petSpecieList, function($petSpecie) use($petSpecieId) {
-            return $petSpecie->getPetSpecieId() == $petSpecieId;
-        });
-
-        $aux = array_values($aux);
-
-        return (count($aux) > 0) ? $aux[0] : array();
-    }
-
-
-}
 ?>

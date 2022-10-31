@@ -1,11 +1,36 @@
 <?php
-
     namespace DAO;
 
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
     use Models\Service as Service;
     use DAO\IServiceDAO as IServiceDAO;
+    use Models\User as User;
+    use Models\UserType as UserType;
 
     class ServiceDAO implements IServiceDAO{
+
+        private $connection;
+        private $tableName = "service";
+
+        public function Add(Service $service)
+        {
+            $query = "INSERT INTO " . $this->tableName . " (id, user_id, start_date, end_date, status) 
+                          VALUES (:id, :user_id, :start_date, :end_date, :status);";
+                
+            $parameters["id"] = "";
+            $parameters["user_id"] = $service->getUser()->getUserId();
+            $parameters["start_date"] = $service->getStartDate();
+            $parameters["end_date"] = $service->getEndDate();
+            $parameters["status"] = $service->getStatus();            
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
+
 
         public $serviceList = array();
         private $fileName = ROOT . "Data/services.json";
@@ -51,97 +76,92 @@
             $id = 0;
             foreach($this->serviceList as $service) {
                 $id = ($service->getId() > $id) ? $service->getId() : $id;
+
             }
-            return $id + 1;
         }
 
-        private function RetrieveData() {
-            $this->serviceList = array();
+        public function GetById($serviceId){//PROBAR!!!!!!!
+            $user = new User;
+            $userType = new UserType;
 
-            if(file_exists($this->fileName)) {
-    
-                $jsonContent = file_get_contents($this->fileName);
-                $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayDecode as $value) {
-                    $service = new service();
-                    $service->setId($value["id"]);
-                    $service->setStartDate($value["startDate"]);
-                    $service->setEndDate($value["endDate"]);
-                    $service->setStatus($value["status"]);
+            $query = "select s.id, u.id, u.name, u.lastname, u.user_name, u.password, u.email, u.phone_number, u.birth_date, s.strat_date, s-end_date, s.status 
+            from ". $this->tableName . " s
+            inner join user u
+            on s.user_id = u.id
+            where s.id = '$serviceId'
+            UNION
+            select t.id, t.type
+            from user_type t
+            inner join user u
+            on u.user_type_id = t.id";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
+                    $service = new Service();
+                    $service->setId($resultSet[0]["id"]);
+                    $user->setUserId($resultSet[0]["id"]);
+                    $user->setname($resultSet[0]["name"]);
+                    $user->setLastname($resultSet[0]["lastname"]);
+                    $user->setUserName($resultSet[0]["user_name"]);
+                    $user->setPassword($resultSet[0]["password"]);
+                    $user->setEMail($resultSet[0]["email"]);
+                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
+                    $user->setBirthDate($resultSet[0]["birth_date"]);
+                    $service->setStartDate($resultSet[0]["start_date"]);
+                    $service->setEndDate($resultSet[0]["end_date"]);
+                    $service->setStatus($resultSet[0]["status"]);
+                    $userType->setUserTypeId($resultSet[0]["id"]);
+                    $userType->setUserType($resultSet[0]["type"]);
+                    $user->setUserType($userType);
+                    $service->setUser($user);                     
                     
-                    $userDAO = new UserDAO;
-                    $user = $userDAO->GetById($value["user"]);
-                    $service->setUser($user);
-                    array_push($this->serviceList, $service);
+                    return $service;   
                 }
+            }catch(Exeption $ex){
+                throw $ex;
             }
-        }
-        private function SaveData() {
+        }     
+            
+        public function GetAll()
+        {
+            try
+            {
+                $serviceList = array();
 
-            $arrayEncode = array();
+                $query = "SELECT * FROM ".$this->tableName;
 
-            foreach ($this->serviceList as $service){
+                $this->connection = Connection::GetInstance();
 
-                $valueArray = array();
-                $valueArray["id"] = $service->getId();
-                $valueArray["user"] = $service->getUser()->getUserId();
-                $valueArray["startDate"]= $service->getStartDate();
-                $valueArray["endDate"] = $service->getEndDate();
-                $valueArray["status"] = $service->getStatus();
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){
 
+                    $serviceTypeDAO = new ServiceTypeDAO;
+                    $serviceType = $serviceTypeDAO->GetById($row["Service_type"]);                     
 
-                array_push($arrayEncode, $valueArray);
+                    $service = new Service();
+                    $service->setServiceId($row["id"]);
+                    $service->setServiceType($serviceType);
+                    $service->setName($row["name"]);
+                    $service->setLastName($row["lastname"]);
+                    $service->setServiceName($row["Service_name"]);
+                    $service->setPassword($row["password"]);
+                    $service->setEMail($row["email"]);
+                    $service->setPhoneNumber($row["phone_number"]);
+                    $service->setBirthDate($row["birth_date"]);                    
+
+                    array_push($serviceList, $service);
+                }
+
+                return $serviceList;
             }
-            $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-            file_put_contents($this->fileName, $jsonContent);
-        }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }        
 
-
-        public function GetByKeeperId($keeperId) {
-            $this->RetrieveData();
-            $aux = array_filter($this->serviceList, function($service) use($keeperId) {
-                return $service->getUser()->getUserId() == $keeperId;
-            });
-            $aux = array_values($aux);
-            return (count($aux) > 0) ? $aux : array();
-    
-        }
-
-        public function GetById($id) {
-            $this->RetrieveData();
-    
-            $aux = array_filter($this->serviceList, function($service) use($id) {
-                return $service->getId() == $id;
-            });
-    
-            $aux = array_values($aux);
-    
-            return (count($aux) > 0) ? $aux[0] : array();
-        }
-
-        public function modifyService($serviceId, $status){
-            $this->RetrieveData();
-            $newService = $this->GetById($serviceId);
-            $newService->setStatus($status);
-            $this->serviceList = array_filter($this->serviceList, function($service) use($newService) {
-                return $service->getId() != $newService->getId();
-            });
-
-            array_push($this->serviceList, $newService);
-
-            $this->SaveData();
-        }
-
-        public function Remove($id)
-        {            
-            $this->RetrieveData();
-            
-            $this->serviceList = array_filter($this->serviceList, function($service) use($id){                
-                return $service->getId() != $id;
-            });
-            
-            $this->SaveData();
-        }
     }
 ?>
