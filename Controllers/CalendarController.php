@@ -11,7 +11,12 @@ class CalendarController{
     public function __construct($month = null) {
         $this->active_year = date('Y');
         $this->active_month = $month != null ? date($month) : date('m');
-        $this->active_day = date('d');
+        if($this->active_month == date('m')){
+            $this->active_day = date('d');
+        }else{
+            $this->active_day = date(1);
+        }
+        
     }
 
     public function ShowAvailabilityCalendar($month = null){
@@ -23,22 +28,52 @@ class CalendarController{
                 $startDate = $service->getStartDate();
                 $endDate = $service->getEndDate();
                 for($i = $startDate; $i <= $endDate; $i++){
-                    switch ($service->getStatus()) {
-                        case 'available':
-                            $calendar->add_event('Available', $i, 1, 'green');
-                            break;
-                        case 'unavailable':
-                            $calendar->add_event('Unavailable', $i, 1, 'red');
-                            break;
-                        case 'pending':
-                            $calendar->add_event('Pending', $i, 1, 'yellow');
-                            break;
-                        case 'reserved':
-                            $calendar->add_event('Reserved', $i, 1, 'blue');
-                            break; 
-                        case 'approved':
-                            $calendar->add_event('Approved', $i, 1, 'blue');
-                            break;  
+                    $dateF = date_create($i);
+                    $date = date_format($dateF, 'Y-m-d');
+                    $dateT = date_create(date('Y-m-d'));
+                    $dateToday = date_format($dateT, 'Y-m-d');
+                    $m = date( 'y-m-t' );
+                    if($date < $m){
+                        switch ($service->getStatus()) {
+                            case 'available':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Available', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Available', $i, 1, 'green');
+                                }
+                                break;
+                            case 'unavailable':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Unavailable', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Unavailable', $i, 1, 'red');
+                                }
+                                break;
+                            case 'pending':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Unanswered', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Pending', $i, 1, 'yellow');
+                                }
+                                break;
+                            case 'reserved':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Reserved', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Reserved', $i, 1, 'blue');
+                                }
+                                break;
+                            case 'rejected':
+                                $calendar->add_event('Rejected', $i, 1, 'grey');
+                                break;
+                            case 'approved':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Finished', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Approved', $i, 1, 'blue');
+                                }
+                                break;  
+                        }
                     }
                     
                 }
@@ -58,22 +93,52 @@ class CalendarController{
                 $startDate = $service->getStartDate();
                 $endDate = $service->getEndDate();
                 for($i = $startDate; $i <= $endDate; $i++){
-                    switch ($service->getStatus()) {
-                        case 'available':
-                            $calendar->add_event('Available', $i, 1, 'green');
-                            break;
-                        case 'unavailable':
-                            $calendar->add_event('Unavailable', $i, 1, 'red');
-                            break;
-                        case 'pending':
-                            $calendar->add_event('Pending', $i, 1, 'yellow');
-                            break;
-                        case 'reserved':
-                            $calendar->add_event('Reserved', $i, 1, 'blue');
-                            break;
-                        case 'rejected':
-                            $calendar->add_event('Rejected', $i, 1, 'grey');
-                            break;
+                    $dateF = date_create($i);
+                    $date = date_format($dateF, 'Y-m-d');
+                    $dateT = date_create(date('Y-m-d'));
+                    $dateToday = date_format($dateT, 'Y-m-d');
+                    $m = date( 'y-m-t' );
+                    if($date < $m){
+                        switch ($service->getStatus()) {
+                            case 'available':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Available', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Available', $i, 1, 'green');
+                                }
+                                break;
+                            case 'unavailable':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Unavailable', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Unavailable', $i, 1, 'red');
+                                }
+                                break;
+                            case 'pending':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Unanswered', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Pending', $i, 1, 'yellow');
+                                }
+                                break;
+                            case 'reserved':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Reserved', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Reserved', $i, 1, 'blue');
+                                }
+                                break;
+                            case 'rejected':
+                                $calendar->add_event('Rejected', $i, 1, 'grey');
+                                break;
+                            case 'approved':
+                                if($date < $dateToday){
+                                    $calendar->add_event('Finished', $i, 1, 'grey');
+                                }else{
+                                    $calendar->add_event('Approved', $i, 1, 'blue');
+                                }
+                                break;  
+                        }
                     }
                     
                 }
@@ -96,8 +161,8 @@ class CalendarController{
         $first_day_of_week = array_search(date('D', strtotime($this->active_year . '-' . $this->active_month . '-1')), $days);
         $html = '<div class="calendar">';
         $html .= '<div class="header">';
-        $html .= '<div class="month-year">';
-        $html .= date('F Y', strtotime($this->active_year . '-' . $this->active_month . '-' . $this->active_day));
+        $html .= '<div class="month-year">';   
+        $html .= date('M Y', strtotime($this->active_year . '-' . $this->active_month . '-' . $this->active_day));
         $html .= '</div>';
         $html .= '</div>';
         $html .= '<div class="days">';

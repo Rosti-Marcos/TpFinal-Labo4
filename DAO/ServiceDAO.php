@@ -9,6 +9,7 @@
     use Models\UserType as UserType;
 
     class ServiceDAO implements IServiceDAO{
+
         private $connection;
         private $tableName = "service";
 
@@ -29,6 +30,53 @@
                 
             } catch(Exception $ex) {
                 throw $ex;
+
+
+        public $serviceList = array();
+        private $fileName = ROOT . "Data/services.json";
+
+
+        public function GetAll() {
+            $this->RetrieveData();
+            return $this->serviceList;
+        }
+
+        public function GetAvailables() {
+            $available = 'available';
+            $this->RetrieveData();
+            $aux = array_filter($this->serviceList, function($service) use($available) {
+                return $service->getStatus() == $available ;
+            });
+            $aux = array_values($aux);
+            return (count($aux) > 0) ? $aux : array();
+        }
+
+        public function GetAvailablesByKeeper($userId) {
+            $available = 'available';
+            $this->RetrieveData();
+            $aux = array_filter($this->serviceList, function($service) use($available, $userId) {
+                return ($service->getStatus() == $available  && $service->getUser()->getUserId() == $userId);
+            });
+            $aux = array_values($aux);
+            return (count($aux) > 0) ? $aux : array();
+        }
+
+        public function Add(Service $service) {
+            $this->RetrieveData();
+
+            $service->setId($this->GetNextId());
+
+            array_push($this->serviceList, $service);
+
+            $this->SaveData();
+        }
+
+
+        private function GetNextId() {
+            $id = 0;
+            foreach($this->serviceList as $service) {
+                $id = ($service->getId() > $id) ? $service->getId() : $id;
+
             }
         }
 

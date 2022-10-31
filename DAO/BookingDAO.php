@@ -71,6 +71,16 @@
             return (count($aux) > 0) ? $aux[0] : array();
         }
 
+        public function GetByStatus($status) {
+            $this->RetrieveData();
+            $user = $_SESSION["loggedUser"];
+            $aux = array_filter($this->bookingList, function($booking) use($status, $user) {
+                return ($booking->getKeeper()->getUser() == $user && $booking->getStatus() == $status);
+            });
+            $aux = array_values($aux);
+            return (count($aux) > 0) ? $aux : array();
+        }
+
         public function Add(Booking $booking) {
             $this->RetrieveData();
 

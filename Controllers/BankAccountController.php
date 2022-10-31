@@ -14,10 +14,5 @@
             $this->bankAccountDAO = new BankAccountDAO;
 
         }
-
-        public function Add()
-        {
-            require_once(VIEWS_PATH."bankAccount-add.php");
-        }
     }
     ?>
