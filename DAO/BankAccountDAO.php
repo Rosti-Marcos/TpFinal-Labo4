@@ -64,7 +64,7 @@ class BankAccountDAO implements IBankAccountDAO{
                 $bankAccount->setId($value["id"]);
                 $bankAccount->setUser($user);
                 $bankAccount->setAccountNbr($value["accountNbr"]);
-                $bankAccount->setPrice($value["price"]);
+                $bankAccount->setBalance($value["balance"]);
                               
                 array_push($this->bankAccountList, $bankAccount);
             }
@@ -81,7 +81,7 @@ class BankAccountDAO implements IBankAccountDAO{
             $valueArray["id"]= $bankAccount->getId();
             $valueArray["user"]= $bankAccount->getUser()->getUserId();
             $valueArray["accountNbr"] = $bankAccount->getAccountNbr();
-            $valueArray["price"] = $bankAccount->getPrice();
+            $valueArray["balance"] = $bankAccount->getBalance();
             
             array_push($arrayEncode, $valueArray);
         }

@@ -5,7 +5,7 @@
         private $id;
         private User $user;
         private $accountNbr;
-        private $price;
+        private $balance;
 
         
         public function getId(){
@@ -32,12 +32,12 @@
             $this->accountNbr = $accountNbr;
         }
 
-        public function getPrice(){
-            return $this->price;
+        public function getBalance(){
+            return $this->balance;
         }
 
-        public function setPrice($price){
-            $this->price = $price;
+        public function setBalance($balance){
+            $this->balance = $balance;
         }
     }
 
