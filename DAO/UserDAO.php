@@ -1,140 +1,141 @@
 <?php
-
     namespace DAO;
 
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
     use Models\User as User;
     use DAO\IUserDAO as IUserDAO;
+    use Models\UserType as UserType;
 
+    class UserDAO implements IUserDAO{
+        private $connection;
+        private $tableName = "user";
 
-    class UserDAO implements IUserDAO {
+        public function Add(User $user)
+        {
+            $query = "INSERT INTO " . $this->tableName . " (user_type_id, name, lastname, user_name, password, email, phone_number, birth_date) 
+                          VALUES (:user_type_id, :name, :lastname, :user_name, :password, :email, :phone_number, :birth_date);";
+                
+            $parameters["user_type_id"] = 1;
+            $parameters["name"] = $user->getName();
+            $parameters["lastname"] = $user->getLastname();
+            $parameters["user_name"] = $user->getUserName();
+            $parameters["password"] = $user->getPassword();
+            $parameters["email"] = $user->geteMail();
+            $parameters["phone_number"] = $user->getPhoneNumber();
+            $parameters["birth_date"] = $user->getBirthDate();
 
-        private $userList = array();
-        private $fileName = ROOT . "Data/users.json";
-
-
-        public function GetAll() {
-            $this->RetrieveData();
-            return $this->userList;
-        }
-
-        public function Add(User $user) {
-            $userTypeDAO = new UserTypeDAO;
-            $userType = $userTypeDAO->GetById(1);
-           
-            $this->RetrieveData();
-            $user->setUserId($this->GetNextId());
-            $user->setUserType($userType);
-            array_push($this->userList, $user);
-
-            $this->SaveData();
-        }
-
-
-        public function GetNextId() {
-            $id = 0;
-            foreach($this->userList as $user) {
-                $id = ($user->getUserId() > $id) ? $user->getUserId() : $id;
+            try{
+                //$this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
             }
-            return $id + 1;
         }
 
-        public function GetById($userId) {
-            $this->RetrieveData();
-    
-            $aux = array_filter($this->userList, function($user) use($userId) {
-                return $user->getUserId() == $userId;
-            });
-    
-            $aux = array_values($aux);
-    
-            return (count($aux) > 0) ? $aux[0] : array();
-        }
+        /*public function GetByUserName($userName){
+            $userType = new UserType;
 
-        public function GetByUserName($userName) {
-            $this->RetrieveData();
+            $query = "select u.id, t.id, t.type, u.name, u.lastname, u.user_name, u.password, u.email, u.phone_number, u.birth_date 
+            from ". $this->tableName . " u
+            inner join user_type t
+            on u.user_type_id = t.id
+            WHERE user_name = '$userName'";
 
-            $aux = array_filter($this->userList, function($user) use($userName) {
-                return $user->getUserName() == $userName;
-            });
-
-            $aux = array_values($aux);
-
-            return (count($aux) > 0) ? $aux[0] : array();
-        }
-
-        private function RetrieveData() {
-            $this->userList = array();
-
-            if(file_exists($this->fileName)) {
-                $jsonContent = file_get_contents($this->fileName);
-                $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayDecode as $value) {
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
                     $user = new User();
-                    $user->setUserId($value["userId"]);
-                    $user->setName($value["name"]);
-                    $user->setLastname($value["lastname"]);
-                    $user->setUserName($value["userName"]);
-                    $user->setPassword($value["password"]);
-                    $user->setEMail($value["eMail"]);
-                    $user->setPhoneNumber($value["phoneNumber"]);
-                    $user->setBirthDate($value["birthDate"]);
+                    $user->setUserId($resultSet[0]["id"]);
+                    $userType->setUserTypeId($resultSet[0]["id"]);
+                    $userType->setUserType($resultSet[0]["type"]);
+                    $user->setUserType($userType);
+                    $user->setName($resultSet[0]["name"]);
+                    $user->setLastName($resultSet[0]["lastname"]);
+                    $user->setUserName($resultSet[0]["user_name"]);
+                    $user->setPassword($resultSet[0]["password"]);
+                    $user->setEMail($resultSet[0]["email"]);
+                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
+                    $user->setBirthDate($resultSet[0]["birth_date"]);                    
+                    
+                    return $user;   
+                }
+            }catch(Exeption $ex){
+                throw $ex;
+            }
+        }*/     
+            
+        public function GetAll()
+        {
+            try
+            {
+                $userList = array();
+
+                $query = "SELECT * FROM ".$this->tableName;
+
+                //$this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){
 
                     $userTypeDAO = new UserTypeDAO;
-                    $userType = $userTypeDAO->GetById($value["userType"]);
+                    $userType = $userTypeDAO->GetById($row["user_type"]);                     
+
+                    $user = new User();
+                    $user->setUserId($row["id"]);
                     $user->setUserType($userType);
+                    $user->setName($row["name"]);
+                    $user->setLastName($row["lastname"]);
+                    $user->setUserName($row["user_name"]);
+                    $user->setPassword($row["password"]);
+                    $user->setEMail($row["email"]);
+                    $user->setPhoneNumber($row["phone_number"]);
+                    $user->setBirthDate($row["birth_date"]);                    
 
-                    array_push($this->userList, $user);
+                    array_push($userList, $user);
                 }
+
+                return $userList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
             }
         }
-        private function SaveData() {
-
-            $arrayEncode = array();
-
-            foreach ($this->userList as $user){
-
-                $valueArray = array();
-                $valueArray["userId"]=$user->getUserId();
-                $valueArray["userType"]=$user->getUserType()->getUserTypeId();
-                $valueArray["name"]= $user->getName();
-                $valueArray["lastname"] = $user->getLastname();
-                $valueArray["userName"] = $user->getUserName();
-                $valueArray["password"] = $user->getPassword();
-                $valueArray["eMail"] = $user->getEMail();
-                $valueArray["phoneNumber"] = $user->getPhoneNumber();
-                $valueArray["birthDate"] = $user->getBirthDate();
-
-                array_push($arrayEncode, $valueArray);
+        
+        public function GetByUserName($userName){
+            $userType = new UserType();
+            $userTypeDAO = new UserTypeDAO();
+            
+            $query = "select * 
+            from ". $this->tableName . "            
+            WHERE user_name = '$userName'";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
+                    $user = new User();
+                    $user->setUserId($resultSet[0]["id"]);                    
+                    $user->setName($resultSet[0]["name"]);
+                    $user->setLastName($resultSet[0]["lastname"]);
+                    $user->setUserName($resultSet[0]["user_name"]);
+                    $user->setPassword($resultSet[0]["password"]);
+                    $user->setEMail($resultSet[0]["email"]);
+                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
+                    $user->setBirthDate($resultSet[0]["birth_date"]);                    
+                    $userType = $userTypeDAO->GetById($resultSet[0]["user_type_id"]);
+                    $user->setUserType($userType);                       
+                }
+            }catch(Exeption $ex){
+                throw $ex;
             }
-            $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-            file_put_contents($this->fileName, $jsonContent);
-        }
-
-        public function Modify(User $newUser) {
-            $this->RetrieveData();
-
-            $this->userList = array_filter($this->userList, function($user) use($newUser) {
-                return $user->getUserId() != $newUser->getUserId();
-            });
-
-            array_push($this->userList, $newUser);
-
-            $this->SaveData();
-        }
-
-        public function TurnToKeeper (User $newUser) {
-            $this->RetrieveData();
-            $userTypeDAO = new UserTypeDAO;
-            $userType = $userTypeDAO->GetById(2);
-            $newUser->setUserType($userType);
-            $this->userList = array_filter($this->userList, function($user) use($newUser) {
-                return $user->getUserId() != $newUser->getUserId();
-            });
-
-            array_push($this->userList, $newUser);
-
-            $this->SaveData();
+            
+           
+            if($user){return $user;}
         }
 
     }

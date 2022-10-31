@@ -1,84 +1,87 @@
 <?php
+    namespace DAO;
 
-namespace DAO;
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
+    use Models\PetSize as PetSize;
+    use DAO\IPetSizeDAO as IPetSizeDAO;
 
-use Models\PetSize as PetSize;
-use DAO\IPetSizeDAO as IPetSizeDAO;
+    class PetSizeDAO implements IPetSizeDAO{
+        private $connection;
+        private $tableName = "pet_size";
 
+        public function Add(PetSize $petSize)
+        {
+            try
+            {
+                $query = "INSERT INTO " . $this->tableName . " (id, pet_size) VALUES (:id, :pet_size);";
+                
+                $parameters["id"] = $userType->getPetSizeId();
+                $parameters["pet_size"] = $userType->getPetSize();                
 
-class PetSizeDAO implements iPetSizeDAO{
+                $this->connection = Connection::GetInstance();
 
-    private $petSizeList = array();
-    private $fileName = ROOT . "Data/petSizes.json";
-
-    function GetAll(){
-        $this->RetrieveData();
-        return $this->petSizeList;
-    }
-
-    function Add(PetSize $petSize){
-
-        $this->RetrieveData();
-
-        $petSize->setPetSizeId($this->GetNextId());
-
-        array_push($this->petSizeList, $petSize);
-
-        $this->SaveData();
-
-    }
-
-    private function GetNextId() {
-        $id = 0;
-        foreach($this->petSizeList as $petSize) {
-            $id = ($petSize->getPetSizeId() > $id) ? $petSize->getPetSizeId() : $id;
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
         }
-        return $id + 1;
-    }
 
-    public function RetrieveData() {
-        $this->petSizeList = array();
+        public function GetAll()
+        {
+            try
+            {
+                $petSizeList = array();
 
-        if(file_exists($this->fileName)) {
-            $jsonContent = file_get_contents($this->fileName);
-            $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+                $query = "SELECT * FROM ".$this->tableName;
 
-            foreach($arrayDecode as $value) {
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $petSize = new PetSize();
+                    $petSize->setUserTypeId($row["id"]);
+                    $petSize->setUserType($row["pet_size"]);
+                    
+
+                    array_push($petSizeList, $petSize);
+                }
+
+                return $petSizeList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetById($id)
+        {
+            try
+            {
+                $userTypeList = array();
+
+                $query = "SELECT * FROM ".$this->tableName."WHERE id = " . $id;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);                
+                if(!empty($resultSet)){
                 $petSize = new PetSize();
-                $petSize->setPetSizeId($value["petSizeId"]);
-                $petSize->setPetSize($value["petSize"]);
+                $petSize->setPetSizeId($resultSet["id"]);
+                $petSize->setPetSize($resultSet["pet_size"]);       
 
-                array_push($this->petSizeList, $petSize);
+                return $petSizeList;
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
             }
         }
     }
-
-    private function SaveData() {
-
-        $arrayEncode = array();
-
-        foreach ($this->petSizeList as $petSize){
-
-            $valueArray = array();
-            $valueArray["petSizeId"]= $petSize->getPetSizeId();
-            $valueArray["petSize"]= $petSize->getPetSize();
-
-            array_push($arrayEncode, $valueArray);
-        }
-        $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-        file_put_contents($this->fileName, $jsonContent);
-    }
-    
-    public function GetById($petSizeId) {
-        $this->RetrieveData();
-
-        $aux = array_filter($this->petSizeList, function($petSize) use($petSizeId) {
-            return $petSize->getPetSizeId() == $petSizeId;
-        });
-
-        $aux = array_values($aux);
-
-        return (count($aux) > 0) ? $aux[0] : array();
-    }
-}
 ?>

@@ -10,5 +10,29 @@
         "petBreed": "asd",
         "petSpecie": 2,
         "observation": "gato"
+    },
+    {
+        "petId": 2,
+        "petName": "Patan",
+        "user": 2,
+        "vaccineCert": "Views\/uploads\/cert_vac5_1667049852.jpeg",
+        "petSize": 3,
+        "petPics": "Views\/uploads\/rott1_1667049852.jpg",
+        "petVideo": "Views\/uploads\/rott_1667049852.mp4",
+        "petBreed": "Rottweiler",
+        "petSpecie": 1,
+        "observation": "Buen caracter, manzo"
+    },
+    {
+        "petId": 3,
+        "petName": "Nikita",
+        "user": 2,
+        "vaccineCert": "Views\/uploads\/certVac_1667049892.jpg",
+        "petSize": 1,
+        "petPics": "Views\/uploads\/gato3_1667049892.jpg",
+        "petVideo": "Views\/uploads\/perritoGris_1667049892.mp4",
+        "petBreed": "comun",
+        "petSpecie": 2,
+        "observation": ""
     }
 ]
