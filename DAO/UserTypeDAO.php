@@ -65,7 +65,7 @@
             {
                 
 
-                $query = "SELECT * FROM ".$this->tableName."WHERE id = " . $id;
+                $query = "SELECT * FROM ".$this->tableName." WHERE id = " . $id;
 
                 $this->connection = Connection::GetInstance();
 

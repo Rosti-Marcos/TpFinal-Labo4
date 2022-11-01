@@ -130,7 +130,7 @@
                     $userType = $userTypeDAO->GetById($resultSet[0]["user_type_id"]);
                     $user->setUserType($userType);                       
                 }
-            }catch(Exeption $ex){
+            }catch(Exception $ex){
                 throw $ex;
             }
             
