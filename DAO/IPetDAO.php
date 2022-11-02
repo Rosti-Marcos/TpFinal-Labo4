@@ -6,7 +6,7 @@ namespace DAO;
 
     interface iPetDAO {
         function GetAll();
-        function GetByPetId($petId);//reemplazar por Id
+        function GetByPetId($petId);
         function Add(Pet $pet);
     }
 ?>

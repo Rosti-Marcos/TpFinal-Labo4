@@ -26,46 +26,13 @@
             $parameters["birth_date"] = $user->getBirthDate();
 
             try{
-                //$this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 
             } catch(Exception $ex) {
                 throw $ex;
             }
-        }
-
-        /*public function GetByUserName($userName){
-            $userType = new UserType;
-
-            $query = "select u.id, t.id, t.type, u.name, u.lastname, u.user_name, u.password, u.email, u.phone_number, u.birth_date 
-            from ". $this->tableName . " u
-            inner join user_type t
-            on u.user_type_id = t.id
-            WHERE user_name = '$userName'";
-
-            try{
-                $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->Execute($query); 
-                if(!empty($resultSet)){
-                    $user = new User();
-                    $user->setUserId($resultSet[0]["id"]);
-                    $userType->setUserTypeId($resultSet[0]["id"]);
-                    $userType->setUserType($resultSet[0]["type"]);
-                    $user->setUserType($userType);
-                    $user->setName($resultSet[0]["name"]);
-                    $user->setLastName($resultSet[0]["lastname"]);
-                    $user->setUserName($resultSet[0]["user_name"]);
-                    $user->setPassword($resultSet[0]["password"]);
-                    $user->setEMail($resultSet[0]["email"]);
-                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
-                    $user->setBirthDate($resultSet[0]["birth_date"]);                    
-                    
-                    return $user;   
-                }
-            }catch(Exeption $ex){
-                throw $ex;
-            }
-        }*/     
+        }            
             
         public function GetAll()
         {
@@ -75,7 +42,7 @@
 
                 $query = "SELECT * FROM ".$this->tableName;
 
-                //$this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
@@ -132,11 +99,54 @@
                 }
             }catch(Exception $ex){
                 throw $ex;
-            }
-            
-           
+            }           
             if($user){return $user;}
         }
 
-    }
+        public function GetById($userId){
+            $userType = new UserType();
+            $userTypeDAO = new UserTypeDAO();
+            
+            $query = "select * 
+            from ". $this->tableName . "            
+            WHERE id = '$userId'";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
+                    $user = new User();
+                    $user->setUserId($resultSet[0]["id"]);                    
+                    $user->setName($resultSet[0]["name"]);
+                    $user->setLastName($resultSet[0]["lastname"]);
+                    $user->setUserName($resultSet[0]["user_name"]);
+                    $user->setPassword($resultSet[0]["password"]);
+                    $user->setEMail($resultSet[0]["email"]);
+                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
+                    $user->setBirthDate($resultSet[0]["birth_date"]);                    
+                    $userType = $userTypeDAO->GetById($resultSet[0]["user_type_id"]);
+                    $user->setUserType($userType);                       
+                }
+            }catch(Exception $ex){
+                throw $ex;
+            }           
+            if($user){return $user;}
+        }
+
+        public function TurnToKeeper($userId){
+                        
+            $query = "UPDATE ".$this->tableName." SET user_type_id =:user_type_id               
+            WHERE id =:user_id;";            
+            $parameters['user_type_id'] = 2;                        
+            $parameters['user_id'] = $userId;
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
+            }
+
+        }        
+    }    
 ?>

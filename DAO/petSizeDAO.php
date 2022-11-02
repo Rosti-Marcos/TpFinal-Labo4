@@ -44,8 +44,8 @@
                 foreach ($resultSet as $row)
                 {                
                     $petSize = new PetSize();
-                    $petSize->setUserTypeId($row["id"]);
-                    $petSize->setUserType($row["pet_size"]);
+                    $petSize->setPetSizeId($row["id"]);
+                    $petSize->setPetSize($row["pet_size"]);
                     
 
                     array_push($petSizeList, $petSize);
@@ -62,20 +62,19 @@
         public function GetById($id)
         {
             try
-            {
-                $userTypeList = array();
+            {           
 
-                $query = "SELECT * FROM ".$this->tableName."WHERE id = " . $id;
+                $query = "SELECT * FROM ".$this->tableName." WHERE id = " . $id;
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);                
                 if(!empty($resultSet)){
                 $petSize = new PetSize();
-                $petSize->setPetSizeId($resultSet["id"]);
-                $petSize->setPetSize($resultSet["pet_size"]);       
+                $petSize->setPetSizeId($resultSet[0]["id"]);
+                $petSize->setPetSize($resultSet[0]["pet_size"]);       
 
-                return $petSizeList;
+                return $petSize;
                 }
             }
             catch(Exception $ex)
