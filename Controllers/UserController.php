@@ -30,7 +30,7 @@
             $user->setEMail($eMail);
             $user->setPhoneNumber($phoneNumber);
             $user->setBirthDate($birthDate);
-            if ($this->userDAO->GetByUserName($userName)) {
+            if (!empty($this->userDAO->GetByUserName($userName))) {
 
                 return $message = 'User name already exists, please enter a new user name';
 
