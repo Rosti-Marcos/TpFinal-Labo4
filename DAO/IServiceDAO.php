@@ -4,7 +4,7 @@
     use Models\Service as Service;
 
     interface IServiceDAO {
-        function GetAll();
+        //function GetAll();
         function Add(Service $service);
     }
 ?>

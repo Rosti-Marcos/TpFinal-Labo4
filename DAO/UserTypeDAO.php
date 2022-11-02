@@ -19,7 +19,7 @@
                 $parameters["id"] = $userType->getUserTypeId();
                 $parameters["type"] = $userType->getUserType();                
 
-                //$this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
             }
@@ -37,7 +37,7 @@
 
                 $query = "SELECT * FROM ".$this->tableName;
 
-                //$this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
@@ -45,8 +45,7 @@
                 {                
                     $userType = new UserType();
                     $userType->setUserTypeId($row["id"]);
-                    $userType->setUserType($row["type"]);
-                    
+                    $userType->setUserType($row["type"]);                    
 
                     array_push($userTypeList, $userType);
                 }

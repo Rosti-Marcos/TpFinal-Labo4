@@ -59,19 +59,19 @@
 
         public function GetById($id){
             try{
-                $petSpecieList = array();
+                
 
-                $query = "SELECT * FROM ".$this->tableName."WHERE id = " . $id;
+                $query = "SELECT * FROM ".$this->tableName." WHERE id = " . $id;
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);                
                 if(!empty($resultSet)){
                 $petSpecie= new PetSpecie();
-                $petSpecie->setPetSpecieId($resultSet["id"]);
-                $petSpecie->setPetSpecie($resultSet["pet_specie"]);       
+                $petSpecie->setPetSpecieId($resultSet[0]["id"]);
+                $petSpecie->setPetSpecie($resultSet[0]["pet_specie"]);       
 
-                return $petSpecieList;
+                return $petSpecie;
                 }
             }
             catch(Exception $ex)

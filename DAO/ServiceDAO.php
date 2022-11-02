@@ -4,21 +4,19 @@
     use \Exception as Exception;        
     use DAO\Connection as Connection;
     use Models\Service as Service;
-    use DAO\IServiceDAO as IServiceDAO;
-    use Models\User as User;
-    use Models\UserType as UserType;
+    use DAO\IServiceDAO as IServiceDAO;    
+    use DAO\UserDAO as UserDAO;
 
     class ServiceDAO implements IServiceDAO{
 
         private $connection;
         private $tableName = "service";
 
-        public function Add(Service $service)
-        {
-            $query = "INSERT INTO " . $this->tableName . " (id, user_id, start_date, end_date, status) 
-                          VALUES (:id, :user_id, :start_date, :end_date, :status);";
-                
-            $parameters["id"] = "";
+        public function Add(Service $service){            
+            
+            $query = "INSERT INTO " . $this->tableName . " (user_id, start_date, end_date, status) 
+                          VALUES (:user_id, :start_date, :end_date, :status);";                
+            
             $parameters["user_id"] = $service->getUser()->getUserId();
             $parameters["start_date"] = $service->getStartDate();
             $parameters["end_date"] = $service->getEndDate();
@@ -28,104 +26,14 @@
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 
-            } catch(Exception $ex) {
-                throw $ex;
-
-
-        public $serviceList = array();
-        private $fileName = ROOT . "Data/services.json";
-
-
-        public function GetAll() {
-            $this->RetrieveData();
-            return $this->serviceList;
-        }
-
-        public function GetAvailables() {
-            $available = 'available';
-            $this->RetrieveData();
-            $aux = array_filter($this->serviceList, function($service) use($available) {
-                return $service->getStatus() == $available ;
-            });
-            $aux = array_values($aux);
-            return (count($aux) > 0) ? $aux : array();
-        }
-
-        public function GetAvailablesByKeeper($userId) {
-            $available = 'available';
-            $this->RetrieveData();
-            $aux = array_filter($this->serviceList, function($service) use($available, $userId) {
-                return ($service->getStatus() == $available  && $service->getUser()->getUserId() == $userId);
-            });
-            $aux = array_values($aux);
-            return (count($aux) > 0) ? $aux : array();
-        }
-
-        public function Add(Service $service) {
-            $this->RetrieveData();
-
-            $service->setId($this->GetNextId());
-
-            array_push($this->serviceList, $service);
-
-            $this->SaveData();
-        }
-
-
-        private function GetNextId() {
-            $id = 0;
-            foreach($this->serviceList as $service) {
-                $id = ($service->getId() > $id) ? $service->getId() : $id;
-
-            }
-        }
-
-        public function GetById($serviceId){//PROBAR!!!!!!!
-            $user = new User;
-            $userType = new UserType;
-
-            $query = "select s.id, u.id, u.name, u.lastname, u.user_name, u.password, u.email, u.phone_number, u.birth_date, s.strat_date, s-end_date, s.status 
-            from ". $this->tableName . " s
-            inner join user u
-            on s.user_id = u.id
-            where s.id = '$serviceId'
-            UNION
-            select t.id, t.type
-            from user_type t
-            inner join user u
-            on u.user_type_id = t.id";
-            
-            try{
-                $this->connection = Connection::GetInstance();
-                $resultSet = $this->connection->Execute($query); 
-                if(!empty($resultSet)){
-                    $service = new Service();
-                    $service->setId($resultSet[0]["id"]);
-                    $user->setUserId($resultSet[0]["id"]);
-                    $user->setname($resultSet[0]["name"]);
-                    $user->setLastname($resultSet[0]["lastname"]);
-                    $user->setUserName($resultSet[0]["user_name"]);
-                    $user->setPassword($resultSet[0]["password"]);
-                    $user->setEMail($resultSet[0]["email"]);
-                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
-                    $user->setBirthDate($resultSet[0]["birth_date"]);
-                    $service->setStartDate($resultSet[0]["start_date"]);
-                    $service->setEndDate($resultSet[0]["end_date"]);
-                    $service->setStatus($resultSet[0]["status"]);
-                    $userType->setUserTypeId($resultSet[0]["id"]);
-                    $userType->setUserType($resultSet[0]["type"]);
-                    $user->setUserType($userType);
-                    $service->setUser($user);                     
-                    
-                    return $service;   
-                }
-            }catch(Exeption $ex){
+            } catch(Exception $ex){
                 throw $ex;
             }
-        }     
-            
+        }
+        
         public function GetAll()
         {
+            $userDAO = new UserDAO();
             try
             {
                 $serviceList = array();
@@ -136,21 +44,15 @@
 
                 $resultSet = $this->connection->Execute($query);
                 
-                foreach ($resultSet as $row){
-
-                    $serviceTypeDAO = new ServiceTypeDAO;
-                    $serviceType = $serviceTypeDAO->GetById($row["Service_type"]);                     
+                foreach ($resultSet as $row){                                        
 
                     $service = new Service();
-                    $service->setServiceId($row["id"]);
-                    $service->setServiceType($serviceType);
-                    $service->setName($row["name"]);
-                    $service->setLastName($row["lastname"]);
-                    $service->setServiceName($row["Service_name"]);
-                    $service->setPassword($row["password"]);
-                    $service->setEMail($row["email"]);
-                    $service->setPhoneNumber($row["phone_number"]);
-                    $service->setBirthDate($row["birth_date"]);                    
+                    $service->setId($row["id"]);
+                    $user = $userDAO->GetById($row["user_id"]);
+                    $service->setUser($user);                    
+                    $service->setStartDate($row["start_date"]);
+                    $service->setEndDate($row["end_date"]);
+                    $service->setStatus($row["status"]);                                        
 
                     array_push($serviceList, $service);
                 }
@@ -161,7 +63,126 @@
             {
                 throw $ex;
             }
-        }        
+        }
+
+        public function GetAvailables() {
+            $availableList = array();
+            $available = 'available';
+            $serviceList = $this->GetAll();
+            foreach($serviceList as $service){
+                if($service->getStatus() == $available){
+                    array_push($availableList, $service);
+                }
+            }
+            if(!empty($availableList)){
+            return $availableList;
+            }
+        }
+
+        public function GetAvailablesByKeeper($userId) {
+            $availableList = array();
+            $available = 'available';
+            $serviceList = $this->GetAll();
+            foreach($serviceList as $service){
+                if($service->getUser()->getUserId() == $userId){
+                    if($service->getStatus() == $available){
+                        array_push($availableList, $service);
+                    }
+                }
+            }
+            if(!empty($availableList)){
+            return $availableList;
+            }
+        }
+        
+        public function GetByKeeperId($keeperId){
+            $userDAO = new UserDAO();
+            
+            $query = "select * 
+            from ". $this->tableName . " 
+            WHERE user_id = '$keeperId'";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
+                    $service = new Service();
+                    $service->setServiceId($resultSet[0]["id"]);       
+                    $user = $userDAO->GetById($resultSet[0]["user_id"]);
+                    $service->setUser($user);
+                    $service->setStartDate($resultSet[0]["start_date"]);
+                    $service->setEndDate($resultSet[0]['end_date']);                    
+                    $service->setStatus($resultSet[0]["status"]);                                
+                }
+
+            }catch(Exeption $ex){
+                throw $ex;
+            }
+            if($service){
+                return $service;
+            }
+    
+        }
+
+        public function GetById($serviceId){
+            
+            $userDAO = new UserDAO();
+            
+            $query = "select * 
+            from ". $this->tableName . " 
+            WHERE id = '$serviceId'";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
+                    $service = new Service();
+                    $service->setServiceId($resultSet[0]["id"]);       
+                    $user = $userDAO->GetById($resultSet[0]["user_id"]);
+                    $service->setUser($user);
+                    $service->setStartDate($resultSet[0]["start_date"]);
+                    $service->setEndDate($resultSet[0]['end_date']);                    
+                    $service->setStatus($resultSet[0]["status"]);
+                                
+                }
+            }catch(Exeption $ex){
+                throw $ex;
+            }
+            if($service){
+                return $service;
+            }
+        } 
+        
+        public function modifyService($serviceId, $status){
+            $query = "UPDATE ".$this->tableName." SET status =:status               
+            WHERE id =:service_id;"; 
+            $parameters['status'] = $status;           
+            $parameters['service_id'] = $serviceId;                        
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
+            }
+        }
+
+        public function Remove($id)
+        {            
+            $query = "DELETE FROM ".$this->tableName."                
+            WHERE id =:service_id;"; 
+                       
+            $parameters['service_id'] = $serviceId;                        
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
+            }
+        }
 
     }
 ?>

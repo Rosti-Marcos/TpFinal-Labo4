@@ -13,12 +13,12 @@
 
         public function Add(Pet $pet)
         {
-            $query = "INSERT INTO " . $this->tableName . " (id, pet_name, user_id, vaccine_cert, pet_size_id, pet_pics, pet_video, pet_breed, pet_specie_id, observation) 
-                          VALUES (:id, :pet_name, :user_id, :vaccine_cert, :pet_size_id, :pet_pics, :pet_video, :pet_breed, :pet_specie_id, :observation);";
+            $query = "INSERT INTO " . $this->tableName . " (pet_name, user_id, vaccine_cert, pet_size_id, pet_pics, pet_video, pet_breed, pet_specie_id, observation) 
+                          VALUES (:pet_name, :user_id, :vaccine_cert, :pet_size_id, :pet_pics, :pet_video, :pet_breed, :pet_specie_id, :observation);";
                 
-            $parameters["id"] = "";
+            
             $parameters["pet_name"] = $pet->getPetName();
-            $parameters["user_id"] = $pet->getUser()->getUserId();
+            $parameters["user_id"] = $_SESSION['loggedUser']->getUserId();
             $parameters["vaccine_cert"] = $pet->getVaccineCert();
             $parameters["pet_size_id"] = $pet->getPetSize()->getPetSizeId();
             $parameters["pet_pics"] = $pet->getPetPics();
@@ -37,42 +37,45 @@
         }
 
         public function GetByPetId($petId){
-            $petSize = new PetSize;
-            $petSpecie = new PetSpecie;
-            $user = new User;
-            //CONTINUAR
-            $query = "select p.id, p.pet_name, u.id, p.vaccine_cert, s.pet_size_id, p.pet_pics, p.pet_video, p.pet_breed, u.phone_number, u.birth_date 
-            from ". $this->tableName . " u
-            inner join Pet_type t
-            on u.Pet_type_id = t.id
-            WHERE Pet_name = '$petName'";
+            $petSizeDAO = new PetSizeDAO();
+            $petSpecieDAO = new PetSpecieDAO();
+            $userDAO = new UserDAO();
+            
+            $query = "select * 
+            from ". $this->tableName . " 
+            WHERE id = '$petId'";
             
             try{
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query); 
                 if(!empty($resultSet)){
                     $pet = new Pet();
-                    $pet->setPetId($resultSet[0]["id"]);
-                    $petType->setPetTypeId($resultSet[0]["id"]);
-                    $petType->setPetType($resultSet[0]["type"]);
-                    $pet->setPetType($petType);
-                    $pet->setName($resultSet[0]["name"]);
-                    $pet->setLastName($resultSet[0]["lastname"]);
-                    $pet->setPetName($resultSet[0]["Pet_name"]);
-                    $pet->setPassword($resultSet[0]["password"]);
-                    $pet->setEMail($resultSet[0]["email"]);
-                    $pet->setPhoneNumber($resultSet[0]["phone_number"]);
-                    $pet->setBirthDate($resultSet[0]["birth_date"]);                    
-                    
-                    return $pet;   
+                    $pet->setPetId($resultSet[0]["id"]);                    
+                    $pet->setPetName($resultSet[0]["pet_name"]);
+                    $user = $userDAO->GetById($resultSet[0]["user_id"]);
+                    $pet->setUser($user);
+                    $pet->setVaccineCert($resultSet[0]["vaccine_cert"]);
+                    $petSize = $petSizeDAO->GetById($resultSet[0]['pet_size_id']);
+                    $pet->setPetSize($petSize);
+                    $pet->setPetPics($resultSet[0]["pet_pics"]);
+                    $pet->setPetVideo($resultSet[0]["pet_video"]);
+                    $pet->setPetBreed($resultSet[0]["pet_breed"]);
+                    $petSpecie = $petSpecieDAO->GetById($resultSet[0]['pet_specie_id']);
+                    $pet->setPetSpecie($petSpecie);
+                    $pet->setObservation($resultSet[0]["observation"]);            
                 }
             }catch(Exeption $ex){
                 throw $ex;
             }
+            if($pet){
+                return $pet;
+            }
         }     
             
-        public function GetAll()
-        {
+        public function GetAll(){
+            $petSizeDAO = new PetSizeDAO();
+            $petSpecieDAO = new PetSpecieDAO();
+            $userDAO = new UserDAO();
             try
             {
                 $petList = array();
@@ -85,22 +88,23 @@
                 
                 foreach ($resultSet as $row){
 
-                    $petTypeDAO = new PetTypeDAO;
-                    $petType = $petTypeDAO->GetById($row["Pet_type"]);                     
+                                         
 
                     $pet = new Pet();
-                    $pet->setPetId($row["id"]);
-                    $pet->setPetType($petType);
-                    $pet->setName($row["name"]);
-                    $pet->setLastName($row["lastname"]);
-                    $pet->setPetName($row["Pet_name"]);
-                    $pet->setPassword($row["password"]);
-                    $pet->setEMail($row["email"]);
-                    $pet->setPhoneNumber($row["phone_number"]);
-                    $pet->setBirthDate($row["birth_date"]);                    
-                    $user = new User();
-                    $user->setUserId($row["id"]);//check
-                    $pet->setUser($user);//check
+                    $pet->setPetId($row["id"]);                    
+                    $pet->setPetName($row["pet_name"]);
+                    $user = $userDAO->GetById($row["user_id"]);
+                    $pet->setUser($user);
+                    $pet->setVaccineCert($row["vaccine_cert"]);
+                    $petSize = $petSizeDAO->GetById($row["pet_size_id"]);
+                    $pet->setPetSize($petSize);
+                    $pet->setPetPics($row["pet_pics"]);
+                    $pet->setPetVideo($row["pet_video"]);                    
+                    $pet->setPetBreed($row["pet_breed"]);
+                    $petSpecie = $petSpecieDAO->GetById($row["pet_specie_id"]);
+                    $pet->setPetSpecie($petSpecie);
+                    $pet->setObservation($row["observation"]);
+                    
                     array_push($petList, $pet);
                 }
 
@@ -110,7 +114,20 @@
             {
                 throw $ex;
             }
-        }        
+        }
+        
+        public function GetByUser($user) { 
+            $userPetList = array();       
+            $petList = $this->GetAll();
+            foreach($petList as $pet){
+                if($pet->getUser()->getUserId() == $user->getUserId()){
+                    array_push($userPetList, $pet);
+                }                
+            }
+            if(!empty($userPetList)){
+            return $userPetList;
+            }    
+        }
 
     }
 ?>
