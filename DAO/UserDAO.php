@@ -100,7 +100,9 @@
             }catch(Exception $ex){
                 throw $ex;
             }           
-            if($user){return $user;}
+            if(!empty($user)){
+                return $user;
+            }
         }
 
         public function GetById($userId){

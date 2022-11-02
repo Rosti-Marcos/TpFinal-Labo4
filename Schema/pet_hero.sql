@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2022 a las 18:14:49
+-- Tiempo de generación: 02-11-2022 a las 19:40:18
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -70,6 +70,16 @@ CREATE TABLE `pet` (
   `pet_specie_id` int(11) NOT NULL,
   `observation` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pet`
+--
+
+INSERT INTO `pet` (`id`, `pet_name`, `user_id`, `vaccine_cert`, `pet_size_id`, `pet_pics`, `pet_video`, `pet_breed`, `pet_specie_id`, `observation`) VALUES
+(1, 'Patan', 1, 'Views/uploads/cert_vac5_1667412588.jpeg', 3, 'Views/uploads/patan_1667412588.jpg', 'Views/uploads/patan_1667412588.mp4', 'Rottweiler', 1, 'Nice on kids'),
+(2, 'Darky', 1, 'Views/uploads/cert_vac5_1667412730.jpeg', 1, 'Views/uploads/oscuro_1667412730.png', 'Views/uploads/oscuro_1667412730.mp4', 'common', 2, 'Sleepy cat'),
+(3, 'Casper', 2, 'Views/uploads/certVac3_1667413848.jpg', 1, 'Views/uploads/casper_1667413848.jpg', 'Views/uploads/casper_1667413848.mp4', 'common', 2, 'Nice to people'),
+(4, 'Tina', 2, 'Views/uploads/certVac3_1667413920.jpg', 1, 'Views/uploads/gato4_1667413920.jpg', 'Views/uploads/tigre_1667413920.mp4', 'persian', 2, 'Water lover');
 
 -- --------------------------------------------------------
 
@@ -138,7 +148,7 @@ CREATE TABLE `user` (
   `user_name` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
-  `phone_number` int(12) NOT NULL,
+  `phone_number` bigint(18) NOT NULL,
   `birth_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -147,7 +157,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `user_type_id`, `name`, `lastname`, `user_name`, `password`, `email`, `phone_number`, `birth_date`) VALUES
-(1, 1, 'Victor', 'Silva', 'vicsil', '1234', 'victorsilva1978@gmail.com', 221456557, '1982-10-20');
+(1, 1, 'Victor', 'Silva', 'vicsil', '1234', 'victorsilva1978@gmail.com', 2234565578, '1982-10-20'),
+(2, 1, 'Marcos', 'Rosti', 'rocksti', '1234', 'rockandrost@gmail.com', 2234632587, '1986-03-08'),
+(3, 1, 'Camila', 'Silva', 'camsil', '1234', 'victors.it78@gmail.com', 2234748364, '2008-10-23'),
+(4, 1, 'Lorena', 'Sola', 'lore', '1234', 'rosti_marcos@hotmail.com', 2236781114, '1988-10-30');
 
 -- --------------------------------------------------------
 
@@ -256,7 +269,7 @@ ALTER TABLE `keeper`
 -- AUTO_INCREMENT de la tabla `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `pet_size`
@@ -280,7 +293,7 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `user_type`
