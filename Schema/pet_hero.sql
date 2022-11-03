@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2022 a las 19:40:18
+-- Tiempo de generación: 03-11-2022 a las 20:10:01
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -33,10 +33,19 @@ CREATE TABLE `booking` (
   `keeper_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `description` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
+  `message` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `pet_id` int(11) NOT NULL,
   `price` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `booking`
+--
+
+INSERT INTO `booking` (`id`, `owner_id`, `keeper_id`, `start_date`, `end_date`, `message`, `pet_id`, `price`, `status`) VALUES
+(1, 1, 1, '2022-11-03', '2022-11-03', NULL, 2, 10000, 'pending'),
+(2, 1, 2, '2022-11-04', '2022-11-05', NULL, 2, 30000, 'pending');
 
 -- --------------------------------------------------------
 
@@ -51,6 +60,14 @@ CREATE TABLE `keeper` (
   `remuneration` int(11) NOT NULL,
   `start_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `keeper`
+--
+
+INSERT INTO `keeper` (`id`, `user_id`, `pet_size_id`, `remuneration`, `start_date`) VALUES
+(1, 2, 3, 10000, '2022-11-03'),
+(2, 4, 3, 15000, '2022-11-03');
 
 -- --------------------------------------------------------
 
@@ -134,6 +151,15 @@ CREATE TABLE `service` (
   `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `service`
+--
+
+INSERT INTO `service` (`id`, `user_id`, `start_date`, `end_date`, `status`) VALUES
+(1, 2, '2022-11-03', '2022-11-08', 'available'),
+(2, 1, '2022-11-03', '2022-11-03', 'pending'),
+(3, 2, '2022-11-04', '2022-11-05', 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -158,9 +184,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `user_type_id`, `name`, `lastname`, `user_name`, `password`, `email`, `phone_number`, `birth_date`) VALUES
 (1, 1, 'Victor', 'Silva', 'vicsil', '1234', 'victorsilva1978@gmail.com', 2234565578, '1982-10-20'),
-(2, 1, 'Marcos', 'Rosti', 'rocksti', '1234', 'rockandrost@gmail.com', 2234632587, '1986-03-08'),
+(2, 2, 'Marcos', 'Rosti', 'rocksti', '1234', 'rockandrost@gmail.com', 2234632587, '1986-03-08'),
 (3, 1, 'Camila', 'Silva', 'camsil', '1234', 'victors.it78@gmail.com', 2234748364, '2008-10-23'),
-(4, 1, 'Lorena', 'Sola', 'lore', '1234', 'rosti_marcos@hotmail.com', 2236781114, '1988-10-30');
+(4, 2, 'Lorena', 'Sola', 'lore', '1234', 'rosti_marcos@hotmail.com', 2236781114, '1988-10-30'),
+(5, 1, 'Carolina', 'Gallo', 'caro', '1234', 'slumdesarrollos@gmail.com', 2236252998, '1985-10-12');
 
 -- --------------------------------------------------------
 
@@ -192,7 +219,8 @@ INSERT INTO `user_type` (`id`, `type`) VALUES
 ALTER TABLE `booking`
   ADD PRIMARY KEY (`id`),
   ADD KEY `owner_id` (`owner_id`),
-  ADD KEY `keeper_id` (`keeper_id`);
+  ADD KEY `keeper_id` (`keeper_id`),
+  ADD KEY `pet_id` (`pet_id`);
 
 --
 -- Indices de la tabla `keeper`
@@ -257,13 +285,13 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT de la tabla `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `keeper`
 --
 ALTER TABLE `keeper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pet`
@@ -287,13 +315,13 @@ ALTER TABLE `pet_specie`
 -- AUTO_INCREMENT de la tabla `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `user_type`
@@ -310,7 +338,8 @@ ALTER TABLE `user_type`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`keeper_id`) REFERENCES `keeper` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`keeper_id`) REFERENCES `keeper` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `keeper`

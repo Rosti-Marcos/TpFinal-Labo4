@@ -5,7 +5,6 @@
     use DAO\Connection as Connection;
     use Models\User as User;
     use DAO\IUserDAO as IUserDAO;
-    use Models\UserType as UserType;
 
     class UserDAO implements IUserDAO{
         private $connection;
@@ -49,7 +48,7 @@
                 foreach ($resultSet as $row){
 
                     $userTypeDAO = new UserTypeDAO;
-                    $userType = $userTypeDAO->GetById($row["user_type"]);                     
+                    $userType = $userTypeDAO->GetById($row["user_type_id"]);                     
 
                     $user = new User();
                     $user->setUserId($row["id"]);
@@ -74,11 +73,10 @@
         }
         
         public function GetByUserName($userName){
-            $userType = new UserType();
+        
             $userTypeDAO = new UserTypeDAO();
             
-            $query = "select * 
-            from ". $this->tableName . "            
+            $query = "select * from ". $this->tableName . "            
             WHERE user_name = '$userName'";
             
             try{
@@ -106,7 +104,7 @@
         }
 
         public function GetById($userId){
-            $userType = new UserType();
+
             $userTypeDAO = new UserTypeDAO();
             
             $query = "select * 
@@ -132,7 +130,7 @@
             }catch(Exception $ex){
                 throw $ex;
             }           
-            if($user){return $user;}
+            if(!empty($user)){return $user;}
         }
 
         public function TurnToKeeper($userId){

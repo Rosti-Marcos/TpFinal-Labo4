@@ -37,54 +37,56 @@
         }            
             
         public function GetAll(){
+
+            $userDAO = new UserDAO();
+            $petSizeDAO = new PetSizeDAO();
+            $keeperList = array();
+
             try{
-                $keeperList = array();
-
+                
                 $query = "SELECT * FROM ".$this->tableName;
-
+                
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                     
                 foreach ($resultSet as $row){
 
-                    $userDAO = new UserDAO();
-                    $user = $userDAO->GetById($row['user_id']);
-                    $petSizeDAO = new PetSizeDAO();
-                    $petSize = $petSizeDAO->GetById('pet_size_id');
                     $keeper = new Keeper();                    
                     $keeper->setKeeperId($row["id"]);
+                    $user = $userDAO->GetById($row['user_id']);
                     $keeper->setUser($user);
+                    $petSize = $petSizeDAO->GetById($row['pet_size_id']);
                     $keeper->setPetSize($petSize);
                     $keeper->setRemuneration($row['remuneration']);                                           
                     $keeper->setStartDate($row['start_date']);  
                     array_push($keeperList, $keeper);
                 }
 
-                return $keeperList;
                 }
-                catch(Exception $ex)
-                {
+                catch(Exception $ex){
                     throw $ex;
+                }
+                if(!empty($keeperList)){
+                    return $keeperList;
                 }
             }
             
-            public function GetById($userId){
+            public function GetById($keeperId){
                 
                 $userDAO = new UserDAO();
                 $petSizeDAO = new PetSizeDAO();
                 
-                $query = "select * 
-                from ". $this->tableName . "            
-                WHERE user_id = '$userId'";
+                $query = "select * from ". $this->tableName . "            
+                WHERE id = '$keeperId'";
                 
                 try{
                     $this->connection = Connection::GetInstance();
                     $resultSet = $this->connection->Execute($query); 
                     if(!empty($resultSet)){
                         $keeper = new Keeper();
-                        $user->setUserId($resultSet[0]["id"]); 
-                        $user = $userDAO->GetbyId($resultSet[0]['userId']);                   
+                        $keeper->setKeeperId($resultSet[0]["id"]); 
+                        $user = $userDAO->GetbyId($resultSet[0]['user_id']);                   
                         $keeper->setUser($user);
                         $petSize = $petSizeDAO->GetbyId($resultSet[0]['pet_size_id']);
                         $keeper->setPetSize($petSize);
@@ -95,7 +97,7 @@
                 }catch(Exception $ex){
                     throw $ex;
                 }           
-                if($keeper){
+                if(!empty($keeper)){
                     return $keeper;
                 }
             }
