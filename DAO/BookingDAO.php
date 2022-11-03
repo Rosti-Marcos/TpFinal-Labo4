@@ -1,172 +1,224 @@
 <?php
-
     namespace DAO;
 
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
     use Models\Booking as Booking;
-    use Models\Pet as Pet;
     use DAO\IBookingDAO as IBookingDAO;
+    use Models\Keeper as Keeper;
 
     class BookingDAO implements IBookingDAO{
+        private $connection;
+        private $tableName = "booking";
 
-        public $bookingList = array();
-        private $fileName = ROOT . "Data/bookings.json";
-
-
-        public function GetAll() {
-            $this->RetrieveData();
-            return $this->bookingList;
-        }
-
-        public function GetByUser($user)
+        public function Add(Booking $booking)
         {
-            $this->RetrieveData();
+            $query = "INSERT INTO " . $this->tableName . " (owner_id, keeper_id, start_date, end_date, message, pet_id, price, status) 
+            VALUES (:owner_id, :keeper_id, :start_date, :end_date, :message, :pet_id, :price, :status);";
+                
+            $parameters["owner_id"] = $booking->getUser()->getUserId();
+            $parameters["keeper_id"] = $booking->getKeeper()->getKeeperId();
+            $parameters["start_date"] = $booking->getStartDate();
+            $parameters["end_date"] = $booking->getEndDate();
+            $parameters["message"] = $booking->getMessage();
+            $parameters["pet_id"] = $booking->getPet()->getPetId();
+            $parameters["price"] = $booking->getPrice();
+            $parameters["status"] = $booking->getStatus();
 
-            $booking = array_filter($this->bookingList, function($booking) use($user){                
-                return $booking->getUser() == $user;
-            });
-
-            $booking = array_values($booking);
-            
-
-            return (count($booking) > 0) ? $booking : array();
-        }
-
-        public function GetByKeeper($keeper)
-        {
-            $this->RetrieveData();
-
-            $booking = array_filter($this->bookingList, function($booking) use($keeper){                
-                return $booking->getKeeper() == $keeper;
-            });
-
-            $booking = array_values($booking);
-            
-
-            return (count($booking) > 0) ? $booking : array();
-        }
-
-        public function GetByKeeperId($keeperId)
-        {
-            $this->RetrieveData();
-
-            $booking = array_filter($this->bookingList, function($booking) use($keeperId){                
-                return $booking->getKeeper()->getKeeperId() == $keeperId;
-            });
-
-            $booking = array_values($booking);
-            
-
-            return (count($booking) > 0) ? $booking : array();
-        }
-
-        public function GetById($id) {
-            $this->RetrieveData();
-    
-            $aux = array_filter($this->bookingList, function($booking) use($id) {
-                return $booking->getId() == $id;
-            });
-    
-            $aux = array_values($aux);
-    
-            return (count($aux) > 0) ? $aux[0] : array();
-        }
-
-        public function GetByStatus($status) {
-            $this->RetrieveData();
-            $user = $_SESSION["loggedUser"];
-            $aux = array_filter($this->bookingList, function($booking) use($status, $user) {
-                return ($booking->getKeeper()->getUser() == $user && $booking->getStatus() == $status);
-            });
-            $aux = array_values($aux);
-            return (count($aux) > 0) ? $aux : array();
-        }
-
-        public function Add(Booking $booking) {
-            $this->RetrieveData();
-
-            $booking->setId($this->GetNextId());
-
-            array_push($this->bookingList, $booking);
-
-            $this->SaveData();
-        }
-
-
-        private function GetNextId() {
-            $id = 0;
-            foreach($this->bookingList as $booking) {
-                $id = ($booking->getId() > $id) ? $booking->getId() : $id;
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
             }
-            return $id + 1;
-        }
+        }            
+            
+        public function GetAll()
+        {
+            $userDAO = new UserDAO();
+            $keeperDAO = new KeeperDAO();
+            $petDAO = new PetDAO();
+            $bookingList = array();
+            try{
+            
+                $query = "SELECT * FROM ".$this->tableName;
 
-        public function modifyBooking($bookingId, $message, $status){
-            $this->RetrieveData();
-            $newBooking = $this->GetById($bookingId);
-            $newBooking->setStatus($status);
-            $newBooking->setMessage($message);
-            $this->bookingList = array_filter($this->bookingList, function($booking) use($newBooking) {
-                return $booking->getId() != $newBooking->getId();
-            });
+                $this->connection = Connection::GetInstance();
 
-            array_push($this->bookingList, $newBooking);
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){
 
-            $this->SaveData();
-        }
-
-        private function RetrieveData() {
-            $this->bookingList = array();
-
-            if(file_exists($this->fileName)) {
-                $jsonContent = file_get_contents($this->fileName);
-                $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayDecode as $value) {
-                    $petDAO = new PetDAO;
-                    $pet = $petDAO->GetByPetId($value["pet"]);
-                    $userDAO = new UserDAO;
-                    $user = $userDAO->GetById($value["user"]);
-                    $keeperDAO = new KeeperDAO;
-                    $keeper = $keeperDAO->getById($value["keeper"]);
-                    
-                    $booking = new booking();
-                    $booking->setId($value["id"]);
+                    $booking = new Booking();
+                    $booking->setId($row["id"]);
+                    $user = $userDAO->GetById($row["owner_id"]);
                     $booking->setUser($user);
+                    $keeper = $keeperDAO->GetById($row["keeper_id"]); 
                     $booking->setKeeper($keeper);
-                    $booking->setStartDate($value["startDate"]);
-                    $booking->setEndDate($value["endDate"]);
-                    $booking->setMessage($value["message"]);
+                    $booking->setStartDate($row["start_date"]);
+                    $booking->setEndDate($row["end_date"]);
+                    $booking->setMessage($row["message"]);
+                    $pet = $petDAO->GetByPetId($row["pet_id"]);    
                     $booking->setPet($pet);
-                    $booking->setPrice($value["price"]);
-                    $booking->setStatus($value["status"]);
+                    $booking->setPrice($row["price"]);
+                    $booking->setStatus($row["status"]);                    
 
-                    array_push($this->bookingList, $booking);
+                    array_push($bookingList, $booking);
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            if(!empty($bookingList)){return $bookingList;}
+        }
+        
+        public function GetById($bookingId){
+            $userDAO = new UserDAO();
+            $keeperDAO = new KeeperDAO();
+            $petDAO = new PetDAO();
+                
+            $query = "SELECT * FROM ". $this->tableName . "            
+            WHERE id = '$bookingId'";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+
+                if(!empty($resultSet)){
+
+                    $booking = new Booking();
+                    $booking->setId($resultSet[0]["id"]); 
+                    $user = $userDAO->GetById($resultSet[0]["owner_id"]);
+                    $booking->setUser($user);
+                    $keeper = $keeperDAO->GetById($resultSet[0]["keeper_id"]); 
+                    $booking->setKeeper($keeper);
+                    $booking->setStartDate($resultSet[0]["start_date"]);
+                    $booking->setEndDate($resultSet[0]["end_date"]);
+                    $booking->setMessage($resultSet[0]["message"]);
+                    $pet = $petDAO->GetByPetId($resultSet[0]["pet_id"]);
+                    $booking->setPet($pet);
+                    $booking->setPrice($resultSet[0]["price"]);                    
+                    $booking->setStatus($resultSet[0]["status"]);                       
+                }
+            }catch(Exception $ex){
+                throw $ex;
+            }           
+            if(!empty($booking)){return $booking;}
+        }
+
+        public function GetByUser($user) { 
+            $bookingListByUser = array();       
+            $bookingList = $this->GetAll();
+            foreach($bookingList as $booking){
+                if($booking->getUser() == $user){
+                    array_push($bookingListByUser, $booking);
+                }                
+            }
+            if(!empty($bookingListByUser)){
+            return $bookingListByUser;
+            }    
+        }
+        
+        public function GetByKeeper($keeper) { 
+            $bookingListByKeeper = array();       
+            $bookingList = $this->GetAll();
+            foreach($bookingList as $booking){
+                if($booking->getKeeper()->getUser() == $keeper){
+                    array_push($bookingListByKeeper, $booking);
+                }                
+            }
+            if(!empty($bookingListByKeeper)){
+            return $bookingListByKeeper;
+            }    
+        }
+
+    public function GetByKeeperId($keeperId)
+    {
+
+        $userDAO = new UserDAO();
+        $keeperDAO = new KeeperDAO();
+        $petDAO = new PetDAO();
+        $bookingList = array();
+
+        try {
+            $query = "select * from " . $this->tableName . "            
+            WHERE keeper_id = '$keeperId'";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+
+                $user = $userDAO->GetById($row["owner_id"]);
+                $keeper = $keeperDAO->GetById($row["keeper_id"]);
+                $pet = $petDAO->GetByPetId($row["pet_id"]);
+
+                $booking = new Booking();
+                $booking->setId($row["id"]);
+                $booking->setUser($user);
+                $booking->setKeeper($keeper);
+                $booking->setStartDate($row["start_date"]);
+                $booking->setEndDate($row["end_date"]);
+                $booking->setMessage($row["message"]);
+                $booking->setPet($pet);
+                $booking->setPrice($row["price"]);
+                $booking->setStatus($row["status"]);
+
+                array_push($bookingList, $booking);
+            }
+
+            return $bookingList;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+        public function GetByStatus($status, $user = null) {
+            $userBookingListByStatus = array();
+            if($user == null){
+                $userKeeper = $_SESSION["loggedUser"];
+                $bookingListByKeeper = $this->GetByKeeper($userKeeper);
+                if(!empty($bookingListByKeeper)){
+                    foreach ($bookingListByKeeper as $booking){
+                        if($booking->getStatus() == $status)
+                        array_push($userBookingListByStatus, $booking);
+                    }
+                }
+                if (!empty($userBookingListByStatus)){
+                    return $userBookingListByStatus;
+                }
+            }else{
+                $bookingListByUser = $this->GetByUser($user);
+                    foreach ($bookingListByUser as $booking){
+                        if($booking->getStatus() == $status)
+                        array_push($userBookingListByStatus, $booking);
+                    }
+                if (!empty($userBookingListByStatus)){
+                    return $userBookingListByStatus;
                 }
             }
         }
-        
-        private function SaveData() {
 
-            $arrayEncode = array();
-
-            foreach ($this->bookingList as $booking){
-
-                $valueArray = array();
-                $valueArray["id"] = $booking->getId();
-                $valueArray["user"] = $booking->getUser()->getUserId();
-                $valueArray["keeper"] = $booking->getKeeper()->getKeeperId();
-                $valueArray["startDate"]= $booking->getStartDate();
-                $valueArray["endDate"] = $booking->getEndDate();
-                $valueArray["message"]= $booking->getMessage();
-                $valueArray["pet"] = $booking->getPet()->getPetId();
-                $valueArray["price"] = $booking->getPrice();
-                $valueArray["status"] = $booking->getStatus();
-
-
-                array_push($arrayEncode, $valueArray);
+        public function modifyBooking($bookingId, $message, $status){
+            $query = "UPDATE ".$this->tableName." 
+            SET status =:status, message=:message               
+            WHERE id =:booking_id;"; 
+            
+            $parameters['status'] = $status; 
+            $parameters['message'] = $message;           
+            $parameters['booking_id'] = $bookingId;  
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch(Exception $ex) {
+                throw $ex;
             }
-            $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-            file_put_contents($this->fileName, $jsonContent);
         }
-    }
+
+    }    
 ?>

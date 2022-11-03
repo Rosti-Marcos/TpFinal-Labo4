@@ -5,7 +5,7 @@
     use DAO\Connection as Connection;
     use Models\Pet as Pet;
     use DAO\IPetDAO as IPetDAO;
-    use Models\PetType as PetType;
+
 
     class PetDAO implements IPetDAO{
         private $connection;
@@ -41,8 +41,7 @@
             $petSpecieDAO = new PetSpecieDAO();
             $userDAO = new UserDAO();
             
-            $query = "select * 
-            from ". $this->tableName . " 
+            $query = "select * from ". $this->tableName . " 
             WHERE id = '$petId'";
             
             try{
@@ -64,7 +63,7 @@
                     $pet->setPetSpecie($petSpecie);
                     $pet->setObservation($resultSet[0]["observation"]);            
                 }
-            }catch(Exeption $ex){
+            }catch(Exception $ex){
                 throw $ex;
             }
             if($pet){
@@ -87,8 +86,6 @@
                 $resultSet = $this->connection->Execute($query);
                 
                 foreach ($resultSet as $row){
-
-                                         
 
                     $pet = new Pet();
                     $pet->setPetId($row["id"]);                    

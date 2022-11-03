@@ -20,7 +20,7 @@
             $this->id = $id;
         }
 
-        public function setUser($user){
+        public function setUser(User $user){
             $this->user = $user;
         }
 
@@ -28,7 +28,7 @@
             return $this->user;
         }
 
-        public function setKeeper($keeper){
+        public function setKeeper(Keeper $keeper){
             $this->keeper = $keeper;
         }
 

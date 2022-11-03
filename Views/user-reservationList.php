@@ -26,6 +26,7 @@
 						  </thead>
 						  <tbody>
 						  <?php
+						  	if(!empty($bookingList))
 							foreach($bookingList as $booking)
 							{
                                 $name;

@@ -29,7 +29,7 @@
             $userController = new UserController();
             $keeperController = new KeeperController();
             $keeper = $keeperController->keeperDAO->GetByUser($_SESSION['loggedUser']);
-            $bookingList = $this->bookingDAO->getByKeeper($keeper);
+            $bookingList = $this->bookingDAO->getByKeeperId($keeper->getKeeperId());
             $userList = $userController->userDAO->getAll();
             require_once(VIEWS_PATH."keeper-reservationList.php");
         }

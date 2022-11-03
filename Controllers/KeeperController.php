@@ -4,7 +4,7 @@ namespace Controllers;
 
 use DAO\KeeperDAO as KeeperDAO;
 use Models\Keeper as Keeper;
-
+use Models\UserType as UserType;
 
 class KeeperController{
     public $keeperDAO;
@@ -21,7 +21,7 @@ class KeeperController{
     }
 
     public function ShowListView(){
-        $keeperList = null;
+        $keeperList = $this->keeperDAO->GetAll();
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
     }
@@ -43,11 +43,15 @@ class KeeperController{
     }
 
     public function Add($petSizeId, $remuneration){
+        $userType = new UserType();
+        $userType->setUserTypeId(2);
+        $userType->setUserType("Keeper");
         $petSizeController = new PetSizeController;
         $petSize=$petSizeController->petSizeDAO->GetById($petSizeId);
         $keeper = new Keeper;
         $keeper->setPetSize($petSize);
         $keeper->setRemuneration($remuneration);
+        $_SESSION["loggedUser"]->setUserType($userType);
         $this->keeperDAO->Add($keeper);
         require_once(VIEWS_PATH."keeper-wellcome.php");
     }

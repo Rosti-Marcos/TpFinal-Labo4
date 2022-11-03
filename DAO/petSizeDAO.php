@@ -16,8 +16,8 @@
             {
                 $query = "INSERT INTO " . $this->tableName . " (id, pet_size) VALUES (:id, :pet_size);";
                 
-                $parameters["id"] = $userType->getPetSizeId();
-                $parameters["pet_size"] = $userType->getPetSize();                
+                $parameters["id"] = $petSize->getPetSizeId();
+                $parameters["pet_size"] = $petSize->getPetSize();                
 
                 $this->connection = Connection::GetInstance();
 

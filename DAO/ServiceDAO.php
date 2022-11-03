@@ -98,8 +98,7 @@
         public function GetByKeeperId($keeperId){
             $userDAO = new UserDAO();
             
-            $query = "select * 
-            from ". $this->tableName . " 
+            $query = "select * from ". $this->tableName . " 
             WHERE user_id = '$keeperId'";
             
             try{
@@ -107,7 +106,7 @@
                 $resultSet = $this->connection->Execute($query); 
                 if(!empty($resultSet)){
                     $service = new Service();
-                    $service->setServiceId($resultSet[0]["id"]);       
+                    $service->setId($resultSet[0]["id"]);       
                     $user = $userDAO->GetById($resultSet[0]["user_id"]);
                     $service->setUser($user);
                     $service->setStartDate($resultSet[0]["start_date"]);
@@ -115,7 +114,7 @@
                     $service->setStatus($resultSet[0]["status"]);                                
                 }
 
-            }catch(Exeption $ex){
+            }catch(Exception $ex){
                 throw $ex;
             }
             if($service){
@@ -128,8 +127,7 @@
             
             $userDAO = new UserDAO();
             
-            $query = "select * 
-            from ". $this->tableName . " 
+            $query = "select * from ". $this->tableName . " 
             WHERE id = '$serviceId'";
             
             try{
@@ -137,7 +135,7 @@
                 $resultSet = $this->connection->Execute($query); 
                 if(!empty($resultSet)){
                     $service = new Service();
-                    $service->setServiceId($resultSet[0]["id"]);       
+                    $service->setId($resultSet[0]["id"]);       
                     $user = $userDAO->GetById($resultSet[0]["user_id"]);
                     $service->setUser($user);
                     $service->setStartDate($resultSet[0]["start_date"]);
@@ -145,7 +143,7 @@
                     $service->setStatus($resultSet[0]["status"]);
                                 
                 }
-            }catch(Exeption $ex){
+            }catch(Exception $ex){
                 throw $ex;
             }
             if($service){
@@ -168,7 +166,7 @@
             }
         }
 
-        public function Remove($id)
+        public function Remove($serviceId)
         {            
             $query = "DELETE FROM ".$this->tableName."                
             WHERE id =:service_id;"; 
