@@ -8,9 +8,7 @@
 			<h1>Set my availability</h1>
   	</div>
   </nav>
-  <?php if(!empty($message)){?>
-            <h4 class = "alert alert-danger"><?php echo $message ?></h4>
-        <?php } ?>
+  <?php if(!empty($message)){ echo $message; }?>
 	<div id="service" class="section img">
 		<div class="section-center">
 			<div class="container">

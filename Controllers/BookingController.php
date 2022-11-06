@@ -122,6 +122,9 @@
                                 $serviceController->Add($startDate, $endDate, 'pending', $keeper);
                                 $cont++;
                                 $message = 'Your booking has been successfully set';
+                                $homeController = new HomeController;
+                                $homeController->ShowWellcomeView("<script>alert('$message');</script>");
+
                             }else if($flag == 1){
                                 $message = 'Some of the dates entered had already been booked with different species. Please enter different dates.'; 
                                 $this->PreReservation($userId, null, $message);
@@ -132,7 +135,7 @@
                             }
                         }
                     }
-                    if($cont < sizeOf($serviceList) && $flag != 2){
+                    if($cont == 0){
                         $message = 'Some of the dates introduced are not available, please check the availability calendar and enter a new one.'; 
                         $this->PreReservation($userId, null, $message);  
                     }
@@ -165,13 +168,14 @@
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($booking->getKeeper()->getKeeperId());
             if($button == 'Approve'){
                 $this->bookingDAO->modifyBooking($bookingId, $message, 'approved');
-                
-                foreach($serviceList as $service){
-                    if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
-                        && $booking->getStartDate() == $service->getStartDate() && $booking->getEndDate() == $service->getEndDate()){
-                        $serviceController->serviceDAO->modifyService($service->getId(), 'approved');
-                    }       
-                }    
+                if(!empty($serviceList)){
+                    foreach($serviceList as $service){
+                        if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
+                            && $booking->getStartDate() == $service->getStartDate() && $booking->getEndDate() == $service->getEndDate()){
+                            $serviceController->serviceDAO->modifyService($service->getId(), 'approved');
+                        }       
+                    } 
+                }   
             }else{
                 $this->bookingDAO->modifyBooking($bookingId, $message, 'rejected');
                 foreach($serviceList as $service){
