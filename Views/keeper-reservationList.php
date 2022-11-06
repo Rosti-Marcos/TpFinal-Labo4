@@ -13,24 +13,27 @@
 			</div>
 		<div class="container">       
         <div class="row justify-content-md-center">
-            <div class="col-6 col-md-7">
+            <div class="col-6 col-md-9">
               <div class="card mb-12">
                 <div class="card-body">
                   <div class="row">
 				  	 <div class="col-sm-4" style="text-align: center;">
 				  		<h5 class="mb-2" style="border-right: 1px solid grey">Bookings Filter</h5>
                      </div>
-                    	<div class="col-sm-2 text-secondary" style="text-align: center;">
+                    	<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."finished"?>" class="btn btn-primary" for="option.finished" value="finished">Finished</a>
 						</div>
-						<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."pending"?>" class="btn btn-warning" for="option.pending" value="pending">Pending</a>
 						</div>
-						<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."approved"?>" class="btn btn-success" for="option.approved">Approved</a>
 						</div>
-						<div class="col-sm-2 text-secondary" style="text-align: center;">
+						<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."rejected"?>" class="btn btn-danger" for="option.rejected">Rejected</a>
+                        </div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."unanswered"?>" class="btn btn-secondary" for="option.unanswered">Unanswered</a>
                         </div>
                      </div>           
               		</div>
@@ -111,7 +114,7 @@
 											</td>
 											<td style="text-align: center;">
 												<button type="submit" name="approve" class="btn btn-success" value="Approve"> Approve </button>
-												<button type="submit" name="decline" class="btn btn-danger" value="Decline"> Decline </button>
+												<button type="submit" name="decline" class="btn btn-danger" value="Decline"> Reject </button>
 											</td>
 										</form>
 									<?php
