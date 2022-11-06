@@ -2,11 +2,15 @@
  include('header.php');
  include('nav-bar.php');
 ?>
+
 	    <nav class="navtop">
 	    	<div>
 	    		<h1>Keeper Profile</h1>
 	    	</div>
 	    </nav>
+      <?php if(!empty($message)){?>
+            <h4 class = "alert alert-danger"><?php echo $message ?></h4>
+        <?php } ?>
         <br>
         <div class="container">
         <div class="row">
@@ -130,7 +134,7 @@
                              } ?>
                             <input type="radio" class="btn-check" name="petId" id="option.<?php echo $pet->getPetId() ?>" autocomplete="off" value="<?php echo $pet->getPetId() ?>" checked />
                             <label class="btn btn-secondary" for="option.<?php echo $pet->getPetName() ?>"><?php echo $pet->getPetName() ?></label>
-                        <?php }} if($cont == 0){ ?>
+                        <?php }}} if($cont == 0){ ?>
                             "You do not have any pet size that the keeper takes care of."
                             <?php } ?>
                     </div>
@@ -175,8 +179,8 @@
                                         <option value="7">July</option>
                                         <option value="8">August</option>
                                         <option value="9">September</option>
-                                        <option value="10" selected>October</option>
-                                        <option value="11">November</option>
+                                        <option value="10">October</option>
+                                        <option value="11" selected >November</option>
                                         <option value="12">December</option>
                                         </select>
                                 <span class="select-arrow"></span>
