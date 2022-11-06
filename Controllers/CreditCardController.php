@@ -26,11 +26,15 @@
             require_once(VIEWS_PATH."validate-session.php");
         }
 
-        public function Red ($id){
+        public function Payment ($id){
             $bookingController = new BookingController;
             $booking= $bookingController->bookingDAO->GetById($id);
+            $user = $booking->getUser();
+            $_SESSION['loggedUser'] = $user;
+            $homeController = new HomeController();
+            $homeController->PaymentLogin($user->getUserName(), $user->getPassword());
             $this->ShowAddCard($booking);
-            require_once(VIEWS_PATH."validate-session.php");
+            
         }
     
     }

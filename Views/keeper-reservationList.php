@@ -75,6 +75,12 @@
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
+											case 'payed':
+												$class = "btn btn - success";
+												break;
+											case 'pending payment': 
+												$class = "btn btn - warning";
+												break;
 											case 'approved':
 												$class = "btn btn-success";
 												break;
