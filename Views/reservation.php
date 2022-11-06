@@ -131,10 +131,12 @@
                         foreach($petList as $pet){
                             if($pet->getPetSize() == $petSize){
                                 $cont++;
-                             } ?>
-                            <input type="radio" class="btn-check" name="petId" id="option.<?php echo $pet->getPetId() ?>" autocomplete="off" value="<?php echo $pet->getPetId() ?>" checked />
-                            <label class="btn btn-secondary" for="option.<?php echo $pet->getPetName() ?>"><?php echo $pet->getPetName() ?></label>
-                        <?php }} if($cont == 0){ ?>
+                            ?>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="<?php echo $pet->getPetId() ?>" value="<?php echo $pet->getPetId() ?>">
+                              <label class="form-check-label" for="<?php echo $pet->getPetName() ?>"><?php echo $pet->getPetName() ?></label>
+                            </div>
+                        <?php }}} if($cont == 0){ ?>
                             "You do not have any pet size that the keeper takes care of."
                             <?php } ?>
                     </div>

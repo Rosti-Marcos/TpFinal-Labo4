@@ -31,7 +31,8 @@
             if($keeper == null){
                 if($endDate < $startDate){
                     $message = 'You cannot set the end date to before the start date';
-                    $this->ShowAvailabilityView($message);
+                    $this->ShowAvailabilityView("<h4 class = 'alert alert-danger'> $message </h4>");
+
                 }else{
                     $flag = 0; 
                     foreach($serviceList as $service){
@@ -47,10 +48,10 @@
                         $service->setStatus($status);
                         $this->serviceDAO->Add($service);
                         $message = 'Your availability has been successfully set';
-                        $this->ShowAvailabilityView($message);
+                        $this->ShowAvailabilityView("<h4 class = 'alert alert-success'> $message </h4>");                        
                     }else if($flag == 1){
                         $message = 'Some of the dates entered had already been loaded. Please enter different dates.'; 
-                        $this->ShowAvailabilityView($message);
+                        $this->ShowAvailabilityView("<h4 class = 'alert alert-warning'> $message </h4>");
                     }
                 $serviceList = $this->serviceDAO->getAll();
                 $this->ShowAvailabilityView();
@@ -62,8 +63,6 @@
                 $service->setEndDate($endDate);
                 $service->setStatus($status);
                 $this->serviceDAO->Add($service);
-                $keeperController = new KeeperController();
-                $keeperController->ShowListView();
             }
             
         }
