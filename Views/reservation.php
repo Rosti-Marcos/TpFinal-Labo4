@@ -2,6 +2,7 @@
  include('header.php');
  include('nav-bar.php');
 ?>
+
 	    <nav class="navtop">
 	    	<div>
 	    		<h1>Keeper Profile</h1>
@@ -174,8 +175,8 @@
                                         <option value="7">July</option>
                                         <option value="8">August</option>
                                         <option value="9">September</option>
-                                        <option value="10" selected>October</option>
-                                        <option value="11">November</option>
+                                        <option value="10">October</option>
+                                        <option value="11" selected >November</option>
                                         <option value="12">December</option>
                                         </select>
                                 <span class="select-arrow"></span>

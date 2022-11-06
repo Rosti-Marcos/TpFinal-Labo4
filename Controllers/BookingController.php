@@ -17,8 +17,17 @@
 
         public function ShowBookingsUser()
         {
+            $this->CheckFinishedBookings();
             $userController = new UserController();
             $bookingList = $this->bookingDAO->getByUser($_SESSION['loggedUser']);
+            $userList = $userController->userDAO->getAll();
+            require_once(VIEWS_PATH."user-reservationList.php");
+        }
+
+        public function ShowBookingsUserByStatus($status)
+        {
+            $userController = new UserController();
+            $bookingList = $this->bookingDAO->getByStatus($status, $_SESSION["loggedUser"]);
             $userList = $userController->userDAO->getAll();
             require_once(VIEWS_PATH."user-reservationList.php");
         }
@@ -137,11 +146,10 @@
                         }
                         
                     }
-                    if($cont < sizeOf($serviceList)){
+                    if($cont < sizeOf($serviceList) && $flag != 2){
                         $message = 'Some of the dates introduced are not available, please check the availability calendar and enter a new one.'; 
                         echo "<script>alert('$message');</script>";
-                        $this->PreReservation($userId);
-                        
+                        $this->PreReservation($userId);   
                     }
                 }
             }else{
@@ -194,9 +202,13 @@
         }
 
         public function CheckFinishedBookings(){
-            $bookingList = $this->bookingDAO->GetByKeeperId($_SESSION["loggedUser"]->getUserId());
+            $bookingList = $this->bookingDAO->GetAll();
+            $dateNow = date_create(date('y-m-d'));
+            $dateNow = date_format($dateNow, 'y-m-d');
             foreach($bookingList as $booking){
-                if($booking->getEndDate() < date('y-m-d')){
+                $date = date_create($booking->getEndDate());
+                $date = date_format($date, 'y-m-d');
+                if($date < $dateNow){
                     switch($booking->getStatus()){
                         case 'approved':
                             $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "finished");
