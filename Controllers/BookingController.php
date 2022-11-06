@@ -188,18 +188,20 @@
             $bookingList = $this->bookingDAO->GetAll();
             $dateNow = date_create(date('y-m-d'));
             $dateNow = date_format($dateNow, 'y-m-d');
-            foreach($bookingList as $booking){
-                $date = date_create($booking->getEndDate());
-                $date = date_format($date, 'y-m-d');
-                if($date < $dateNow){
-                    switch($booking->getStatus()){
-                        case 'approved':
-                            $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "finished");
-                            break;
-                        case 'pending':
-                            $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "unanswered");
+            if(!empty($bookingList)){
+                foreach($bookingList as $booking){
+                    $date = date_create($booking->getEndDate());
+                    $date = date_format($date, 'y-m-d');
+                    if($date < $dateNow){
+                        switch($booking->getStatus()){
+                            case 'approved':
+                                $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "finished");
+                                break;
+                            case 'pending':
+                                $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "unanswered");
+                        }
+                        
                     }
-                    
                 }
             }
         }
