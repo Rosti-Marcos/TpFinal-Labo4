@@ -38,6 +38,13 @@ use DAO\UserDAO;
 
         }
 
+        
+        public function PaymentLogin($userName, $password) {
+            $userDAO = new UserDAO;
+            $user= $userDAO->GetByUserName($userName);
+            $_SESSION["loggedUser"] = $user;
+        }
+
         public function Logout() {
 
             session_destroy();

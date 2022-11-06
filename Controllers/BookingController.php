@@ -6,7 +6,7 @@
 
     class BookingController
     {
-        private $bookingDAO;
+        public $bookingDAO;
 
 
         public function __construct()
@@ -174,6 +174,7 @@
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($booking->getKeeper()->getKeeperId());
             if($button == 'Approve'){
                 $this->bookingDAO->modifyBooking($bookingId, $message, 'approved');
+                
                 foreach($serviceList as $service){
                     if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
                         && $booking->getStartDate() == $service->getStartDate() && $booking->getEndDate() == $service->getEndDate()){
