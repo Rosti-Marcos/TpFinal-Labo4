@@ -61,10 +61,10 @@
 							{
                                 $name;
                                 $lastName;
-                                foreach($userList as $user){
-                                    if($booking->getKeeper()->getKeeperId() == $user->getUserId()){
-                                        $name = $user->getName();
-                                        $lastName = $user->getLastname();
+                                foreach($keeperList as $keeper){
+                                    if($booking->getKeeper()->getKeeperId() == $keeper->getKeeperId()){
+                                        $name = $keeper->getUser()->getName();
+                                        $lastName = $keeper->getUser()->getLastname();
                                     }
                                 }
 								?>
@@ -76,6 +76,9 @@
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
+											case 'pending payment': 
+												$class = "btn btn-warning";
+												break;
 											case 'approved':
 												$class = "btn btn-success";
 												break;

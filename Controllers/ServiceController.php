@@ -13,7 +13,7 @@
             $this->serviceDAO = new serviceDAO();
         }
 
-        public function ShowAvailabilityView()
+        public function ShowAvailabilityView($message = "")
         {
     
             require_once(VIEWS_PATH."keeper-availability.php");
@@ -26,12 +26,12 @@
 
         public function Add($startDate, $endDate, $status, $keeper = NULL){
             $userController = new UserController();
-            $user = $keeper != null ? $userController->userDAO->GetById($keeper->getKeeperId()) : $_SESSION["loggedUser"];
+            $user = $keeper != null ? $userController->userDAO->GetById($keeper->getUser()->getUserID()) : $_SESSION["loggedUser"];
             $serviceList = $this->serviceDAO->getAll();
             if($keeper == null){
                 if($endDate < $startDate){
                     $message = 'You cannot set the end date to before the start date';
-                    echo "<script>alert('$message');</script>";
+                    $this->ShowAvailabilityView($message);
                 }else{
                     $flag = 0; 
                     foreach($serviceList as $service){
@@ -47,10 +47,10 @@
                         $service->setStatus($status);
                         $this->serviceDAO->Add($service);
                         $message = 'Your availability has been successfully set';
-                        echo "<script>alert('$message');</script>";
+                        $this->ShowAvailabilityView($message);
                     }else if($flag == 1){
                         $message = 'Some of the dates entered had already been loaded. Please enter different dates.'; 
-                        echo "<script>alert('$message');</script>";
+                        $this->ShowAvailabilityView($message);
                     }
                 $serviceList = $this->serviceDAO->getAll();
                 $this->ShowAvailabilityView();

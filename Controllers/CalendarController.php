@@ -111,43 +111,45 @@ class CalendarController{
             }
     
         }
-        foreach($bookingList as $booking){
-            if($booking->getKeeper()->getKeeperId() == $userId){
-                $startDate = $booking->getStartDate();
-                $endDate = $booking->getEndDate();
-                for($i = $startDate; $i <= $endDate; $i++){
-                    $dateF = date_create($i);
-                    $date = date_format($dateF, 'Y-m-d');
-                    $dateT = date_create(date('Y-m-d'));
-                    $dateToday = date_format($dateT, 'Y-m-d');
-                    $m = date( 'y-m-t' );
-                    if($date < $m){
-                        switch ($booking->getStatus()) {
-                            case 'pending':
-                                if($date < $dateToday){
-                                    $this->add_event('Unanswered', $i, 1, 'grey');
-                                }else{
-                                    $this->add_event('Pending', $i, 1, 'yellow');
-                                }
-                                break;
-                            case 'approved':
-                                if($date < $dateToday){
-                                    $this->add_event('Finished', $i, 1, 'grey');
-                                }else{
-                                    $this->add_event('Approved', $i, 1, 'blue');
-                                }
-                                break; 
-                            case 'rejected':
-                                if($date < $dateToday){
-                                    $this->add_event('Rejected', $i, 1, 'grey');
-                                }else{
-                                    $this->add_event('Rejected', $i, 1, 'red');
-                                }
-                                break; 
+        if($bookingList){
+            foreach($bookingList as $booking){
+                if($booking->getKeeper()->getUser()->getUserId() == $userId){
+                    $startDate = $booking->getStartDate();
+                    $endDate = $booking->getEndDate();
+                    for($i = $startDate; $i <= $endDate; $i++){
+                        $dateF = date_create($i);
+                        $date = date_format($dateF, 'Y-m-d');
+                        $dateT = date_create(date('Y-m-d'));
+                        $dateToday = date_format($dateT, 'Y-m-d');
+                        $m = date( 'y-m-t' );
+                        if($date < $m){
+                            switch ($booking->getStatus()) {
+                                case 'pending':
+                                    if($date < $dateToday){
+                                        $this->add_event('Unanswered', $i, 1, 'grey');
+                                    }else{
+                                        $this->add_event('Pending', $i, 1, 'yellow');
+                                    }
+                                    break;
+                                case 'approved':
+                                    if($date < $dateToday){
+                                        $this->add_event('Finished', $i, 1, 'grey');
+                                    }else{
+                                        $this->add_event('Approved', $i, 1, 'blue');
+                                    }
+                                    break; 
+                                case 'rejected':
+                                    if($date < $dateToday){
+                                        $this->add_event('Rejected', $i, 1, 'grey');
+                                    }else{
+                                        $this->add_event('Rejected', $i, 1, 'red');
+                                    }
+                                    break; 
+                            }
                         }
                     }
+                
                 }
-            
             }
         }
         return $this->__toString();
