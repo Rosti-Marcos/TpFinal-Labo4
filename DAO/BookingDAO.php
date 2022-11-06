@@ -111,10 +111,12 @@
         public function GetByUser($user) { 
             $bookingListByUser = array();       
             $bookingList = $this->GetAll();
-            foreach($bookingList as $booking){
-                if($booking->getUser() == $user){
-                    array_push($bookingListByUser, $booking);
-                }                
+            if(!empty($bookingList)){
+                foreach($bookingList as $booking){
+                    if($booking->getUser() == $user){
+                        array_push($bookingListByUser, $booking);
+                    }                
+                }
             }
             if(!empty($bookingListByUser)){
             return $bookingListByUser;
