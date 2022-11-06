@@ -134,7 +134,7 @@
                              } ?>
                             <input type="radio" class="btn-check" name="petId" id="option.<?php echo $pet->getPetId() ?>" autocomplete="off" value="<?php echo $pet->getPetId() ?>" checked />
                             <label class="btn btn-secondary" for="option.<?php echo $pet->getPetName() ?>"><?php echo $pet->getPetName() ?></label>
-                        <?php }}} if($cont == 0){ ?>
+                        <?php }} if($cont == 0){ ?>
                             "You do not have any pet size that the keeper takes care of."
                             <?php } ?>
                     </div>
