@@ -1,8 +1,12 @@
 <?php
-include_once('header.php');
+
 include_once('nav-bar.php');
 ?>
-<?php if(!empty($message)){ echo $message; }?>
+
+<header><link href="<?php echo CSS_PATH . "wellcome.css" ?>" rel="stylesheet"></header>
+
+//<?php if(!empty($message)){ echo $message; }?>
+
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -11,27 +15,27 @@ include_once('nav-bar.php');
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="10000">
-                <div class="container">
+                
                 <img src="<?php echo FRONT_ROOT.IMG_PATH."perro3.jpg"?>"class="d-block w-100" alt="..." >
-                </div>
+                
                 <div class="carousel-caption d-none d-md-block">
                     <h3>Become a Keeper</h3>
                     <p>Aren't they cute?</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <div class="container">
+                
                 <img src="<?php echo FRONT_ROOT.IMG_PATH."perro1.jpg"?>"class="d-block w-100" alt="..." width="240">
-                </div>
+                
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Become a keeper</h5>
                     <p>Don't you want to keep them?</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="container">
-                <img src="<?php echo FRONT_ROOT.IMG_PATH."perro2.jpg"?>" class="d-block w-100" alt="...">
-                </div>
+                
+                <img src="<?php echo FRONT_ROOT.IMG_PATH."ownerSlider1.jpg"?>" class="d-block w-100" alt="...">
+                
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Become a keeper</h5>
                     <p>What are you waiting for?</p>

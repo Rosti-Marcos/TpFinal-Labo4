@@ -1,54 +1,47 @@
 <?php
-include_once('header.php');
+include ('nav-bar.php');
 ?>
+<header>
+    <link href="<?php echo CSS_PATH . "turningToKeeper.css" ?>" rel="stylesheet">
+</header>
 
-<div id="breadcrumb" class="hoc clear">
-    <h6 class="heading">Register</h6>
-</div>
-</div>
-<div class="wrapper row3" >
-    <main class="container" style="width: 95%;">
-        <!-- main body -->
-        <div class="content" >
-            <div id="comments" style="align-items:center;">
-                <h2>Insert your data</h2>
-                <form action="<?php echo  FRONT_ROOT . "Keeper\Add "?>" method="post"  style="background-color: #EAEDED;padding: 2rem !important;">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Pet type</th>
-                            <th>Intended remuneration</th>
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            
+            <div class="card">
+                <h5 class="text-center mb-4">Your preferences</h5>
+                <form class="form-card" action="<?php echo  FRONT_ROOT . "Keeper\Add "?>" method="post">
 
-                        </tr>
-                        </thead>
-                        <tbody align="center">
-                        <tr>
-                            <td>
-                                <select id="petSizeId" name="petSizeId">
-                                    <?php foreach($petSizeList as $petSize){?>
-                                        <option value="<?php echo $petSize->getPetSizeId() ?>"><?php echo $petSize->getPetSize()?></option>
-                                    <?php } ?>
-                                </select>
-
-                            </td>
-                            </select>
-                            <td>
-                                <input type="number" name="remuneration" size="20" min="0" required>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <input type="submit" class="btn" value="Send" style="background-color:#DC8E47;color:white;"/>
+                    
+                    <div >
+                        <label class="form-control-label px-3">Pet size allowed
+                            <span class="text-danger"> *</span>
+                        </label>
+                        <select id="petSizeId" name="petSizeId">
+                            <?php foreach($petSizeList as $petSize){?>
+                            <option value="<?php echo $petSize->getPetSizeId()?>"><?php echo $petSize->getPetSize()?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <br>                
+                    <div >
+                        <label class="form-control-label px-3">Your Remuneration
+                            <span class="text-danger"> *</span>
+                        </label>
+                        <input type="number" name="remuneration" min="0" required>
+                    </div>            
+                    <div class="text-center pt-1 mb-5 pb-1">
+                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Go!</button>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="d-flex align-items-center justify-content-center pb-4">
+                            <p class="mb-0 me-2"></p>
+                            <button type="button" class="btn btn-outline-danger"
+                                    onclick="location.href='<?php echo FRONT_ROOT . "Home/ShowWellcomeView"?>'">Back</button>
                     </div>
                 </form>
-                <a href="<?php echo FRONT_ROOT. "Home\ShowWellcomeView"?>">Back</a>
             </div>
         </div>
-    </main>
+    </div>
 </div>
-<!-- ################################################################################################ -->
-
-<?php
-include('footer.php');
-?>

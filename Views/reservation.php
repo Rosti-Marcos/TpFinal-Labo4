@@ -131,6 +131,7 @@
                         foreach($petList as $pet){
                             if($pet->getPetSize() == $petSize){
                                 $cont++;
+                        }
                             ?>
                             <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="inlineRadioOptions" id="<?php echo $pet->getPetId() ?>" value="<?php echo $pet->getPetId() ?>">
