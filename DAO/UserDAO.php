@@ -5,13 +5,13 @@
     use DAO\Connection as Connection;
     use Models\User as User;
     use DAO\IUserDAO as IUserDAO;
+    
 
     class UserDAO implements IUserDAO{
         private $connection;
         private $tableName = "user";
 
-        public function Add(User $user)
-        {
+        public function Add(User $user){
             $query = "INSERT INTO " . $this->tableName . " (user_type_id, name, lastname, user_name, password, email, phone_number, birth_date) 
                           VALUES (:user_type_id, :name, :lastname, :user_name, :password, :email, :phone_number, :birth_date);";
                 
@@ -28,7 +28,7 @@
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 
-            } catch(Exception $ex) {
+            }catch(Exception $ex){
                 throw $ex;
             }
         }            
@@ -73,10 +73,11 @@
         }
         
         public function GetByUserName($userName){
-        
+            
             $userTypeDAO = new UserTypeDAO();
             
-            $query = "select * from ". $this->tableName . "            
+            $query = "select * 
+            from ". $this->tableName . "            
             WHERE user_name = '$userName'";
             
             try{
@@ -104,7 +105,7 @@
         }
 
         public function GetById($userId){
-
+            
             $userTypeDAO = new UserTypeDAO();
             
             $query = "select * 
@@ -130,7 +131,9 @@
             }catch(Exception $ex){
                 throw $ex;
             }           
-            if(!empty($user)){return $user;}
+            if(!empty($user)){
+                return $user;
+            }
         }
 
         public function TurnToKeeper($userId){
@@ -143,7 +146,7 @@
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 
-            } catch(Exception $ex) {
+            }catch(Exception $ex){
                 throw $ex;
             }
 

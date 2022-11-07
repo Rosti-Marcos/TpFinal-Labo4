@@ -2,6 +2,7 @@
  include('header.php');
  include('nav-bar.php');
 ?>
+<body background="<?php echo FRONT_ROOT . IMG_PATH . "wallpaperbetter.jpg"?>">
 <div id="service" class="section">
 	<section class="ftco-section">
 		<div class="container">

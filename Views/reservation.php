@@ -123,9 +123,11 @@
                     <div class="col-sm-9 text-secondary">
                         <?php 
                         $cont = 0;
+                        if(!empty($petList)){
                         foreach($petList as $pet){
                             if($pet->getPetSize() == $petSize){
                                 $cont++;
+                        }
                             ?>
                             <input type="radio" class="btn-check" name="petId" id="option.<?php echo $pet->getPetId() ?>" autocomplete="off" value="<?php echo $pet->getPetId() ?>" checked />
                             <label class="btn btn-secondary" for="option.<?php echo $pet->getPetName() ?>"><?php echo $pet->getPetName() ?></label>

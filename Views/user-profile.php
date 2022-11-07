@@ -1,7 +1,8 @@
 <?php 
- include('header.php');
-
+    include('header.php');
+    include('nav-bar.php')
 ?>
+<body background="<?php echo FRONT_ROOT . IMG_PATH . "mascotas.jpg"?>">
     <section class="ftco-section">
     <div class="container">
     <div class="row justify-content-center">
