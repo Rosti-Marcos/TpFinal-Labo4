@@ -11,6 +11,36 @@
 					<h2 class="heading-section">Reservation List</h2>
 				</div>
 			</div>
+            <div class="container">       
+        <div class="row justify-content-md-center">
+            <div class="col-6 col-md-9">
+              <div class="card mb-12">
+                <div class="card-body">
+                  <div class="row">
+				  	 <div class="col-sm-4" style="text-align: center;">
+				  		<h5 class="mb-2" style="border-right: 1px solid grey">Bookings Filter</h5>
+                     </div>
+                    	<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."finished"?>" class="btn btn-primary" for="option.finished" value="finished">Finished</a>
+						</div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."pending"?>" class="btn btn-warning" for="option.pending" value="pending">Pending</a>
+						</div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."approved"?>" class="btn btn-success" for="option.approved">Approved</a>
+						</div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."rejected"?>" class="btn btn-danger" for="option.rejected">Rejected</a>
+                        </div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."unanswered"?>" class="btn btn-secondary" for="option.unanswered">Unanswered</a>
+                        </div>
+                     </div>           
+              		</div>
+            	</div>
+            </div>
+        </div>
+		<br/>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-wrap">
@@ -32,10 +62,10 @@
 							{
                                 $name;
                                 $lastName;
-                                foreach($userList as $user){
-                                    if($booking->getKeeper()->getKeeperId() == $user->getUserId()){
-                                        $name = $user->getName();
-                                        $lastName = $user->getLastname();
+                                foreach($keeperList as $keeper){
+                                    if($booking->getKeeper()->getKeeperId() == $keeper->getKeeperId()){
+                                        $name = $keeper->getUser()->getName();
+                                        $lastName = $keeper->getUser()->getLastname();
                                     }
                                 }
 								?>
@@ -47,6 +77,9 @@
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
+											case 'pending payment': 
+												$class = "btn btn-warning";
+												break;
 											case 'approved':
 												$class = "btn btn-success";
 												break;
@@ -56,6 +89,12 @@
 											case 'rejected':
 												$class =  "btn btn-danger"; 
 												break;
+                                            case 'finished':
+                                                $class =  "btn btn-primary"; 
+                                                break;
+                                            case 'unanswered':
+                                                $class = "btn btn-secondary"; 
+                                                break;
 
 										}
 									?>

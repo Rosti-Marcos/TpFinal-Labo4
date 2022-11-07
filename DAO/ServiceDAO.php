@@ -117,7 +117,7 @@
             }catch(Exception $ex){
                 throw $ex;
             }
-            if($service){
+            if(!empty($service)){
                 return $service;
             }
     

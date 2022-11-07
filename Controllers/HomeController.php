@@ -11,7 +11,7 @@ use DAO\UserDAO;
 
         }
 
-        public function ShowWellcomeView() {
+        public function ShowWellcomeView($message = "") {
             if($_SESSION["loggedUser"]->getUserType()->getUserTypeId() == 1){
                 require_once(VIEWS_PATH."validate-session.php");
                 require_once(VIEWS_PATH . "wellcome.php");
@@ -36,6 +36,13 @@ use DAO\UserDAO;
                 $this->Index($message);
             }
 
+        }
+
+        
+        public function PaymentLogin($userName, $password) {
+            $userDAO = new UserDAO;
+            $user= $userDAO->GetByUserName($userName);
+            $_SESSION["loggedUser"] = $user;
         }
 
         public function Logout() {

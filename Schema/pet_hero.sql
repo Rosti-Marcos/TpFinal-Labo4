@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2022 a las 20:10:01
+-- Tiempo de generación: 06-11-2022 a las 15:23:35
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -39,14 +39,6 @@ CREATE TABLE `booking` (
   `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `booking`
---
-
-INSERT INTO `booking` (`id`, `owner_id`, `keeper_id`, `start_date`, `end_date`, `message`, `pet_id`, `price`, `status`) VALUES
-(1, 1, 1, '2022-11-03', '2022-11-03', NULL, 2, 10000, 'pending'),
-(2, 1, 2, '2022-11-04', '2022-11-05', NULL, 2, 30000, 'pending');
-
 -- --------------------------------------------------------
 
 --
@@ -67,7 +59,9 @@ CREATE TABLE `keeper` (
 
 INSERT INTO `keeper` (`id`, `user_id`, `pet_size_id`, `remuneration`, `start_date`) VALUES
 (1, 2, 3, 10000, '2022-11-03'),
-(2, 4, 3, 15000, '2022-11-03');
+(2, 4, 3, 15000, '2022-11-03'),
+(3, 6, 1, 5000, '2022-11-06'),
+(4, 7, 3, 5000, '2022-11-06');
 
 -- --------------------------------------------------------
 
@@ -96,7 +90,8 @@ INSERT INTO `pet` (`id`, `pet_name`, `user_id`, `vaccine_cert`, `pet_size_id`, `
 (1, 'Patan', 1, 'Views/uploads/cert_vac5_1667412588.jpeg', 3, 'Views/uploads/patan_1667412588.jpg', 'Views/uploads/patan_1667412588.mp4', 'Rottweiler', 1, 'Nice on kids'),
 (2, 'Darky', 1, 'Views/uploads/cert_vac5_1667412730.jpeg', 1, 'Views/uploads/oscuro_1667412730.png', 'Views/uploads/oscuro_1667412730.mp4', 'common', 2, 'Sleepy cat'),
 (3, 'Casper', 2, 'Views/uploads/certVac3_1667413848.jpg', 1, 'Views/uploads/casper_1667413848.jpg', 'Views/uploads/casper_1667413848.mp4', 'common', 2, 'Nice to people'),
-(4, 'Tina', 2, 'Views/uploads/certVac3_1667413920.jpg', 1, 'Views/uploads/gato4_1667413920.jpg', 'Views/uploads/tigre_1667413920.mp4', 'persian', 2, 'Water lover');
+(4, 'Tina', 2, 'Views/uploads/certVac3_1667413920.jpg', 1, 'Views/uploads/gato4_1667413920.jpg', 'Views/uploads/tigre_1667413920.mp4', 'persian', 2, 'Water lover'),
+(5, 'Rocky', 7, 'Views/uploads/certVac3_1667715499.jpg', 1, 'Views/uploads/perro5_1667715499.jpg', 'Views/uploads/perritoGris_1667715499.mp4', 'Delacalle', 1, '');
 
 -- --------------------------------------------------------
 
@@ -151,15 +146,6 @@ CREATE TABLE `service` (
   `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `service`
---
-
-INSERT INTO `service` (`id`, `user_id`, `start_date`, `end_date`, `status`) VALUES
-(1, 2, '2022-11-03', '2022-11-08', 'available'),
-(2, 1, '2022-11-03', '2022-11-03', 'pending'),
-(3, 2, '2022-11-04', '2022-11-05', 'pending');
-
 -- --------------------------------------------------------
 
 --
@@ -187,7 +173,10 @@ INSERT INTO `user` (`id`, `user_type_id`, `name`, `lastname`, `user_name`, `pass
 (2, 2, 'Marcos', 'Rosti', 'rocksti', '1234', 'rockandrost@gmail.com', 2234632587, '1986-03-08'),
 (3, 1, 'Camila', 'Silva', 'camsil', '1234', 'victors.it78@gmail.com', 2234748364, '2008-10-23'),
 (4, 2, 'Lorena', 'Sola', 'lore', '1234', 'rosti_marcos@hotmail.com', 2236781114, '1988-10-30'),
-(5, 1, 'Carolina', 'Gallo', 'caro', '1234', 'slumdesarrollos@gmail.com', 2236252998, '1985-10-12');
+(5, 1, 'Carolina', 'Gallo', 'caro', '1234', 'slumdesarrollos@gmail.com', 2236252998, '1985-10-12'),
+(6, 2, 'Rodrigo', 'Eulloque', 'rodrieu', '1234', 'rodri@eu', 2944163556, '1992-07-16'),
+(7, 2, 'Marcos', 'Rosti', 'marc', '1234', 'marcos@rosti', 2235164525, '1985-12-21'),
+(8, 1, 'as', 'as', 'as', '1234', 'as@as', 2944163556, '1995-05-15');
 
 -- --------------------------------------------------------
 
@@ -285,19 +274,19 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT de la tabla `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `keeper`
 --
 ALTER TABLE `keeper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pet_size`
@@ -315,13 +304,13 @@ ALTER TABLE `pet_specie`
 -- AUTO_INCREMENT de la tabla `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `user_type`
