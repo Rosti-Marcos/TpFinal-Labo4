@@ -33,7 +33,7 @@ use DAO\UserDAO;
             } else {
                 $message = "User name or password incorrect";
                 //echo ;
-                $this->Index($message);
+                $this->Index("<h4 class = 'alert alert-danger'>$message</h4>");
             }
 
         }

@@ -26,7 +26,7 @@
 
             try{
                 $this->connection = Connection::GetInstance();
-                $this->connection->ExecuteNonQuery($query, $parameters);
+                return $this->connection->ExecuteNonQueryLastId($query, $parameters, false);
                 
             }catch(Exception $ex){
                 throw $ex;
@@ -79,6 +79,38 @@
             $query = "select * 
             from ". $this->tableName . "            
             WHERE user_name = '$userName'";
+            
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query); 
+                if(!empty($resultSet)){
+                    $user = new User();
+                    $user->setUserId($resultSet[0]["id"]);                    
+                    $user->setName($resultSet[0]["name"]);
+                    $user->setLastName($resultSet[0]["lastname"]);
+                    $user->setUserName($resultSet[0]["user_name"]);
+                    $user->setPassword($resultSet[0]["password"]);
+                    $user->setEMail($resultSet[0]["email"]);
+                    $user->setPhoneNumber($resultSet[0]["phone_number"]);
+                    $user->setBirthDate($resultSet[0]["birth_date"]);                    
+                    $userType = $userTypeDAO->GetById($resultSet[0]["user_type_id"]);
+                    $user->setUserType($userType);                       
+                }
+            }catch(Exception $ex){
+                throw $ex;
+            }           
+            if(!empty($user)){
+                return $user;
+            }
+        }
+
+        public function GetByEmail($email){
+            
+            $userTypeDAO = new UserTypeDAO();
+            
+            $query = "select * 
+            from ". $this->tableName . "            
+            WHERE email = '$email'";
             
             try{
                 $this->connection = Connection::GetInstance();
