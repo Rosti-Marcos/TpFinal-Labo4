@@ -32,12 +32,18 @@
             $user->setBirthDate($birthDate);
             if (!empty($this->userDAO->GetByUserName($userName))) {
 
-                return $message = 'User name already exists, please enter a new user name';
-
-                require_once(VIEWS_PATH."user-add.php");
+                $message = 'User name already exists, please enter a new user name';
+                $this->ShowAddView("<h4 class = 'alert alert-danger'> $message </h4>");
+            
+            } else if (!empty($this->userDAO->GetByEmail($eMail))) {
+                $message = 'The email already exists, please enter a new email';
+                $this->ShowAddView("<h4 class = 'alert alert-danger'> $message </h4>");
+        
             } else {
-                $this->userDAO->Add($user);
-                require_once(VIEWS_PATH."home.php");
+                $row = $this->userDAO->Add($user);
+                $message = "The record has been uploaded successfully, ' $row ' row is affected";
+                $homeController = new HomeController();
+                $homeController->Index("<h4 class = 'alert alert-success'> $message </h4>");
 
             }
         }

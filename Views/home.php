@@ -15,9 +15,7 @@ include('header.php');
                                          style="width: 185px;" alt="logo">
                                     <h4 class="mt-1 mb-5 pb-1">Not only kids need heros!</h4>
                                 </div>
-                                <?php if(!empty($message)){?>
-                                    <h2 class = "alert alert-danger"><?php echo $message ?></h2>
-                                    <?php } ?>
+                                <?php if(isset($message)){echo $message;}?>
                                 <form action="<?php echo FRONT_ROOT . "Home/Login"?>" method="post">
                                     <p>Please login to your account</p>
 
