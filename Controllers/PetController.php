@@ -20,7 +20,7 @@ class PetController
 
     }
 
-    public function ShowAddPetView(){
+    public function ShowAddPetView($message = ""){
         $petSpecieController = new PetSpecieController();
         $petSpecieList = $petSpecieController->petSpecieDAO->GetAll();
         $petSizeController = new PetSizeController();
@@ -61,7 +61,8 @@ class PetController
         $pet->setObservation($observation);
 
         $this->petDAO->Add($pet);
-        $this->ShowAddPetView();
+        $message = "Your pet has been added successfully";
+        $this->ShowAddPetView("<h6 class = 'alert alert-success'> $message </h6>");
     }
 
     public function FileUpload($nombre){
