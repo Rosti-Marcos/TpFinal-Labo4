@@ -6,9 +6,7 @@
         private User $user;
         private $cardNbr;
         private $ccv;
-        private $expirationDate;
-
-        
+                
         public function getId(){
             return $this->id;
         }
@@ -40,14 +38,7 @@
         public function setCcv($ccv){
             $this->ccv = $ccv;
         }
-
-        public function getExpirationDate(){
-            return $this->expirationDate;
-        }
-
-        public function setExpirationDate($expirationDate){
-            $this->expirationDate = $expirationDate;
-        }
+        
     }
 
 ?>

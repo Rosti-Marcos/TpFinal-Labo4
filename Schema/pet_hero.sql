@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2022 a las 15:23:35
+-- Tiempo de generación: 13-11-2022 a las 22:18:31
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `bank_account`
+--
+
+CREATE TABLE `bank_account` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `balance` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `bank_account`
+--
+
+INSERT INTO `bank_account` (`id`, `user_id`, `balance`) VALUES
+(1, 2, 10000),
+(2, 6, 10000);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `booking`
 --
 
@@ -38,6 +58,38 @@ CREATE TABLE `booking` (
   `price` int(11) NOT NULL,
   `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `booking`
+--
+
+INSERT INTO `booking` (`id`, `owner_id`, `keeper_id`, `start_date`, `end_date`, `message`, `pet_id`, `price`, `status`) VALUES
+(1, 2, 3, '2022-11-13', '2022-11-13', 'asd', 3, 5000, 'approved'),
+(2, 2, 3, '2022-11-14', '2022-11-14', 'sdgs', 3, 5000, 'approved'),
+(3, 2, 3, '2022-11-15', '2022-11-15', 'asfas', 3, 5000, 'approved'),
+(4, 2, 3, '2022-11-16', '2022-11-16', 'zczxc', 3, 5000, 'approved'),
+(5, 2, 3, '2022-11-17', '2022-11-17', 'asdasd', 3, 5000, 'approved'),
+(6, 2, 3, '2022-11-18', '2022-11-18', 'asd', 3, 5000, 'approved');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `credit_card`
+--
+
+CREATE TABLE `credit_card` (
+  `id` int(11) NOT NULL,
+  `number` bigint(20) NOT NULL,
+  `ccv` int(3) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `credit_card`
+--
+
+INSERT INTO `credit_card` (`id`, `number`, `ccv`, `user_id`) VALUES
+(1, 1234432112344321, 123, 2);
 
 -- --------------------------------------------------------
 
@@ -146,6 +198,19 @@ CREATE TABLE `service` (
   `status` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `service`
+--
+
+INSERT INTO `service` (`id`, `user_id`, `start_date`, `end_date`, `status`) VALUES
+(1, 6, '2022-11-13', '2022-11-30', 'available'),
+(2, 6, '2022-11-13', '2022-11-13', 'pending'),
+(3, 6, '2022-11-14', '2022-11-14', 'pending'),
+(4, 6, '2022-11-15', '2022-11-15', 'pending'),
+(5, 6, '2022-11-16', '2022-11-16', 'pending'),
+(6, 6, '2022-11-17', '2022-11-17', 'pending'),
+(7, 6, '2022-11-18', '2022-11-18', 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -203,6 +268,13 @@ INSERT INTO `user_type` (`id`, `type`) VALUES
 --
 
 --
+-- Indices de la tabla `bank_account`
+--
+ALTER TABLE `bank_account`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indices de la tabla `booking`
 --
 ALTER TABLE `booking`
@@ -210,6 +282,13 @@ ALTER TABLE `booking`
   ADD KEY `owner_id` (`owner_id`),
   ADD KEY `keeper_id` (`keeper_id`),
   ADD KEY `pet_id` (`pet_id`);
+
+--
+-- Indices de la tabla `credit_card`
+--
+ALTER TABLE `credit_card`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indices de la tabla `keeper`
@@ -271,10 +350,22 @@ ALTER TABLE `user_type`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `bank_account`
+--
+ALTER TABLE `bank_account`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `credit_card`
+--
+ALTER TABLE `credit_card`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `keeper`
@@ -304,7 +395,7 @@ ALTER TABLE `pet_specie`
 -- AUTO_INCREMENT de la tabla `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
@@ -323,12 +414,24 @@ ALTER TABLE `user_type`
 --
 
 --
+-- Filtros para la tabla `bank_account`
+--
+ALTER TABLE `bank_account`
+  ADD CONSTRAINT `bank_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `booking`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`keeper_id`) REFERENCES `keeper` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `credit_card`
+--
+ALTER TABLE `credit_card`
+  ADD CONSTRAINT `credit_card_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `keeper`

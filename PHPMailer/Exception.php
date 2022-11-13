@@ -1,5 +1,5 @@
 <?php
-
+namespace PHPMailer;
 /**
  * PHPMailer Exception class.
  * PHP Version 5.5.

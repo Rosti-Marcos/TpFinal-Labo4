@@ -2,92 +2,68 @@
 
 namespace DAO;
 
-use Models\BankAccount as BankAccount;
-use DAO\IBankAccountDAO as IBankAccountDAO;
+    use \Exception as Exception;        
+    use DAO\Connection as Connection;
+    
+    namespace DAO;
 
 
-class BankAccountDAO implements IBankAccountDAO{
 
-    private $bankAccountList = array();
-    private $fileName = ROOT . "Data/bankAccounts.json";
+class BankAccountDAO{
+    private $connection;
+    private $tableName = "bank_account";
 
-    function GetAll(){
-        $this->RetrieveData();
-        return $this->bankAccountList;
-    }
 
-    public function GetById($id) {
-        $this->RetrieveData();
 
-        $aux = array_filter($this->bankAccountList, function($bankAccount) use($id) {
-            return $bankAccount->getId() == $id;
-        });
-
-        $aux = array_values($aux);
-
-        return (count($aux) > 0) ? $aux[0] : array();
-    }
-
-    function Add(BankAccount $bankAccount){
-
-        $this->RetrieveData();
-
-        $bankAccount->setId($this->GetNextId());
-
-        array_push($this->bankAccountList, $bankAccount);
-
-        $this->SaveData();
-
-    }
-
-    private function GetNextId() {
-        $id = 0;
-        foreach($this->bankAccountList as $bankAccount) {
-            $id = ($bankAccount->getId() > $id) ? $bankAccount->getId() : $id;
-        }
-        return $id + 1;
-    }
-
-    public function RetrieveData() {
-        $this->bankAccountList = array();
-
-        if(file_exists($this->fileName)) {
-            $jsonContent = file_get_contents($this->fileName);
-            $arrayDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-            foreach($arrayDecode as $value) {
-
-                $userDAO = new UserDAO;
-                $user = $userDAO->GetById($value["user"]);
-               
-                $bankAccount = new BankAccount();
-                $bankAccount->setId($value["id"]);
-                $bankAccount->setUser($user);
-                $bankAccount->setAccountNbr($value["accountNbr"]);
-                $bankAccount->setBalance($value["balance"]);
-                              
-                array_push($this->bankAccountList, $bankAccount);
+public function GetByUserId($userId){
+        
+        $query = "select balance from ". $this->tableName . " 
+        WHERE user_id = '$userId'";
+        
+        try{
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->Execute($query); 
+            if(!empty($resultSet)){
+                $balance = ($resultSet[0]["balance"]);                              
             }
+        }catch(Exception $ex){
+            throw $ex;
         }
-    }
+        if(!empty($balance)){
+            return $balance;
+        }
+    } 
 
-    private function SaveData() {
-
-        $arrayEncode = array();
-
-        foreach ($this->bankAccountList as $bankAccount){
-
-            $valueArray = array();
-            $valueArray["id"]= $bankAccount->getId();
-            $valueArray["user"]= $bankAccount->getUser()->getUserId();
-            $valueArray["accountNbr"] = $bankAccount->getAccountNbr();
-            $valueArray["balance"] = $bankAccount->getBalance();
+    public function AccountDebit($userId, $amount){
+                        
+        $query = "UPDATE ".$this->tableName." SET balance = balance - :amount              
+        WHERE user_id =:user_id;";            
+        $parameters['amount'] = $amount;                        
+        $parameters['user_id'] = $userId;
+        try{
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query, $parameters);
             
-            array_push($arrayEncode, $valueArray);
+        }catch(Exception $ex){
+            throw $ex;
         }
-        $jsonContent = json_encode($arrayEncode, JSON_PRETTY_PRINT);
-        file_put_contents($this->fileName, $jsonContent);
-    }
 
-}
+    }   
+
+    public function AccountCredit($keeperId, $amount){
+                        
+        $query = "UPDATE ".$this->tableName." SET balance = balance + :amount              
+        WHERE user_id =:user_id;";            
+        $parameters['amount'] = $amount;                        
+        $parameters['user_id'] = $keeperId;
+        try{
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query, $parameters);
+            
+        }catch(Exception $ex){
+            throw $ex;
+        }
+
+    }   
+}    
 ?>

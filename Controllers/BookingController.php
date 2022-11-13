@@ -168,6 +168,7 @@
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($booking->getKeeper()->getKeeperId());
             if($button == 'Approve'){
                 $this->bookingDAO->modifyBooking($bookingId, $message, 'approved');
+                $this->PaymentEmail($booking);
                 if(!empty($serviceList)){
                     foreach($serviceList as $service){
                         if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
@@ -217,5 +218,28 @@
             $this->bookingDAO->Remove($id);
 
         }
+
+        public function PaymentEmail($booking){
+            $id = $booking->getId();
+            $name = $booking->getUser()->getName();
+            $email = $booking->getUser()->getEMail();
+            $emailController = new EmailController();
+            $title = "Pet-Hero! booking confirmation";
+            $subject =  "Your advance payment coupon to confirm your booking";
+            $bodyHTML = "<!DOCTYPE html><html lang='es' xmlns='http://www.w3.org/1999/xhtml' xmlns:o='urn:schemas-microsoft-com:office:office'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='x-apple-disable-message-reformatting'><title></title><!--[if mso]><noscript>
+            <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]--><style>table, td, div, h1, p {font-family: Arial, sans-serif;}</style></head>
+            <body style='margin:40px;padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;'><tr><td align='center' style='padding:0;'><table role='presentation' style='width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;'><tr><td align='center' style='padding:40px 0 30px 0;background:#ffffff;'><img src='https://i.postimg.cc/zvktcy8r/pet-Hero-Logo.png' alt='' width='300' style='height:auto;display:block;' /></td></tr><tr><td style='padding:36px 30px 42px 30px;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 36px 0;color:#153643;'><h1 style='font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;'>Hello $name!!</h1><p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'>We are delighted that you have chosen to trust us! We are sending you this link, so you can make the last step to confirm your booking.</p><p style='margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><a href='http://localhost/TpFinal-Labo4/CreditCard/Payment?id=$id' style='color:#ee4c50;text-decoration:underline;'>Let´s confirm my booking!</a></p></td></tr><tr><td style='padding:0;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='width:260px;padding:0;vertical-align:top;color:#153643;'><p style='margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><img src='https://i.postimg.cc/1XqQbc4q/parque-Mascotas.jpg' alt='' width='260' style='height:auto;display:block;' /></p><p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'>Connecting people to brighten the days of our little friends is our mission! Our pets deserve quality time and there are always people willing to dedicate them.<br>You can trust us to meet some!</p></td><td style='width:20px;padding:0;font-size:0;line-height:0;'>&nbsp;</td><td style='width:260px;padding:0;vertical-align:top;color:#153643;'><p style='margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'><img src='https://i.postimg.cc/jdvbm5Sv/pet-Corazon.jpg' alt='' width='260' style='height:auto;display:block;' /></p><p style='margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;'>All our keepers have veterinary care, for the peace of mind of the owners who trust in our service.</p></td></tr></table></td></tr></table></td>
+            </tr><tr><td style='padding:30px;background:#ee4c50;'><table role='presentation' style='width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;'><tr><td style='padding:0;width:50%;' align='left'>
+            <p style='margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;'>&reg; Pet Hero!, Somewhere 2022<br/></p></td><td style='padding:0;width:50%;' align='right'><table role='presentation' style='border-collapse:collapse;border:0;border-spacing:0;'><tr><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.twitter.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/tw_1.png' alt='Twitter' width='38' style='height:auto;display:block;border:0;' /></a></td><td style='padding:0 0 0 10px;width:38px;'><a href='http://www.facebook.com/' style='color:#ffffff;'><img src='https://assets.codepen.io/210284/fb_1.png' alt='Facebook' width='38' style='height:auto;display:block;border:0;' /></a></td></tr>
+            </table></td></tr></table></td></tr></table></td></tr></table></body></html>";
+
+            $sendCheck = $emailController->metSend($title, $name, $email, $subject, $bodyHTML); 
+
+        }
+
+
+
+        
+
     }
 ?>
