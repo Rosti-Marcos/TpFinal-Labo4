@@ -1,29 +1,37 @@
 <?php
 
 namespace Controllers;
-require_once ("sendMail/PHPMailer/clsMail.php");
-use clsMail as clsMail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use DAO\EmailTemplateDAO as EmailTemplateDAO;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
 
 class EmailController{
-    private $mailSend;
- 
-    public function __construct(){
-        $this->mailSend = new clsMail();
-    }
+        private $mail = null;
 
-    public function EmailSender($booking){
-        $name = $booking->getUser()->getName();
-        $email = $booking->getUser()->getEMail();
-        $id = $booking->getId();
+        function __construct(){
+            $this->mail = new PHPMailer();
+            $this->mail->isSMTP();
+            $this->mail->SMTPAuth = true;
+            $this->mail->SMTPSecure = 'tls';
+            $this->mail->Host = "smtp.gmail.com";
+            $this->mail->Port = 587;    
+            $this->mail->Username = "pet.hero.tpfinal@gmail.com";
+            $this->mail->Password = "slagxhdqwbcxmrvl";
+        }
+    
+        public function metSend($title, $name, $email, $subject, $bodyHTML){
+            $this->mail->setFrom("pet.hero.tpfinal@gmail.com", $title);
+            $this->mail->addAddress($email, $name);
+            $this->mail->Subject = $subject;
+            $this->mail->Body = $bodyHTML;
+            $this->mail->isHTML(true);
+            $this->mail->CharSet = "UTF-8";    
+            return $this->mail->send();
+        }
 
-        $title = 'Pet Hero!, Booking confirmation';
-        $subject = 'Your Pet Hero reservation';
-
-        $bodyHTML = '<h1>"Pet Hero!"</h1> <br> <h2>Ticket coupon</h2> <br> <h3>Hi .<?php echo $name ?>., Once you pay this 50% advance coupon, your booking will be confirmed</h3> <br> <br> <A HREF="http://localhost/TpFinal-Labo4/CreditCard/Payment?id=.<?php echo $id?>.>Acceda al cupon de Pago</A>';
-    
-    
-        $sended = $this->mailSend->metSend($title, $name , $email ,$subject , $bodyHTML);
-    
-}
 }
 ?>

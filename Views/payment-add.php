@@ -3,22 +3,23 @@ include('header.php');
 include ('nav-bar.php');
 ?>
 <header>
-    <link href="<?php echo CSS_PATH . "creditCard.css" ?>" rel="stylesheet">
+    <link href="<?php echo CSS_PATH . "payment.css" ?>" rel="stylesheet">
 </header>
 
 <div class="container">
-<form action="<?php echo  FRONT_ROOT . "CreditCard\Add "?>" method="post">
+<form action="<?php echo  FRONT_ROOT . "CreditCard\CheckPayment "?>" method="post">
   <div class="card">
   <button type="submit" class="proceed"><svg class="sendicon" width="24" height="24" viewBox="0 0 24 24">
   <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
 </svg></button>
   <img src="<?php echo FRONT_ROOT.IMG_PATH."logoVisa.png" ?>" class="logo-card">
  <label>Card number:</label>
- <input id="user" type="text" class="input cardnumber"  placeholder="1234 5678 9101 1121">
+ <input id="user" type="text" name="number" class="input cardnumber"  placeholder="1234 5678 9101 1121">
  <label>Name:</label>
- <input class="input name"  placeholder="Edgar Pérez">
+ <input class="input name" name="name" placeholder="Edgar Pérez">
  <label class="toleft">CCV:</label>
- <input class="input toleft ccv" placeholder="321">
+ <input class="input toleft ccv" name="ccv" placeholder="321">
+ <input type="hidden" name="bookingId" value="<?php echo $booking->getId()?>">
   </div>
   <div class="receipt">
     <div class="col"><p>Total Cost:</p>
@@ -37,4 +38,7 @@ include ('nav-bar.php');
     </div>
     <p class="comprobe">This information will be sended to your email</p>
   </div>
+  <?php if(isset($message)){?>
+      <h4 class = 'alert alert-danger'><?php echo $message ?></h4>
+  <?php }?>
 </div>
