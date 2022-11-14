@@ -70,7 +70,7 @@
                     $bankAccountController->bankAccountDAO->AccountDebit($userId, $amount);
                     $bankAccountController->bankAccountDAO->AccountCredit($keeperId, $amount);
                     $bookingController = new BookingController();
-                    $bookingController->bookingDAO->modifyBooking($bookingId, $booking->getMessage(), "approved(payed)");
+                    $bookingController->bookingDAO->modifyBooking($bookingId, $booking->getMessage(), 'approved(payed)');
                     $homeController = new HomeController();
                     $message = "Transaction done";
                     $homeController->ShowWellcomeView($message);
