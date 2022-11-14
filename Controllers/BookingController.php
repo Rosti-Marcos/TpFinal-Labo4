@@ -130,7 +130,7 @@
                                 $this->PreReservation($userId, null, $message);
                                 break;
                             }else{
-                                $this->PreReservation($userId, null, $message);
+                                $this->PreReservation($userId, null);
                                 break;
                             }
                         }
@@ -167,13 +167,13 @@
             $booking = $this->bookingDAO->GetById($bookingId);
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($booking->getKeeper()->getKeeperId());
             if($button == 'Approve'){
-                $this->bookingDAO->modifyBooking($bookingId, $message, 'approved');
+                $this->bookingDAO->modifyBooking($bookingId, $message, 'approved(pending payment)');
                 $this->PaymentEmail($booking);
                 if(!empty($serviceList)){
                     foreach($serviceList as $service){
                         if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
                             && $booking->getStartDate() == $service->getStartDate() && $booking->getEndDate() == $service->getEndDate()){
-                            $serviceController->serviceDAO->modifyService($service->getId(), 'approved');
+                            $serviceController->serviceDAO->modifyService($service->getId(), 'approved(pending payment)');
                         }       
                     } 
                 }   
@@ -199,7 +199,7 @@
                     $date = date_format($date, 'y-m-d');
                     if($date < $dateNow){
                         switch($booking->getStatus()){
-                            case 'approved':
+                            case 'approved(payed)':
                                 $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "finished");
                                 break;
                             case 'pending':
@@ -209,14 +209,6 @@
                     }
                 }
             }
-        }
-        
-        public function Remove($id)
-        {
-            require_once(VIEWS_PATH."validate-session.php");
-            
-            $this->bookingDAO->Remove($id);
-
         }
 
         public function PaymentEmail($booking){

@@ -33,8 +33,13 @@
             $_SESSION['loggedUser'] = $user;
             $homeController = new HomeController();
             $homeController->PaymentLogin($user->getUserName(), $user->getPassword());
+            if ($booking->getStatus() == 'approved(pending payment)') {
             $this->ShowPayment($booking);
-            
+            }else{
+                $homeController = new HomeController();
+                $message = "Your booking is already payed";
+                $homeController->ShowWellcomeView($message);
+            }
         }
 
         public function CheckCreditCard($cardNbr, $name, $ccv){
@@ -42,7 +47,7 @@
             if(!empty($creditCard)){
                 $fullName = explode(' ', $name);  
                 if ($fullName[0] == $creditCard->getUser()->getName() && $fullName[1]== $creditCard->getUser()->getLastname()){
-                    if ($ccv = $creditCard->getCcv()){
+                    if ($ccv == $creditCard->getCcv()){
                         return $creditCard;
                   }
                 }
@@ -64,6 +69,8 @@
                    if($balance >= $amount){
                     $bankAccountController->bankAccountDAO->AccountDebit($userId, $amount);
                     $bankAccountController->bankAccountDAO->AccountCredit($keeperId, $amount);
+                    $bookingController = new BookingController();
+                    $bookingController->bookingDAO->modifyBooking($bookingId, $booking->getMessage(), "approved(payed)");
                     $homeController = new HomeController();
                     $message = "Transaction done";
                     $homeController->ShowWellcomeView($message);

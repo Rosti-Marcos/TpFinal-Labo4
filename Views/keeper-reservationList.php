@@ -78,13 +78,10 @@
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
-											case 'payed':
-												$class = "btn btn-success";
+											case 'approved(pending payment)': 
+												$class = "btn btn-primary";
 												break;
-											case 'pending payment': 
-												$class = "btn btn-warning";
-												break;
-											case 'approved':
+											case 'approved(payed)':
 												$class = "btn btn-success";
 												break;
 											case 'pending':
@@ -94,7 +91,7 @@
 												$class =  "btn btn-danger"; 
 												break;
 											case 'finished':
-												$class =  "btn btn-primary"; 
+												$class =  "btn btn-secondary"; 
 												break;
 											case 'unanswered':
 												$class = "btn btn-secondary"; 
