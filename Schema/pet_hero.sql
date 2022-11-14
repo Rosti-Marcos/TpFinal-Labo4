@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2022 a las 22:18:31
+-- Tiempo de generación: 14-11-2022 a las 13:30:31
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -64,12 +64,14 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id`, `owner_id`, `keeper_id`, `start_date`, `end_date`, `message`, `pet_id`, `price`, `status`) VALUES
-(1, 2, 3, '2022-11-13', '2022-11-13', 'asd', 3, 5000, 'approved'),
+(1, 2, 3, '2022-11-13', '2022-11-13', 'asd', 3, 5000, 'finished'),
 (2, 2, 3, '2022-11-14', '2022-11-14', 'sdgs', 3, 5000, 'approved'),
 (3, 2, 3, '2022-11-15', '2022-11-15', 'asfas', 3, 5000, 'approved'),
 (4, 2, 3, '2022-11-16', '2022-11-16', 'zczxc', 3, 5000, 'approved'),
 (5, 2, 3, '2022-11-17', '2022-11-17', 'asdasd', 3, 5000, 'approved'),
-(6, 2, 3, '2022-11-18', '2022-11-18', 'asd', 3, 5000, 'approved');
+(6, 2, 3, '2022-11-18', '2022-11-18', 'asd', 3, 5000, 'approved'),
+(7, 2, 3, '2022-11-20', '2022-11-20', 'asd', 4, 5000, 'approved'),
+(8, 2, 3, '2022-11-22', '2022-11-22', 'asdas', 4, 5000, 'approved');
 
 -- --------------------------------------------------------
 
@@ -209,7 +211,9 @@ INSERT INTO `service` (`id`, `user_id`, `start_date`, `end_date`, `status`) VALU
 (4, 6, '2022-11-15', '2022-11-15', 'pending'),
 (5, 6, '2022-11-16', '2022-11-16', 'pending'),
 (6, 6, '2022-11-17', '2022-11-17', 'pending'),
-(7, 6, '2022-11-18', '2022-11-18', 'pending');
+(7, 6, '2022-11-18', '2022-11-18', 'pending'),
+(8, 6, '2022-11-20', '2022-11-20', 'pending'),
+(9, 6, '2022-11-22', '2022-11-22', 'pending');
 
 -- --------------------------------------------------------
 
@@ -359,7 +363,7 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT de la tabla `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `credit_card`
@@ -395,7 +399,7 @@ ALTER TABLE `pet_specie`
 -- AUTO_INCREMENT de la tabla `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
