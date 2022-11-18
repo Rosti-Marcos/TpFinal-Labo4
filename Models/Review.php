@@ -4,8 +4,8 @@
     class Review{
         private $id;
         private User $owner; 
-        private User $keeper;
-        private $description;
+        private keeper $keeper;
+        private $comment;
         private $date;
         private $valoration;
 
@@ -19,7 +19,7 @@
         }
 
         public function getOwner(){
-            return $this->idOwner;
+            return $this->owner;
         }
 
         public function setOwner($owner){
@@ -27,19 +27,19 @@
         }
 
         public function getKeeper(){
-            return $this->idKeeper;
+            return $this->keeper;
         }
 
-        public function setKeeper($keeper){
+        public function setKeeper(keeper $keeper){
             $this->keeper = $keeper;
         }
 
-        public function getDescription(){
-            return $this->description;
+        public function getComment(){
+            return $this->comment;
         }
 
-        public function setDescription($description){
-            $this->description = $description;
+        public function setComment($comment){
+            $this->comment = $comment;
         }
 
         public function getDate(){

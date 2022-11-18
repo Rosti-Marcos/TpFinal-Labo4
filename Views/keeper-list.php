@@ -2,6 +2,7 @@
   include_once('header.php');
   include_once('nav-bar.php');
 ?>
+
 <body background="<?php echo FRONT_ROOT . IMG_PATH . "bgPerroBlanco.jpg"?>">
 <section class="ftco-section">
     <div class="container">
@@ -59,14 +60,15 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Age</th>
-                            <th>Pet Size</th>
-                            <th>Intended remuneration</th>
-                            <th>Start Date</th>
+                            <th style="text-align: center;">Name</th>
+                            <th style="text-align: center;">Lastname</th>
+                            <th style="text-align: center;">Email</th>
+                            <th style="text-align: center;">Phone Number</th>
+                            <th style="text-align: center;">Age</th>
+                            <th style="text-align: center;">Pet Size</th>
+                            <th style="text-align: center;">Intended remuneration</th>
+                            <th style="text-align: center;">Start Date</th>
+                            <th style="text-align: center;">Valoration</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -77,18 +79,36 @@
                         <tr>
                             <?php $birthExplode = explode("-",$keeper->getUser()->getBirthDate());?>
                              
-                            <td><?php echo $keeper->getUser()->getName() ?></td>
-                            <td><?php echo $keeper->getUser()->getLastname() ?></td>
-                            <td><?php echo $keeper->getUser()->getEMail() ?></td>
-                            <td><?php echo $keeper->getUser()->getPhoneNumber() ?></td>
-                            <td><?php echo $age= $year - $birthExplode[0]; ?></td>
-                            <td><?php echo $keeper->getPetSize()->getPetSize() ?></td>
-                            <td><?php echo $keeper->getRemuneration() ?></td>
-                            <td><?php echo $keeper->getStartDate() ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getUser()->getName() ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getUser()->getLastname() ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getUser()->getEMail() ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getUser()->getPhoneNumber() ?></td>
+                            <td style="text-align: center;"><?php echo $age= $year - $birthExplode[0]; ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getPetSize()->getPetSize() ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getRemuneration() ?></td>
+                            <td style="text-align: center;"><?php echo $keeper->getStartDate() ?></td>
+                            <div class="ratings">
+                                <td style="text-align: center;">
+                            <?php foreach($avgList as $avg){
+                                $avgValue = (int)$avg->getValoration();
+                                if($avg->getKeeper() == $keeper){
+                                    for($i = 0 ; $i < 5 ; $i++){
+                                        if($avgValue > 0){
+                                            ?>
+                                            <i class="fa fa-star rating-color"></i>
+                                    <?php   $avgValue = $avgValue - 1; 
+                                        }else{ ?>
+                                            <i class="fa fa-star"></i>
+                                <?php }}?>
+                            <td><label class="<?php echo $class?>"></label></td>
+                            <?php }else{?>
+                                <td></td>
+                            <?php }}?>
+                            </td>
+                            </div>
                             <td><a class="btn btn-primary" href="<?php echo FRONT_ROOT."Booking/PreReservation/".$keeper->getUser()->getUserId()?>" class="btn">Show Profile</a></td>
                         </tr>
-                                <?php }?>
-                        <?php }}?>
+                        <?php }}}?>
                         </tbody>
                     </table>
                 </div>

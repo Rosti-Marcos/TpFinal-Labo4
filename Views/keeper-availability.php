@@ -39,8 +39,8 @@
 											<div class="form-group">
 												<span class="form-label">Status</span>
 													<select class="form-control" name="status" id="status">
-														<option value="available">Available</option>
-														<option value="unavailable">Unavailable</option>
+														<option value="Available">Available</option>
+														<option value="Unavailable">Unavailable</option>
 													</select>
 												<span class="select-arrow"></span>
 											</div>

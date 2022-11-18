@@ -24,7 +24,7 @@
             require_once(VIEWS_PATH."example.php");
         }
 
-        public function Add($startDate, $endDate, $status, $keeper = NULL){
+        public function Add($startDate, $endDate, $status, $keeper = NULL, $specie = NULL){
             $userController = new UserController();
             $user = $keeper != null ? $userController->userDAO->GetById($keeper->getUser()->getUserID()) : $_SESSION["loggedUser"];
             $serviceList = $this->serviceDAO->getAll();
@@ -57,12 +57,44 @@
                 $this->ShowAvailabilityView();
                 }
             }else{
-                $service = new service();
-                $service->setUser($user);
-                $service->setStartDate($startDate);
-                $service->setEndDate($endDate);
-                $service->setStatus($status);
-                $this->serviceDAO->Add($service);
+                $flag = 0;
+                foreach($serviceList as $service){
+                    if($service->getUser() == $user && $startDate <= $service->getEndDate() && $endDate >= $service->getStartDate() && $service->getStatus() == 'For '.$status.'s'){
+                        $dateS = date_create($service->getStartDate());
+                        $dateStart = date_format($dateS, 'Y-m-d');
+                        $dateE = date_create($service->getEndDate());
+                        $dateEnd = date_format($dateE, 'Y-m-d');
+                        if($endDate > $service->getEndDate()){
+                            $serviceBySpecie = new service();
+                            $serviceBySpecie->setUser($user);
+                            $serviceBySpecie->setStartDate(date('Y-m-d', strtotime($service->getEndDate() . '+1 day')));
+                            $serviceBySpecie->setEndDate($endDate);
+                            $serviceBySpecie->setStatus('For '.$status.'s');
+                            $this->serviceDAO->Add($serviceBySpecie);
+                            $flag = 1;
+                        }
+                        if($startDate < $service->getStartDate()){
+                            $serviceBySpecie = new service();
+                            $serviceBySpecie->setUser($user);
+                            $serviceBySpecie->setStartDate($startDate);
+                            $serviceBySpecie->setEndDate(date('Y-m-d', strtotime($dateStart . '-1 day')));
+                            $serviceBySpecie->setStatus('For '.$status.'s');
+                            $this->serviceDAO->Add($serviceBySpecie);
+                            $flag = 1;
+                        }
+                        if($startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
+                            $flag = 1;
+                        }
+                    }
+                }
+                if($flag == 0){
+                    $service = new service();
+                    $service->setUser($user);
+                    $service->setStartDate($startDate);
+                    $service->setEndDate($endDate);
+                    $service->setStatus('For '.$status.'s');
+                    $this->serviceDAO->Add($service);
+                }
             }
             
         }
