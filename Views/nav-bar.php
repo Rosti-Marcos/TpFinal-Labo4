@@ -41,6 +41,7 @@ include_once('header.php');
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Service/ShowAvailabilityView" ?>">Set my availability</a></li>
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Calendar/ShowAvailabilityCalendar" ?>">Availability calendar</a></li>
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeper" ?>">Show my reservations</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Review/ShowReviews" ?>">Show my reviews</a></li>
                         </ul>
                     </li>
                 <?php } ?>

@@ -2,6 +2,7 @@
     namespace Controllers;
 
     use DAO\BookingDAO as BookingDAO;
+    use Controllers\ReviewController as ReviewController;
     use Models\Booking as Booking;
 
     class BookingController
@@ -26,6 +27,11 @@
 
         public function ShowBookingsUserByStatus($status)
         {
+            if($status == 'Approved(Pendingpayment)'){
+                $status = 'Approved (Pending payment)';
+            }else if($status == 'Finishedreviewed'){
+                $status = 'Finished & reviewed';
+            }
             $keeperController = new KeeperController();
             $bookingList = $this->bookingDAO->getByStatus($status, $_SESSION["loggedUser"]);
             $keeperList = $keeperController->keeperDAO->getAll();
@@ -45,6 +51,12 @@
 
         public function ShowBookingsKeeperByStatus($status)
         {
+            if($status == 'Approved(Pendingpayment)'){
+                $status = 'Approved (Pending payment)';
+            }else if($status == 'Finishedreviewed'){
+                $status = 'Finished & reviewed';
+            }
+            
             $userController = new UserController();
             $keeperController = new KeeperController();
             $keeper = $keeperController->keeperDAO->GetByUser($_SESSION['loggedUser']);
@@ -78,7 +90,7 @@
                             foreach($bookingList as $book){
                                 if($startDate <= $book->getStartDate() && $endDate >= $book->getStartDate() || 
                                     $startDate <= $book->getEndDate() && $endDate >= $book->getEndDate()){
-                                    if($pet->getPetSpecie()->getPetSpecieId() != $book->getPet()->getPetSpecie()->getPetSpecieId()){
+                                    if($book->getStatus() == 'Approved (Pending payment)' && $pet->getPetSpecie()->getPetSpecieId() != $book->getPet()->getPetSpecie()->getPetSpecieId()){
                                         $flag = 1;
                                     }
                                     if($book->getUser() == $_SESSION["loggedUser"] && $book->getPet() == $pet){
@@ -116,10 +128,9 @@
                                 $booking->setStartDate($startDate);
                                 $booking->setEndDate($endDate);
                                 $booking->setPrice($price);
-                                $booking->setStatus('pending');
+                                $booking->setStatus('Pending');
                                 $booking->setPet($pet);
                                 $this->bookingDAO->Add($booking);
-                                $serviceController->Add($startDate, $endDate, 'pending', $keeper);
                                 $cont++;
                                 $message = 'Your booking has been successfully set';
                                 $homeController = new HomeController;
@@ -148,6 +159,7 @@
 
 
         public function PreReservation($userId, $month = NULL, $message = ""){
+            $reviewController = new ReviewController();
             $petController = new PetController();
             $petSizeController = new PetSizeController();
             $keeperController = new KeeperController();
@@ -156,6 +168,8 @@
             $petList = $petController->petDAO->GetByUser($_SESSION["loggedUser"]);
             $user = $userController->userDAO->GetById($userId);
             $keeper = $keeperController->keeperDAO->GetByUser($user);
+            $reviewList = $reviewController->reviewDAO->GetReviewsByKeeper($keeper->getKeeperId());
+            $avgReview = $reviewController->reviewDAO->GetAvgByKeeper($keeper->getKeeperId());
             $petSize = $petSizeController->petSizeDAO->GetById($keeper->getPetSize()->getPetSizeId());
             $calendar = $calendarController->GetKeeperAvailabilityCalendar($month, $userId);
             require_once(VIEWS_PATH . "reservation.php");
@@ -167,26 +181,38 @@
             $booking = $this->bookingDAO->GetById($bookingId);
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($booking->getKeeper()->getKeeperId());
             if($button == 'Approve'){
-                $this->bookingDAO->modifyBooking($bookingId, $message, 'approved(pending payment)');
+                $this->bookingDAO->modifyBooking($bookingId, $message, 'Approved (Pending payment)');
+                $serviceController->Add($booking->getStartDate(), $booking->getEndDate(), $booking->getPet()->getPetSpecie()->getPetSpecie(), $booking->getKeeper());
+                $this->CheckOtherSpeciesBookings($booking);
                 $this->PaymentEmail($booking);
                 if(!empty($serviceList)){
                     foreach($serviceList as $service){
-                        if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
+                        if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'Pending' 
                             && $booking->getStartDate() == $service->getStartDate() && $booking->getEndDate() == $service->getEndDate()){
-                            $serviceController->serviceDAO->modifyService($service->getId(), 'approved(pending payment)');
+                            $serviceController->serviceDAO->modifyService($service->getId(), 'Approved (Pending payment)');
                         }       
                     } 
                 }   
             }else{
-                $this->bookingDAO->modifyBooking($bookingId, $message, 'rejected');
+                $this->bookingDAO->modifyBooking($bookingId, $message, 'Rejected');
                 foreach($serviceList as $service){
-                    if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'pending' 
+                    if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'Pending' 
                         && $booking->getStartDate() == $service->getStartDate() && $booking->getEndDate() == $service->getEndDate()){
-                        $serviceController->serviceDAO->modifyService($service->getId(), 'rejected');
+                        $serviceController->serviceDAO->modifyService($service->getId(), 'Rejected');
                     }       
                 }
             }
             $this->ShowBookingsKeeper();
+        }
+
+        public function CheckOtherSpeciesBookings($booking){
+            $bookingList = $this->bookingDAO->GetByKeeper($booking->getKeeper()->getUser());
+            foreach($bookingList as $book){
+                if($book->getStatus() == 'pending' && $book->getStartDate() <= $booking->getEndDate() && $book->getEndDate() >= $booking->getStartDate()){
+                    $message = 'I will be taking care of another specie type.';
+                    $this->bookingDAO->modifyBooking($book->getId(), $message, 'Rejected');
+                }
+            }
         }
 
         public function CheckFinishedBookings(){
@@ -200,10 +226,10 @@
                     if($date < $dateNow){
                         switch($booking->getStatus()){
                             case 'approved(payed)':
-                                $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "finished");
+                                $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "Finished");
                                 break;
                             case 'pending':
-                                $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "unanswered");
+                                $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "Unanswered");
                         }
                         
                     }
