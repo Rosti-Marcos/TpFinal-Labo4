@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-11-2022 a las 16:43:32
+-- Tiempo de generación: 22-11-2022 a las 19:33:56
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -45,6 +45,17 @@ CREATE TABLE `booking` (
 
 INSERT INTO `booking` (`id`, `owner_id`, `keeper_id`, `start_date`, `end_date`, `message`, `pet_id`, `price`, `status`) VALUES
 (93, 1, 3, '2022-11-17', '2022-11-17', 'Yes.', 2, 5000, 'Finished & reviewed');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `chats_index`
+--
+
+CREATE TABLE `chats_index` (
+  `id` int(11) NOT NULL,
+  `chat_name` varchar(100) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -258,6 +269,12 @@ ALTER TABLE `booking`
   ADD KEY `pet_id` (`pet_id`);
 
 --
+-- Indices de la tabla `chats_index`
+--
+ALTER TABLE `chats_index`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `keeper`
 --
 ALTER TABLE `keeper`
@@ -327,6 +344,12 @@ ALTER TABLE `user_type`
 --
 ALTER TABLE `booking`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+
+--
+-- AUTO_INCREMENT de la tabla `chats_index`
+--
+ALTER TABLE `chats_index`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `keeper`
