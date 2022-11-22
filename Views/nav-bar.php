@@ -32,6 +32,31 @@ include_once('header.php');
                 <?php if($_SESSION["loggedUser"]->getUserType()->getUserTypeId() == "1") {?>
                     <li class="nav-item">
                         <a class="nav-link active" href="<?php echo FRONT_ROOT. "Keeper/ShowAddView" ?>">Become a Keeper</a></li>
+
+                    <?php $chatController = new \Controllers\ChatController();
+                    $chatList = $chatController->GetChatByOwnerId($_SESSION['loggedUser']->getUserId());
+                    if(!empty($chatList)){ ?>
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chats
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php
+                                foreach ($chatList as $k => $v){
+                                    $chatName = $v['chat'];
+                                    $keeper = $v['keeper'];
+
+                                    ?>
+
+                                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Chat/ShowChatView"."/".$chatName ?>"><?php echo $keeper ?></a></li>
+                                <?php } ?>
+
+                            </ul>
+                        </li>
+                    <?php } ?>
+
                 <?php }else{ ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,6 +68,52 @@ include_once('header.php');
                             <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeper" ?>">Show my reservations</a></li>
                         </ul>
                     </li>
+                <?php $chatController = new \Controllers\ChatController();
+                $chatList = $chatController->GetChatByKeeperId($_SESSION['loggedUser']->getUserId());
+                if(!empty($chatList)){ ?>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Chats as Keeper
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php
+                                foreach ($chatList as $k => $v){
+                                    $chatName = $v['chat'];
+                                    $owner = $v['owner'];
+
+                            ?>
+
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Chat/ShowChatView"."/".$chatName ?>"><?php echo $owner ?></a></li>
+                            <?php } ?>
+
+                        </ul>
+                    </li>
+                <?php } ?>
+                    <?php $chatController = new \Controllers\ChatController();
+                    $chatList = $chatController->GetChatByOwnerId($_SESSION['loggedUser']->getUserId());
+                    if(!empty($chatList)){ ?>
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chats as Owner
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php
+                                foreach ($chatList as $k => $v){
+                                    $chatName = $v['chat'];
+                                    $keeper = $v['keeper'];
+
+                                    ?>
+
+                                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT."Chat/ShowChatView"."/".$chatName ?>"><?php echo $keeper ?></a></li>
+                                <?php } ?>
+
+                            </ul>
+                        </li>
+                    <?php } ?>
                 <?php } ?>
             </ul>
         </div>
