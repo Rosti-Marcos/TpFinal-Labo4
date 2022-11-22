@@ -33,7 +33,7 @@
             $_SESSION['loggedUser'] = $user;
             $homeController = new HomeController();
             $homeController->PaymentLogin($user->getUserName(), $user->getPassword());
-            if ($booking->getStatus() == 'approved(pending payment)') {
+            if ($booking->getStatus() == 'Approved (Pending payment)') {
             $this->ShowPayment($booking);
             }else{
                 $homeController = new HomeController();
@@ -57,6 +57,7 @@
     
         public function CheckPayment($number, $name, $ccv, $bookingId){
             $bookingController = new BookingController();
+            $chatController = new ChatController();
             $booking = $bookingController->bookingDAO->GetById($bookingId);
             $userId = $booking->getUser()->getUserId();
             $amount = $booking->getPrice()/2;
@@ -72,6 +73,8 @@
                     $bookingController = new BookingController();
                     $bookingController->bookingDAO->modifyBooking($bookingId, $booking->getMessage(), 'approved(payed)');
                     $homeController = new HomeController();
+                    $tableName = $chatController->TableNameGenerator($userId, $keeperId);
+                    $chatController->CreateTable($tableName);
                     $message = "Transaction done";
                     $homeController->ShowWellcomeView($message);
                     $this->ReceiptEmail($booking);

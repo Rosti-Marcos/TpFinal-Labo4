@@ -15,7 +15,9 @@ include('header.php');
                                          style="width: 185px;" alt="logo">
                                     <h4 class="mt-1 mb-5 pb-1">Not only kids need heros!</h4>
                                 </div>
-                                <?php if(isset($message)){echo $message;}?>
+                                <?php if($message != ""){echo "<h4 class='alert alert-danger'>$message</h4>";
+                                }
+                                    ?>
                                 <form action="<?php echo  FRONT_ROOT . "User\Add "?>" method="post">
                                     <p>Please register and start looking for your pet keeper</p>
 

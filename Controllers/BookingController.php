@@ -85,7 +85,7 @@
                 $flag = 0;
                 if(!empty($serviceList)){
                     foreach($serviceList as $service){
-                        if($service->getStatus() == 'available' && $startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
+                        if($service->getStatus() == 'Available' && $startDate >= $service->getStartDate() && $endDate <= $service->getEndDate()){
                             $cont++;
                             foreach($bookingList as $book){
                                 if($startDate <= $book->getStartDate() && $endDate >= $book->getStartDate() || 
@@ -177,14 +177,14 @@
         }
 
         public function ReplyBooking($bookingId, $message, $button){
-            $serviceController = new ServiceController();
+            $serviceController = new ServiceController();                    
             $booking = $this->bookingDAO->GetById($bookingId);
             $serviceList = $serviceController->serviceDAO->GetByKeeperId($booking->getKeeper()->getKeeperId());
             if($button == 'Approve'){
                 $this->bookingDAO->modifyBooking($bookingId, $message, 'Approved (Pending payment)');
                 $serviceController->Add($booking->getStartDate(), $booking->getEndDate(), $booking->getPet()->getPetSpecie()->getPetSpecie(), $booking->getKeeper());
                 $this->CheckOtherSpeciesBookings($booking);
-                $this->PaymentEmail($booking);
+                $this->PaymentEmail($booking);                
                 if(!empty($serviceList)){
                     foreach($serviceList as $service){
                         if($service->getUser()->getUserId() == $booking->getKeeper()->getKeeperId() && $service->getStatus() == 'Pending' 

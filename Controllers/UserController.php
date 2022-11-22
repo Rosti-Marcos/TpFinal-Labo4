@@ -33,17 +33,17 @@
             if (!empty($this->userDAO->GetByUserName($userName))) {
 
                 $message = 'User name already exists, please enter a new user name';
-                $this->ShowAddView("<h4 class = 'alert alert-danger'> $message </h4>");
+                $this->ShowAddView("$message");
             
             } else if (!empty($this->userDAO->GetByEmail($eMail))) {
                 $message = 'The email already exists, please enter a new email';
-                $this->ShowAddView("<h4 class = 'alert alert-danger'> $message </h4>");
+                $this->ShowAddView("$message");
         
             } else {
                 $row = $this->userDAO->Add($user);
-                $message = "The record has been uploaded successfully, ' $row ' row is affected";
+                $messageOk = "The record has been uploaded successfully, ' $row ' row is affected";
                 $homeController = new HomeController();
-                $homeController->Index("<h4 class = 'alert alert-success'> $message </h4>");
+                $homeController->Index("$messageOk");
 
             }
         }

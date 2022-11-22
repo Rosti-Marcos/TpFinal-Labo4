@@ -81,7 +81,7 @@
 
         public function GetAvailablesByKeeper($userId) {
             $availableList = array();
-            $available = 'available';
+            $available = 'Available';
             $serviceList = $this->GetAll();
             foreach($serviceList as $service){
                 if($service->getUser()->getUserId() == $userId){

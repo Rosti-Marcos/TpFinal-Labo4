@@ -21,7 +21,7 @@ class ChatController{
     public function ShowChatView($tableName){
         require_once(VIEWS_PATH."validate-session.php");
         $msgList = $this->chatDAO->GetAllByTableName($tableName);
-        require_once(VIEWS_PATH . "chat.php");
+        require_once(VIEWS_PATH . "chat-view.php");
     }
 
     public function SendMsg($msg, $tableName){

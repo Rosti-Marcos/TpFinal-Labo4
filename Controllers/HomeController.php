@@ -31,9 +31,8 @@ use DAO\UserDAO;
 
                 $this->ShowWellcomeView();
             } else {
-                $message = "User name or password incorrect";
-                //echo ;
-                $this->Index("<h4 class = 'alert alert-danger'>$message</h4>");
+                $message = "User name or password incorrect";                
+                $this->Index($message);
             }
 
         }
