@@ -22,44 +22,51 @@ class CalendarController{
                     $m = date( 'y-m-t' );
                     if($date < $m){
                         switch ($service->getStatus()) {
-                            case 'available':
+                            case 'Available':
                                 if($date < $dateToday){
                                     $this->add_event('Available', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Available', $i, 1, 'green');
                                 }
                                 break;
-                            case 'unavailable':
+                            case 'Unavailable':
                                 if($date < $dateToday){
                                     $this->add_event('Unavailable', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Unavailable', $i, 1, 'red');
                                 }
                                 break;
-                            case 'pending':
+                            case 'Pending':
                                 if($date < $dateToday){
                                     $this->add_event('Unanswered', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Pending', $i, 1, 'yellow');
                                 }
                                 break;
-                            case 'reserved':
+                            case 'Reserved':
                                 if($date < $dateToday){
                                     $this->add_event('Reserved', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Reserved', $i, 1, 'blue');
                                 }
                                 break;
-                            case 'rejected':
+                            case 'Rejected':
                                 $this->add_event('Rejected', $i, 1, 'grey');
                                 break;
-                            case 'approved':
+                            case 'Approved':
                                 if($date < $dateToday){
                                     $this->add_event('Finished', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Approved', $i, 1, 'blue');
                                 }
                                 break;  
+                            default:
+                                if($service->getStatus() != 'Pending' && $date < $dateToday){
+                                    $this->add_event($service->getStatus(), $i, 1, 'grey');
+                                }else{
+                                    $this->add_event($service->getStatus(), $i, 1, 'bg-info');
+                                }
+                                break;
                         }
                     }
                     
@@ -90,20 +97,27 @@ class CalendarController{
                     $m = date( 'y-m-t' );
                     if($date < $m){
                         switch ($service->getStatus()) {
-                            case 'available':
+                            case 'Available':
                                 if($date < $dateToday){
                                     $this->add_event('Available', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Available', $i, 1, 'green');
                                 }
                                 break;
-                            case 'unavailable':
+                            case 'Unavailable':
                                 if($date < $dateToday){
                                     $this->add_event('Unavailable', $i, 1, 'grey');
                                 }else{
                                     $this->add_event('Unavailable', $i, 1, 'red');
                                 }
-                                break; 
+                                break;
+                            default:
+                                if($service->getStatus() != 'Pending' && $date < $dateToday){
+                                    $this->add_event($service->getStatus(), $i, 1, 'grey');
+                                }else{
+                                    $this->add_event($service->getStatus(), $i, 1, 'bg-info');
+                                }
+                                break;
                         }
                     }
                     
@@ -116,6 +130,8 @@ class CalendarController{
                 if($booking->getKeeper()->getUser()->getUserId() == $userId){
                     $startDate = $booking->getStartDate();
                     $endDate = $booking->getEndDate();
+                    $endDateB = date_create($booking->getEndDate());
+                    $endDateB = date_format($endDateB, 'y-m-d');
                     for($i = $startDate; $i <= $endDate; $i++){
                         $dateF = date_create($i);
                         $date = date_format($dateF, 'Y-m-d');
@@ -124,21 +140,29 @@ class CalendarController{
                         $m = date( 'y-m-t' );
                         if($date < $m){
                             switch ($booking->getStatus()) {
-                                case 'pending':
+                                case 'Pending':
                                     if($date < $dateToday){
                                         $this->add_event('Unanswered', $i, 1, 'grey');
                                     }else{
                                         $this->add_event('Pending', $i, 1, 'yellow');
                                     }
                                     break;
-                                case 'approved':
+                                case 'Approved (Pending payment)':
                                     if($date < $dateToday){
-                                        $this->add_event('Finished', $i, 1, 'grey');
+                                        $this->add_event('Not payed', $i, 1, 'grey');
                                     }else{
-                                        $this->add_event('Approved', $i, 1, 'blue');
+                                        $this->add_event('Approved Pending Payment', $i, 1, 'yellow');
                                     }
                                     break; 
-                                case 'rejected':
+                                case 'Approved (Payed)':
+                                    if($endDateB > $dateToday){
+                                        $this->add_event('On going', $i, 1, 'blue');
+                                    }
+                                    break;
+                                case 'Finished':
+                                    $this->add_event('Finished', $i, 1, 'grey');
+                                    break;
+                                case 'Rejected':
                                     if($date < $dateToday){
                                         $this->add_event('Rejected', $i, 1, 'grey');
                                     }else{

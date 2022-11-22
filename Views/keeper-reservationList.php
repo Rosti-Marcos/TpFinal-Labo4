@@ -13,7 +13,7 @@
 			</div>
 		<div class="container">       
         <div class="row justify-content-md-center">
-            <div class="col-6 col-md-9">
+            <div class="col-6 col-md-12">
               <div class="card mb-12">
                 <div class="card-body">
                   <div class="row">
@@ -21,19 +21,25 @@
 				  		<h5 class="mb-2" style="border-right: 1px solid grey">Bookings Filter</h5>
                      </div>
                     	<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."finished"?>" class="btn btn-primary" for="option.finished" value="finished">Finished</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Finished"?>" class="btn btn-dark" for="option.finished" value="finished">Finished</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."pending"?>" class="btn btn-warning" for="option.pending" value="pending">Pending</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Finishedreviewed"?>" class="btn btn-dark" for="option.finished" value="finished">Finished Reviewed</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."approved"?>" class="btn btn-success" for="option.approved">Approved</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Approved"?>" class="btn btn-success" for="option.approved">Approved</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."rejected"?>" class="btn btn-danger" for="option.rejected">Rejected</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Approved (Pending payment)"?>" class="btn btn-success" for="option.pendingPayment">Pending Payment</a>
+						</div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Pending"?>" class="btn btn-warning" for="option.pending" value="pending">Pending</a>
+						</div>
+						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Rejected"?>" class="btn btn-danger" for="option.rejected">Rejected</a>
                         </div>
 						<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."unanswered"?>" class="btn btn-secondary" for="option.unanswered">Unanswered</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsKeeperByStatus/"."Unanswered"?>" class="btn btn-secondary" for="option.unanswered">Unanswered</a>
                         </div>
                      </div>           
               		</div>
@@ -78,22 +84,25 @@
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
-											case 'approved(pending payment)': 
+											case 'Approved (Pending payment)': 
 												$class = "btn btn-primary";
 												break;
-											case 'approved(payed)':
+											case 'Approved (Payed)':
 												$class = "btn btn-success";
 												break;
-											case 'pending':
+											case 'Pending':
 												$class =  "btn btn-warning";
 												break;
-											case 'rejected':
+											case 'Rejected':
 												$class =  "btn btn-danger"; 
 												break;
-											case 'finished':
-												$class =  "btn btn-secondary"; 
+											case 'Finished':
+												$class =  "btn btn-dark"; 
 												break;
-											case 'unanswered':
+											case 'Finished & reviewed':
+												$class =  "btn btn-dark"; 
+												break;
+											case 'Unanswered':
 												$class = "btn btn-secondary"; 
 												break;
 										}
@@ -102,7 +111,7 @@
 										<a class="<?php echo $class?>"><?php echo $booking->getStatus() ?></a>
 									</td>
 									<?php
-										if($booking->getStatus() == 'pending'){
+										if($booking->getStatus() == 'Pending'){
 											?>
 										<form action="<?php echo FRONT_ROOT."Booking/ReplyBooking" ?>" method="POST">
 											<td style="text-align: center;"> 
@@ -115,11 +124,16 @@
 											</td>
 										</form>
 									<?php
-										}else{
+										}else if($booking->getStatus() != 'Finished & reviewed'){
 											?>
 											<td  style="text-align: center;"><?php echo $booking->getMessage() ?></td>
 											<td style="text-align: center;">
 											<a class="btn btn-secondary"><?php echo $booking->getStatus() ?></a>
+											</td>
+									<?php }else{ ?>
+											<td  style="text-align: center;"><?php echo $booking->getMessage() ?></td>
+											<td style="text-align: center;">
+											<a href="<?php echo FRONT_ROOT."Review/ShowReviews"?>" class="btn btn-primary">Show Reviews</a>
 											</td>
 								</tr>
 								<?php

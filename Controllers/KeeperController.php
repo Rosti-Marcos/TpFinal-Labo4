@@ -5,6 +5,7 @@ namespace Controllers;
 use DAO\KeeperDAO as KeeperDAO;
 use Models\Keeper as Keeper;
 use Models\UserType as UserType;
+use Controllers\ReviewController as ReviewController;
 
 class KeeperController{
     public $keeperDAO;
@@ -22,6 +23,8 @@ class KeeperController{
 
     public function ShowListView(){
         $keeperList = $this->keeperDAO->GetAll();
+        $reviewController = new ReviewController();
+        $avgList = $reviewController->reviewDAO->GetAVG();
         require_once (VIEWS_PATH . "keeper-list.php");
         require_once(VIEWS_PATH."validate-session.php");
     }
