@@ -208,7 +208,7 @@
         public function CheckOtherSpeciesBookings($booking){
             $bookingList = $this->bookingDAO->GetByKeeper($booking->getKeeper()->getUser());
             foreach($bookingList as $book){
-                if($book->getStatus() == 'pending' && $book->getStartDate() <= $booking->getEndDate() && $book->getEndDate() >= $booking->getStartDate()){
+                if($book->getStatus() == 'Pending' && $book->getStartDate() <= $booking->getEndDate() && $book->getEndDate() >= $booking->getStartDate()){
                     $message = 'I will be taking care of another specie type.';
                     $this->bookingDAO->modifyBooking($book->getId(), $message, 'Rejected');
                 }
@@ -225,10 +225,10 @@
                     $date = date_format($date, 'y-m-d');
                     if($date < $dateNow){
                         switch($booking->getStatus()){
-                            case 'approved(payed)':
+                            case 'Approved(Payed)':
                                 $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "Finished");
                                 break;
-                            case 'pending':
+                            case 'Pending':
                                 $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "Unanswered");
                         }
                         

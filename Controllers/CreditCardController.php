@@ -71,7 +71,7 @@
                     $bankAccountController->bankAccountDAO->AccountDebit($userId, $amount);
                     $bankAccountController->bankAccountDAO->AccountCredit($keeperId, $amount);
                     $bookingController = new BookingController();
-                    $bookingController->bookingDAO->modifyBooking($bookingId, $booking->getMessage(), 'approved(payed)');
+                    $bookingController->bookingDAO->modifyBooking($bookingId, $booking->getMessage(), 'Approved(Payed)');
                     $homeController = new HomeController();
                     $tableName = $chatController->TableNameGenerator($userId, $keeperId);
                     $chatController->CreateTable($tableName);
