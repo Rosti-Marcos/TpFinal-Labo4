@@ -57,6 +57,7 @@
 						      <th style="text-align: center;">Start date</th>
 						      <th style="text-align: center;">End date</th>
 						      <th style="text-align: center;">Price</th>
+							  <th style="text-align: center;">Specie</th>
 						      <th style="text-align: center;">Status</th>
 							  <th style="text-align: center;">Message</th>
 							  <th style="text-align: center;">Action</th>
@@ -81,11 +82,12 @@
 									<td style="text-align: center;"><?php echo $booking->getStartDate() ?></td>
 									<td style="text-align: center;"><?php echo $booking->getEndDate() ?></td>
 									<td style="text-align: center;"><?php echo $booking->getPrice() ?></td>
+									<td style="text-align: center;"><?php echo $booking->getPet()->getPetSpecie()->getPetSpecie() ?></td>
 									<?php
 										$class = "";
 										switch ($booking->getStatus()) {
 											case 'Approved (Pending payment)': 
-												$class = "btn btn-primary";
+												$class = "btn btn-success";
 												break;
 											case 'Approved (Payed)':
 												$class = "btn btn-success";
