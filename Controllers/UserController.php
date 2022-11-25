@@ -41,9 +41,9 @@
         
             } else {
                 $row = $this->userDAO->Add($user);
-                $messageOk = "The record has been uploaded successfully, ' $row ' row is affected";
+                $message = "The record has been uploaded successfully, ' $row ' row is affected";
                 $homeController = new HomeController();
-                $homeController->Index("$messageOk");
+                $homeController->Index("$message");
 
             }
         }

@@ -38,7 +38,5 @@ include ('nav-bar.php');
     </div>
     <p class="comprobe">This information will be sended to your email</p>
   </div>
-  <?php if(isset($message)){?>
-      <h4 class = 'alert alert-danger'><?php echo $message ?></h4>
-  <?php }?>
+  <?php if($message != ""){ echo "<script>alert('$message');</script>"; }?>
 </div>

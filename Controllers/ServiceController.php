@@ -19,10 +19,6 @@
             require_once(VIEWS_PATH."keeper-availability.php");
         }
 
-        public function ShowListView()
-        {
-            require_once(VIEWS_PATH."example.php");
-        }
 
         public function Add($startDate, $endDate, $status, $keeper = NULL, $specie = NULL){
             $userController = new UserController();
@@ -31,7 +27,7 @@
             if($keeper == null){
                 if($endDate < $startDate){
                     $message = 'You cannot set the end date to before the start date';
-                    $this->ShowAvailabilityView("<h4 class = 'alert alert-danger'> $message </h4>");
+                    $this->ShowAvailabilityView($message);
 
                 }else{
                     $flag = 0; 
@@ -48,10 +44,10 @@
                         $service->setStatus($status);
                         $this->serviceDAO->Add($service);
                         $message = 'Your availability has been successfully set';
-                        $this->ShowAvailabilityView("<h4 class = 'alert alert-success'> $message </h4>");                        
+                        $this->ShowAvailabilityView($message);                        
                     }else if($flag == 1){
                         $message = 'Some of the dates entered had already been loaded. Please enter different dates.'; 
-                        $this->ShowAvailabilityView("<h4 class = 'alert alert-warning'> $message </h4>");
+                        $this->ShowAvailabilityView($message);
                     }
                 $serviceList = $this->serviceDAO->getAll();
                 $this->ShowAvailabilityView();

@@ -18,7 +18,7 @@ include ('nav-bar.php');
                         <label class="form-control-label px-3">Pet size allowed
                             <span class="text-danger"> *</span>
                         </label>
-                        <select id="petSizeId" name="petSizeId">
+                        <select id="petSizeId" name="petSizeId" required>
                             <?php foreach($petSizeList as $petSize){?>
                             <option value="<?php echo $petSize->getPetSizeId()?>"><?php echo $petSize->getPetSize()?></option>
                             <?php } ?>

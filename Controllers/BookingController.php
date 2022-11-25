@@ -18,6 +18,7 @@
 
         public function ShowBookingsUser()
         {
+            require_once(VIEWS_PATH."validate-session.php");
             $this->CheckFinishedBookings();
             $keeperController = new KeeperController();
             $bookingList = $this->bookingDAO->getByUser($_SESSION['loggedUser']);
@@ -27,10 +28,13 @@
 
         public function ShowBookingsUserByStatus($status)
         {
+            require_once(VIEWS_PATH."validate-session.php");
             if($status == 'Approved(Pendingpayment)'){
                 $status = 'Approved (Pending payment)';
             }else if($status == 'Finishedreviewed'){
                 $status = 'Finished & reviewed';
+            }else if ($status == 'Approved(Payed)'){
+                $status = 'Approved (Payed)';
             }
             $keeperController = new KeeperController();
             $bookingList = $this->bookingDAO->getByStatus($status, $_SESSION["loggedUser"]);
@@ -40,6 +44,7 @@
 
         public function ShowBookingsKeeper()
         {
+            require_once(VIEWS_PATH."validate-session.php");
             $this->CheckFinishedBookings();
             $userController = new UserController();
             $keeperController = new KeeperController();
@@ -51,10 +56,13 @@
 
         public function ShowBookingsKeeperByStatus($status)
         {
+            require_once(VIEWS_PATH."validate-session.php");
             if($status == 'Approved(Pendingpayment)'){
                 $status = 'Approved (Pending payment)';
             }else if($status == 'Finishedreviewed'){
                 $status = 'Finished & reviewed';
+            }else if ($status == 'Approved(Payed)'){
+                $status = 'Approved (Payed)';
             }
             
             $userController = new UserController();
@@ -66,6 +74,7 @@
         }
 
         public function MakeReservation($startDate, $endDate, $petId, $petSizeId, $userId){
+            require_once(VIEWS_PATH."validate-session.php");
             $user = $_SESSION["loggedUser"];
             $keeperController = new KeeperController();
             $userController = new UserController();
@@ -134,7 +143,7 @@
                                 $cont++;
                                 $message = 'Your booking has been successfully set';
                                 $homeController = new HomeController;
-                                $homeController->ShowWellcomeView("<script>alert('$message');</script>");
+                                $homeController->ShowWellcomeView($message);
 
                             }else if($flag == 1){
                                 $message = 'Some of the dates entered had already been booked with different species. Please enter different dates.'; 
@@ -159,6 +168,7 @@
 
 
         public function PreReservation($userId, $month = NULL, $message = ""){
+            require_once(VIEWS_PATH."validate-session.php");
             $reviewController = new ReviewController();
             $petController = new PetController();
             $petSizeController = new PetSizeController();
@@ -229,7 +239,7 @@
                     $date = date_format($date, 'y-m-d');
                     if($date < $dateNow){
                         switch($booking->getStatus()){
-                            case 'Approved(Payed)':
+                            case 'Approved (Payed)':
                                 $this->bookingDAO->modifyBooking($booking->getId(), $booking->getMessage(), "Finished");
                                 break;
                             case 'Pending':
