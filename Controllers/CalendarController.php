@@ -9,6 +9,8 @@ class CalendarController{
     public function ShowAvailabilityCalendar($month = null){
         $serviceController = new ServiceController();
         $serviceList = $serviceController->getServices();
+        $bookingController = new BookingController();
+        $bookingList = $bookingController->bookingDAO->GetByKeeper($_SESSION['loggedUser']);
         $this->calendar = new Calendar($month);
         foreach($serviceList as $service){
             if($service->getUser() == $_SESSION['loggedUser']){
@@ -81,6 +83,62 @@ class CalendarController{
             }
     
         }
+        if($bookingList){
+            foreach($bookingList as $booking){
+                if($booking->getKeeper()->getUser() == $_SESSION['loggedUser']){
+                    $startDate = $booking->getStartDate();
+                    $endDate = $booking->getEndDate();
+                    $endDateB = date_create($booking->getEndDate());
+                    $endDateB = date_format($endDateB, 'y-m-d');
+                    for($i = $startDate; $i <= $endDate; $i++){
+                        $dateF = date_create($i);
+                        $date = date_format($dateF, 'Y-m-d');
+                        $dateT = date_create(date('Y-m-d'));
+                        $dateToday = date_format($dateT, 'Y-m-d');
+                        $m = date( 'y-m-t' );
+                        if($date < $m){
+                            switch ($booking->getStatus()) {
+                                case 'Pending':
+                                    if($date < $dateToday){
+                                        $this->add_event('Unanswered', $i, 1, 'grey');
+                                    }else{
+                                        $this->add_event('Pending', $i, 1, 'yellow');
+                                    }
+                                    break;
+                                case 'Approved (Pending payment)':
+                                    if($date < $dateToday){
+                                        $this->add_event('Not payed', $i, 1, 'grey');
+                                    }else{
+                                        $this->add_event('Approved Pending Payment', $i, 1, 'yellow');
+                                    }
+                                    break; 
+                                case 'Approved (Payed)':
+                                    if($startDateB <= $dateToday){
+                                        $this->add_event('On going', $i, 1, 'blue');
+                                    }else{
+                                        $this->add_event('Approved & Payed', $i, 1, 'blue');
+                                    }
+                                    break;
+                                case 'Finished':
+                                    $this->add_event('Finished', $i, 1, 'grey');
+                                    break;
+                                case 'Finished & reviewed':
+                                    $this->add_event('Finished', $i, 1, 'grey');
+                                    break;
+                                case 'Rejected':
+                                    if($date < $dateToday){
+                                        $this->add_event('Rejected', $i, 1, 'grey');
+                                    }else{
+                                        $this->add_event('Rejected', $i, 1, 'red');
+                                    }
+                                    break; 
+                            }
+                        }
+                    }
+                
+                }
+            }
+        }
         $calendar = $this->__toString();
         require_once(VIEWS_PATH."keeper-calendar-availability.php");
         
@@ -134,11 +192,13 @@ class CalendarController{
         }
         if($bookingList){
             foreach($bookingList as $booking){
-                if($booking->getKeeper()->getUser()->getUserId() == $userId){
+                if($booking->getUser() == $_SESSION['loggedUser']){
                     $startDate = $booking->getStartDate();
                     $endDate = $booking->getEndDate();
                     $endDateB = date_create($booking->getEndDate());
                     $endDateB = date_format($endDateB, 'y-m-d');
+                    $startDateB = date_create($startDate);
+                    $startDateB = date_format($startDateB, 'y-m-d');
                     for($i = $startDate; $i <= $endDate; $i++){
                         $dateF = date_create($i);
                         $date = date_format($dateF, 'Y-m-d');
@@ -162,11 +222,16 @@ class CalendarController{
                                     }
                                     break; 
                                 case 'Approved (Payed)':
-                                    if($endDateB > $dateToday){
+                                    if($startDateB <= $dateToday){
                                         $this->add_event('On going', $i, 1, 'blue');
+                                    }else{
+                                        $this->add_event('Approved & Payed', $i, 1, 'blue');
                                     }
                                     break;
                                 case 'Finished':
+                                    $this->add_event('Finished', $i, 1, 'grey');
+                                    break;
+                                case 'Finished & reviewed':
                                     $this->add_event('Finished', $i, 1, 'grey');
                                     break;
                                 case 'Rejected':

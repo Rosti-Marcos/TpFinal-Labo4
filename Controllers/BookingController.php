@@ -99,20 +99,24 @@
                             foreach($bookingList as $book){
                                 if($startDate <= $book->getStartDate() && $endDate >= $book->getStartDate() || 
                                     $startDate <= $book->getEndDate() && $endDate >= $book->getEndDate()){
-                                    if($book->getStatus() == 'Approved (Pending payment)' && $pet->getPetSpecie()->getPetSpecieId() != $book->getPet()->getPetSpecie()->getPetSpecieId()){
+                                    if(($book->getStatus() == 'Approved (Pending payment)' || $book->getStatus() == 'Approved (Payed)') && ($pet->getPetSpecie()->getPetSpecieId() != $book->getPet()->getPetSpecie()->getPetSpecieId())){
                                         $flag = 1;
                                     }
                                     if($book->getUser() == $_SESSION["loggedUser"] && $book->getPet() == $pet){
                                         switch ($book->getStatus()) {
-                                            case 'pending':
+                                            case 'Pending':
                                                 $message = 'You already have a pending reservation.';
                                                 $this->PreReservation($userId, null, $message);
                                                 break;
-                                            case 'approved':
-                                                $message = 'Your reservation is already approved.';
+                                            case 'Approved (Pending payment)':
+                                                $message = 'Your reservation is already approved. You must pay it.';
                                                 $this->PreReservation($userId, null, $message);
                                                 break;
-                                            case 'rejected':
+                                            case 'Approved (Payed)':
+                                                $message = 'Your reservation is already approved and payed.';
+                                                $this->PreReservation($userId, null, $message);
+                                                break;
+                                            case 'Rejected':
                                                 $message = 'Your reservation was already rejected.';
                                                 $this->PreReservation($userId, null, $message);
                                                 break;
@@ -222,7 +226,7 @@
         public function CheckOtherSpeciesBookings($booking){
             $bookingList = $this->bookingDAO->GetByKeeper($booking->getKeeper()->getUser());
             foreach($bookingList as $book){
-                if($book->getStatus() == 'Pending' && $book->getStartDate() <= $booking->getEndDate() && $book->getEndDate() >= $booking->getStartDate()){
+                if($book->getStatus() == 'Pending' && $book->getStartDate() <= $booking->getEndDate() && $book->getEndDate() >= $booking->getStartDate() && ($book->getPet()->getPetSpecie() != $booking->getPet()->getPetSpecie())){
                     $message = 'I will be taking care of another specie type.';
                     $this->bookingDAO->modifyBooking($book->getId(), $message, 'Rejected');
                 }

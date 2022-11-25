@@ -27,7 +27,7 @@
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Finishedreviewed"?>" class="btn btn-dark" for="option.finished" value="finished">Finished Reviewed</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Approved"?>" class="btn btn-success" for="option.approved">Approved</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Approved(Payed)"?>" class="btn btn-success" for="option.approved">Approved (Payed)</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Approved (Pending payment)"?>" class="btn btn-success" for="option.pendingPayment">Pending Payment</a>
@@ -85,10 +85,10 @@
 										$class = "";
 										switch ($booking->getStatus()) {
 											case 'Approved (Pending payment)': 
-												$class = "btn btn-primary";
+												$class = "btn btn-success";
 												break;
 											case 'Approved (Payed)':
-												$class = "btn btn-primary";
+												$class = "btn btn-success";
 												break;
 											case 'Pending':
 												$class =  "btn btn-warning";
