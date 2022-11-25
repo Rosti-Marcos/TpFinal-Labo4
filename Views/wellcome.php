@@ -5,7 +5,7 @@ include_once('nav-bar.php');
 
 <header><link href="<?php echo CSS_PATH . "wellcome.css" ?>" rel="stylesheet"></header>
 
-<?php if(!empty($message)){ echo $message; }?>
+<?php if($message != ""){ echo "<script>alert('$message');</script>"; }?>
 
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">

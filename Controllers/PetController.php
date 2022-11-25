@@ -62,7 +62,7 @@ class PetController
 
         $this->petDAO->Add($pet);
         $message = "Your pet has been added successfully";
-        $this->ShowAddPetView("<h6 class = 'alert alert-success'> $message </h6>");
+        $this->ShowAddPetView($message);
     }
 
     public function FileUpload($nombre){

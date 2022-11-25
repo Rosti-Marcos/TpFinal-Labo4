@@ -9,9 +9,7 @@
         </div>
        </nav>
 
-         <?php if(!empty($message)){?>
-              <h4 class = "alert alert-danger"><?php echo $message ?></h4>
-        <?php } ?>
+       <?php if($message != ""){ echo "<script>alert('$message');</script>"; }?>
 
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">

@@ -53,13 +53,20 @@ class CalendarController{
                             case 'Rejected':
                                 $this->add_event('Rejected', $i, 1, 'grey');
                                 break;
-                            case 'Approved':
+                            case 'Approved (Payed)':
                                 if($date < $dateToday){
                                     $this->add_event('Finished', $i, 1, 'grey');
                                 }else{
-                                    $this->add_event('Approved', $i, 1, 'blue');
+                                    $this->add_event('Approved (Payed)', $i, 1, 'blue');
                                 }
                                 break;  
+                            case 'Approved (Pending payment)':
+                                if($date < $dateToday){
+                                    $this->add_event('Not payed', $i, 1, 'grey');
+                                }else{
+                                    $this->add_event('Approved Pending Payment', $i, 1, 'yellow');
+                                }
+                                break; 
                             default:
                                 if($service->getStatus() != 'Pending' && $date < $dateToday){
                                     $this->add_event($service->getStatus(), $i, 1, 'grey');
