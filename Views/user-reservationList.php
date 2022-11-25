@@ -24,10 +24,13 @@
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Finished"?>" class="btn btn-dark" for="option.finished" value="finished">Finished</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Finishedreviewed"?>" class="btn btn-dark" for="option.finished" value="finished">Finished Reviewed</a>
+						</div>
+						<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Approved"?>" class="btn btn-success" for="option.approved">Approved</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
-						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Approved (Pending payment)"?>" class="btn btn-primary" for="option.pendingPayment">Pending Payment</a>
+						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Approved (Pending payment)"?>" class="btn btn-success" for="option.pendingPayment">Pending Payment</a>
 						</div>
 						<div class="col text-secondary" style="text-align: center;">
 						<a href="<?php echo FRONT_ROOT."Booking/ShowBookingsUserByStatus/"."Pending"?>" class="btn btn-warning" for="option.pending" value="pending">Pending</a>

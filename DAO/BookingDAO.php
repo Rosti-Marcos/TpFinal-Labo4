@@ -194,10 +194,12 @@
                 }
             }else{
                 $bookingListByUser = $this->GetByUser($user);
+                if(!empty($bookingListByUser)){
                     foreach ($bookingListByUser as $booking){
                         if($booking->getStatus() == $status)
                         array_push($userBookingListByStatus, $booking);
                     }
+                }
                 if (!empty($userBookingListByStatus)){
                     return $userBookingListByStatus;
                 }

@@ -243,7 +243,7 @@
                     <br>
                     <div style="width: auto; height: 440px; overflow: auto; text-align: justify; padding: 20px;">
                     <?php
-                        if($reviewList){ 
+                        if(!empty($reviewList)){ 
                         foreach($reviewList as $review){ 
                         $date = date_create($review->getDate());
                         $date = date_format($date, "D, d M Y");
@@ -278,9 +278,11 @@
                         </div>
                     </div>
                     <hr> 
-                    <?php }}?>
-                </div>   
-              </div>
+                    <?php }}else{?>
+                      <i>This keeper still has no reviews.</i>
+                      <?php }?>
+                </div>               
+            </div>
             </div>
       </div>        
       
