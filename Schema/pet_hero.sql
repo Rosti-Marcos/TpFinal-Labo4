@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2022 a las 19:33:56
+-- Tiempo de generación: 25-11-2022 a las 16:34:02
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pet_hero`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bank_account`
+--
+
+CREATE TABLE `bank_account` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `balance` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `bank_account`
+--
+
+INSERT INTO `bank_account` (`id`, `user_id`, `balance`) VALUES
+(1, 6, 12500),
+(2, 1, 47500);
 
 -- --------------------------------------------------------
 
@@ -44,7 +64,9 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id`, `owner_id`, `keeper_id`, `start_date`, `end_date`, `message`, `pet_id`, `price`, `status`) VALUES
-(93, 1, 3, '2022-11-17', '2022-11-17', 'Yes.', 2, 5000, 'Finished & reviewed');
+(93, 1, 3, '2022-11-17', '2022-11-17', 'Yes.', 2, 5000, 'Finished & reviewed'),
+(94, 2, 3, '2022-11-23', '2022-11-23', NULL, 7, 5000, 'Pending'),
+(95, 1, 3, '2022-11-24', '2022-11-24', 'aa', 1, 5000, 'approved(payed)');
 
 -- --------------------------------------------------------
 
@@ -56,6 +78,58 @@ CREATE TABLE `chats_index` (
   `id` int(11) NOT NULL,
   `chat_name` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `chats_index`
+--
+
+INSERT INTO `chats_index` (`id`, `chat_name`) VALUES
+(1, 'chat_1_6');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `chat_1_6`
+--
+
+CREATE TABLE `chat_1_6` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `message` varchar(1000) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `msg_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `chat_1_6`
+--
+
+INSERT INTO `chat_1_6` (`id`, `name`, `message`, `active`, `msg_date`) VALUES
+(1, 'Victor', 'holaaaaa', 1, '2022-11-22'),
+(2, 'Rodrigo', 'lalalalalla', 1, '2022-11-22'),
+(3, 'Victor', 'holaaaaa', 1, '2022-11-22'),
+(4, 'Victor', '111111', 1, '2022-11-22'),
+(5, 'Rodrigo', 'lalalalalla', 1, '2022-11-22');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `credit_card`
+--
+
+CREATE TABLE `credit_card` (
+  `id` int(11) NOT NULL,
+  `number` bigint(20) NOT NULL,
+  `ccv` int(3) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `credit_card`
+--
+
+INSERT INTO `credit_card` (`id`, `number`, `ccv`, `user_id`) VALUES
+(1, 1234567812345678, 321, 1);
 
 -- --------------------------------------------------------
 
@@ -110,7 +184,8 @@ INSERT INTO `pet` (`id`, `pet_name`, `user_id`, `vaccine_cert`, `pet_size_id`, `
 (3, 'Casper', 2, 'Views/uploads/certVac3_1667413848.jpg', 1, 'Views/uploads/casper_1667413848.jpg', 'Views/uploads/casper_1667413848.mp4', 'common', 2, 'Nice to people'),
 (4, 'Tina', 2, 'Views/uploads/certVac3_1667413920.jpg', 1, 'Views/uploads/gato4_1667413920.jpg', 'Views/uploads/tigre_1667413920.mp4', 'persian', 2, 'Water lover'),
 (5, 'Rocky', 7, 'Views/uploads/certVac3_1667715499.jpg', 3, 'Views/uploads/perro5_1667715499.jpg', 'Views/uploads/perritoGris_1667715499.mp4', 'Delacalle', 1, ''),
-(6, 'Rocky', 1, 'Views/uploads/certVac3_1667747645.jpg', 3, 'Views/uploads/rott1_1667747645.jpg', 'Views/uploads/rott_1667747645.mp4', 'Rottweiler', 1, '');
+(6, 'Rocky', 1, 'Views/uploads/certVac3_1667747645.jpg', 3, 'Views/uploads/rott1_1667747645.jpg', 'Views/uploads/rott_1667747645.mp4', 'Rottweiler', 1, ''),
+(7, 'aaaaa', 2, 'Views/uploads/patan_1669154988.jpg', 3, 'Views/uploads/labra_1669154988.jpg', 'Views/uploads/perroSonrriente_1669154988.mp4', 'aaaaa', 1, 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -201,7 +276,10 @@ CREATE TABLE `service` (
 
 INSERT INTO `service` (`id`, `user_id`, `start_date`, `end_date`, `status`) VALUES
 (48, 6, '2022-11-06', '2022-11-29', 'Available'),
-(133, 6, '2022-11-18', '2022-11-18', 'For Cats');
+(133, 6, '2022-11-18', '2022-11-18', 'For Cats'),
+(134, 6, '2022-12-01', '2022-12-10', 'Available'),
+(135, 2, '2022-11-22', '2022-12-10', 'Available'),
+(136, 6, '2022-11-24', '2022-11-24', 'For Dogs');
 
 -- --------------------------------------------------------
 
@@ -233,7 +311,10 @@ INSERT INTO `user` (`id`, `user_type_id`, `name`, `lastname`, `user_name`, `pass
 (5, 1, 'Carolina', 'Gallo', 'caro', '1234', 'slumdesarrollos@gmail.com', 2236252998, '1985-10-12'),
 (6, 2, 'Rodrigo', 'Eulloque', 'rodrieu', '1234', 'rodri@eu', 2944163556, '1992-07-16'),
 (7, 2, 'Marcos', 'Rosti', 'marc', '1234', 'marcos@rosti', 2235164525, '1985-12-21'),
-(8, 1, 'as', 'as', 'as', '1234', 'as@as', 2944163556, '1995-05-15');
+(8, 1, 'as', 'as', 'as', '1234', 'as@as', 2944163556, '1995-05-15'),
+(9, 1, 'elma', 'amilkar', 'elma', '1234', 'elma@gmail', 111111111, '2014-07-25'),
+(10, 1, 'mario', 'silva', 'mario', '1234', 'mario@gmail', 111111111, '2016-09-25'),
+(11, 1, 'lala', 'lala', 'lala', '1234', 'lala@ss', 222222, '2021-12-29');
 
 -- --------------------------------------------------------
 
@@ -260,6 +341,13 @@ INSERT INTO `user_type` (`id`, `type`) VALUES
 --
 
 --
+-- Indices de la tabla `bank_account`
+--
+ALTER TABLE `bank_account`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indices de la tabla `booking`
 --
 ALTER TABLE `booking`
@@ -273,6 +361,19 @@ ALTER TABLE `booking`
 --
 ALTER TABLE `chats_index`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `chat_1_6`
+--
+ALTER TABLE `chat_1_6`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `credit_card`
+--
+ALTER TABLE `credit_card`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indices de la tabla `keeper`
@@ -340,16 +441,34 @@ ALTER TABLE `user_type`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `bank_account`
+--
+ALTER TABLE `bank_account`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `chats_index`
 --
 ALTER TABLE `chats_index`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `chat_1_6`
+--
+ALTER TABLE `chat_1_6`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `credit_card`
+--
+ALTER TABLE `credit_card`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `keeper`
@@ -361,7 +480,7 @@ ALTER TABLE `keeper`
 -- AUTO_INCREMENT de la tabla `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `pet_size`
@@ -385,13 +504,13 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT de la tabla `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `user_type`
@@ -404,12 +523,24 @@ ALTER TABLE `user_type`
 --
 
 --
+-- Filtros para la tabla `bank_account`
+--
+ALTER TABLE `bank_account`
+  ADD CONSTRAINT `bank_account_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `booking`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`keeper_id`) REFERENCES `keeper` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `credit_card`
+--
+ALTER TABLE `credit_card`
+  ADD CONSTRAINT `credit_card_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `keeper`
