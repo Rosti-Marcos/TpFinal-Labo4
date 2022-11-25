@@ -168,6 +168,10 @@
             $petList = $petController->petDAO->GetByUser($_SESSION["loggedUser"]);
             $user = $userController->userDAO->GetById($userId);
             $keeper = $keeperController->keeperDAO->GetByUser($user);
+            $remuneration = $keeper->getRemuneration();
+            $date1=date_create(date('Y-m-d'));
+            $date2=date_create($keeper->getStartDate());
+            $experience=$date2->diff($date1);
             $reviewList = $reviewController->reviewDAO->GetReviewsByKeeper($keeper->getKeeperId());
             $avgReview = $reviewController->reviewDAO->GetAvgByKeeper($keeper->getKeeperId());
             $petSize = $petSizeController->petSizeDAO->GetById($keeper->getPetSize()->getPetSizeId());

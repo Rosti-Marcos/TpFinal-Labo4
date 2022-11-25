@@ -86,7 +86,7 @@
                                 <h6 class="mb-0">Price</h6>
                               </div>
                               <div class="col-sm-6 text-secondary">
-                                  <?php echo $keeper->getRemuneration()."/day" ?>
+                                  <?php echo $remuneration."/day" ?>
                               </div>
                             </div>
                             <hr>
@@ -95,9 +95,7 @@
                                 <h6 class="mb-0">Experience</h6>
                               </div>
                               <div class="col-sm-6 text-secondary">
-                              <?php $date1=date_create(date('Y-m-d'));
-                                    $date2=date_create($keeper->getStartDate());
-                                  $diff=$date2->diff($date1); echo $diff->y." "."years, ".$diff->m." months, ".$diff->d." days"?>
+                              <?php echo $experience->y." "."years, ".$experience->m." months, ".$experience->d." days";?>
                               </div>
                             </div>
                             <br>
