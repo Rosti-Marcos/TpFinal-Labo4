@@ -1,6 +1,10 @@
-<?php include "header2.php";
+<?php 
       include "nav-bar.php";
 ?>
+<header>
+<meta http-equiv="refresh" content="7; url=http://localhost/TpFinal-Labo4/Chat/ShowChatView/<?php echo $tableName ?>">
+
+</header>
     <style>
         h2{
             color:white;
@@ -27,6 +31,7 @@
             background-color:#d69de0;
             margin-bottom:4%;
             overflow:auto;
+            flex-direction: column-reverse;
             padding:15px;
         }
         .message{
@@ -99,5 +104,14 @@
 
 
     </body>
+
+    <script>
+window.onload=function () {
+     var objDiv = document.getElementById( "display-chat");
+     objDiv.scrollTop = objDiv.scrollHeight;
+}
+                    </script>
+
+
     </html>
 
